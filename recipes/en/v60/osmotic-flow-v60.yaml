@@ -1,0 +1,27 @@
+id: osmotic-flow-v60
+name: Osmotic Flow V60
+brewer: V60
+dose_g: 18
+water_ml: 300
+ratio: "1:16.7"
+water_temp_c: 93
+grind_size: medium-coarse
+description: >
+  The Japanese osmotic flow method emphasizes keeping the water level just above
+  the coffee bed throughout the brew, creating a gentle osmotic extraction. A
+  single, very slow continuous pour with precise kettle control.
+phases:
+  - label: Bloom
+    water_g: 45
+    wait_seconds: 30
+    note: Create a small crater in the center, pour gently into it
+  - label: Osmotic Pour
+    water_g: 255
+    wait_seconds: 0
+    note: >
+      Single slow continuous pour, keeping water just 1-2cm above the bed.
+      Takes about 2 minutes. Do not disturb the crust.
+source:
+  name: Japanese Osmotic Flow Method
+  url: https://www.youtube.com/watch?v=kqQDYf8BmIA
+tags: [light-roast, single-pour, advanced, sweet]

@@ -1,0 +1,35 @@
+id: matteo-negotiate-orea
+name: 谈判者冲煮法 (The Negotiator)
+brewer: Orea
+dose_g: 18
+water_ml: 300
+ratio: "1:16.7"
+water_temp_c: 93
+grind_size: medium
+description: >
+  Matteo D'Ottavio 的竞赛级 Orea 冲煮方案，采用"谈判式"平底滤纸技术——手动将滤纸压入
+  滤杯使其完全贴合内壁，实现零旁路萃取。五次精确注水配合严格计时，带来甜感突出、
+  高萃取率且层次清晰的一杯。最适合浅烘焙咖啡豆。
+phases:
+  - label: 闷蒸
+    water_g: 54
+    wait_seconds: 40
+    note: 将滤纸"谈判"压入滤杯；3倍粉量闷蒸，轻柔摇晃
+  - label: 第二段注水
+    water_g: 60
+    wait_seconds: 15
+    note: 绕圈注水，待水面降至粉床上方约1cm
+  - label: 第三段注水
+    water_g: 60
+    wait_seconds: 15
+  - label: 第四段注水
+    water_g: 60
+    wait_seconds: 15
+  - label: 最后一段注水
+    water_g: 66
+    wait_seconds: 0
+    note: 轻柔中心注水；目标总萃取时间约3:30
+source:
+  name: Matteo D'Ottavio
+  url: https://www.youtube.com/watch?v=xRCFT3OpCYQ
+tags: [light-roast, sweet, multi-pour, competition, advanced]

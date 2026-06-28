@@ -1,0 +1,33 @@
+id: tetsu-kasuya-4-6-method
+name: 粕谷哲 4:6 冲煮法
+brewer: V60
+dose_g: 20
+water_ml: 300
+ratio: "1:15"
+water_temp_c: 92
+grind_size: coarse
+description: >
+  2016 年世界手冲大赛冠军粕谷哲的获奖配方。前 40% 的水控制风味平衡（甜感 vs 酸质），
+  后 60% 控制浓度和醇厚度。每一段注水需完全流完再进行下一段。
+phases:
+  - label: 闷蒸（40% — 甜感）
+    water_g: 60
+    wait_seconds: 45
+    note: 较小的闷蒸注水强调甜感，较大的闷蒸注水强调酸质
+  - label: 第二段（40%）
+    water_g: 60
+    wait_seconds: 45
+  - label: 第三段（60% — 浓度）
+    water_g: 60
+    wait_seconds: 45
+  - label: 第四段（60%）
+    water_g: 60
+    wait_seconds: 45
+  - label: 最后一段（60%）
+    water_g: 60
+    wait_seconds: 45
+source:
+  name: 粕谷哲 (Tetsu Kasuya)
+  url: https://www.youtube.com/watch?v=wmCW8xSWGZY
+  competition: 2016 年世界手冲大赛
+tags: [light-roast, sweet, multi-pour, competition, advanced]

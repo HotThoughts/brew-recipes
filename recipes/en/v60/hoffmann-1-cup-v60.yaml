@@ -1,0 +1,34 @@
+id: hoffmann-1-cup-v60
+name: Hoffmann 1-Cup V60
+brewer: V60
+dose_g: 15
+water_ml: 250
+ratio: "1:16.7"
+water_temp_c: 100
+grind_size: medium-fine
+description: >
+  James Hoffmann's refined single-cup V60 technique. Uses boiling water and a
+  pulsed pouring approach with gentle swirls between pours. The well in the
+  coffee bed and the final swirl ensure even extraction.
+phases:
+  - label: Bloom
+    water_g: 50
+    wait_seconds: 45
+    note: Swirl gently at 0:10-0:15 to knock grounds off walls
+  - label: Second Pour
+    water_g: 50
+    wait_seconds: 10
+  - label: Third Pour
+    water_g: 50
+    wait_seconds: 10
+  - label: Fourth Pour
+    water_g: 50
+    wait_seconds: 10
+  - label: Final Pour
+    water_g: 50
+    wait_seconds: 0
+    note: Swirl gently to flatten bed, let draw down
+source:
+  name: James Hoffmann
+  url: https://www.youtube.com/watch?v=1oB1oDrDkHM
+tags: [light-roast, beginner-friendly, multi-pour, balanced]

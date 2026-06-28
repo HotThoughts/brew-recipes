@@ -1,0 +1,32 @@
+id: the-barn-2-cup-v60
+name: The Barn 2-Cup V60
+brewer: V60
+dose_g: 23.5
+water_ml: 400
+ratio: "1:17"
+water_temp_c: 96
+grind_size: medium-fine
+description: >
+  The Barn Berlin's larger-batch V60 recipe by co-founder Andreas. A continuous
+  pour hitting staged water targets rather than discrete pulses.
+phases:
+  - label: Bloom
+    water_g: 60
+    wait_seconds: 45
+    note: Pour slowly over 20+ seconds for even saturation
+  - label: Continuous Pour 1
+    water_g: 140
+    wait_seconds: 0
+    note: Reach 200g total by 1:30, concentric circles
+  - label: Continuous Pour 2
+    water_g: 100
+    wait_seconds: 0
+    note: Reach 300g total by 2:00
+  - label: Continuous Pour 3
+    water_g: 100
+    wait_seconds: 0
+    note: Reach 400g total by 2:30, let draw down
+source:
+  name: The Barn Berlin
+  url: https://thebarn.de
+tags: [light-roast, continuous-pour]

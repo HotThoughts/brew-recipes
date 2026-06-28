@@ -1,0 +1,15 @@
+{
+  "name": "brew-recipes",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Community pour-over coffee recipe database",
+  "license": "CC0-1.0",
+  "scripts": {
+    "test": "node scripts/validate.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "js-yaml": "^4.1.0"
+  }
+}

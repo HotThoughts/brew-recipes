@@ -1,0 +1,23 @@
+id: hoffmann-aeropress
+name: Hoffmann Aeropress
+brewer: Aeropress
+dose_g: 11
+water_ml: 200
+ratio: "1:18.2"
+water_temp_c: 100
+grind_size: medium-fine
+description: >
+  James Hoffmann's ultimate Aeropress recipe. Uses a higher ratio that produces
+  a clean, tea-like cup. Light agitation, no pressing until the very end, and a
+  gentle swirl to break the crust.
+phases:
+  - label: Pour
+    water_g: 200
+    wait_seconds: 120
+    note: >
+      Add all water at once. Wait 2 minutes. Swirl gently to break the crust.
+      Wait 30 seconds. Insert plunger and press gently — stop at the hiss.
+source:
+  name: James Hoffmann
+  url: https://www.youtube.com/watch?v=j6VlT_jUVPc
+tags: [light-roast, immersion, beginner-friendly]

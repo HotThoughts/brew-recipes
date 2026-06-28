@@ -1,0 +1,37 @@
+name: Validate Recipes
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'recipes/**/*.yaml'
+      - 'recipes/**/*.yml'
+      - 'schema.yaml'
+      - '.github/workflows/validate.yaml'
+      - '.pre-commit-config.yaml'
+  pull_request:
+    paths:
+      - 'recipes/**/*.yaml'
+      - 'recipes/**/*.yml'
+      - 'schema.yaml'
+      - '.github/workflows/validate.yaml'
+      - '.pre-commit-config.yaml'
+
+jobs:
+  validate-recipes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate all recipes
+        run: npm test
+
+      - uses: pre-commit/action@2c7b3805fd9a0f3b7e911d50293cac82afb38cb0 # v3.0.1

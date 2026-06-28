@@ -1,0 +1,34 @@
+id: tetsu-kasuya-4-6-method
+name: Tetsu Kasuya 4:6 Method
+brewer: V60
+dose_g: 20
+water_ml: 300
+ratio: "1:15"
+water_temp_c: 92
+grind_size: coarse
+description: >
+  Tetsu Kasuya's winning 2016 World Brewers Cup recipe. The first 40% of water
+  controls flavor balance (sweetness vs acidity), the remaining 60% controls
+  strength/body. Let each pour fully drain before starting the next.
+phases:
+  - label: Bloom (40% — sweetness)
+    water_g: 60
+    wait_seconds: 45
+    note: Smaller bloom emphasizes sweetness; larger bloom emphasizes acidity
+  - label: Second Pour (40%)
+    water_g: 60
+    wait_seconds: 45
+  - label: Third Pour (60% — strength)
+    water_g: 60
+    wait_seconds: 45
+  - label: Fourth Pour (60%)
+    water_g: 60
+    wait_seconds: 45
+  - label: Final Pour (60%)
+    water_g: 60
+    wait_seconds: 45
+source:
+  name: Tetsu Kasuya
+  url: https://www.youtube.com/watch?v=wmCW8xSWGZY
+  competition: World Brewers Cup 2016
+tags: [light-roast, sweet, multi-pour, competition, advanced]

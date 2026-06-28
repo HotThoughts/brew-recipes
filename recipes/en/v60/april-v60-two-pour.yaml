@@ -1,0 +1,26 @@
+id: april-v60-two-pour
+name: April V60 Two-Pour
+brewer: V60
+dose_g: 13
+water_ml: 200
+ratio: "1:15.4"
+water_temp_c: 91
+grind_size: medium-coarse
+description: >
+  Patrik Rolf's signature two-pour method from April Coffee Roasters
+  (Copenhagen). Uses a coarse grind, low temperature, and only two pours for a
+  clean, sweet, and highly repeatable cup. Originally designed for the April
+  dripper but works beautifully with V60.
+phases:
+  - label: First Pour
+    water_g: 100
+    wait_seconds: 35
+    note: Pour 100g in 10 seconds, gentle circular motion
+  - label: Second Pour
+    water_g: 100
+    wait_seconds: 0
+    note: Start at 0:35, pour 100g in 10 seconds. Total brew ~3:00-3:30
+source:
+  name: Patrik Rolf / April Coffee Roasters
+  url: https://www.youtube.com/watch?v=X-fXQKqkYxI
+tags: [light-roast, multi-pour, beginner-friendly, sweet, balanced]

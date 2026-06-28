@@ -1,0 +1,27 @@
+id: april-base
+name: April Base Recipe (Sustainable Profile)
+brewer: April
+dose_g: 13
+water_ml: 200
+ratio: "1:15.4"
+water_temp_c: 94
+grind_size: medium-coarse
+description: >
+  April Coffee's foundational Sustainable Profile — their recommended baseline for
+  the April Brewer. Two equal 100 g pours (each split into a 60 g circle pour
+  followed by a 40 g center pour) produce a clean, balanced cup. Target TDS
+  1.25–1.35%, total brew time 2:00–3:00. Grind reference: Comandante ~9 clicks
+  (medium-coarse). For a simpler approach, each 100 g phase can be poured in a
+  single continuous circle instead of the circle+center split.
+phases:
+  - label: First Pour
+    water_g: 100
+    wait_seconds: 30
+    note: 60 g circle pour then 40 g center pour; start timer at 0:00
+  - label: Second Pour
+    water_g: 100
+    note: 60 g circle pour then 40 g center pour at 0:30; let draw down
+source:
+  name: April Coffee Roasters
+  url: https://www.aprilcoffeeroasters.com/pages/coffee-inf-recipes
+tags: [light-roast, balanced, beginner-friendly, multi-pour]

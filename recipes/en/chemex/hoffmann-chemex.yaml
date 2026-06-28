@@ -1,0 +1,28 @@
+id: hoffmann-chemex
+name: Hoffmann Chemex
+brewer: Chemex
+dose_g: 30
+water_ml: 500
+ratio: "1:16.7"
+water_temp_c: 100
+grind_size: medium-coarse
+description: >
+  James Hoffmann's Chemex recipe. The thick paper and large brewer call for a
+  coarser grind and longer brew time. A single bloom + continuous pour approach
+  suits the Chemex's slower flow rate.
+phases:
+  - label: Bloom
+    water_g: 60
+    wait_seconds: 45
+    note: Swirl vigorously to saturate all grounds
+  - label: Main Pour
+    water_g: 440
+    wait_seconds: 0
+    note: >
+      Continuous pour in concentric circles, reaching 500g by ~2:00. Gently stir
+      once after pouring, then let draw down. Remove filter when water stream
+      breaks to drops.
+source:
+  name: James Hoffmann
+  url: https://www.youtube.com/watch?v=1oB1oDrDkHM
+tags: [medium-roast, beginner-friendly, continuous-pour]

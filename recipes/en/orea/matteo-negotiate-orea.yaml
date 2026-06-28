@@ -1,0 +1,37 @@
+id: matteo-negotiate-orea
+name: The Negotiator
+brewer: Orea
+dose_g: 18
+water_ml: 300
+ratio: "1:16.7"
+water_temp_c: 93
+grind_size: medium
+description: >
+  Matteo D'Ottavio's competition-proven Orea recipe that uses the "negotiated"
+  flat filter technique — manually shaping the filter to sit flush inside the
+  brewer for zero-bypass extraction. Five measured pours with precise timing
+  produce a sweet, high-extraction cup with excellent clarity. Works best with
+  light-roast coffees.
+phases:
+  - label: Bloom
+    water_g: 54
+    wait_seconds: 40
+    note: Negotiate filter into brewer; 3× coffee weight bloom with gentle swirl
+  - label: Second Pour
+    water_g: 60
+    wait_seconds: 15
+    note: Circular pour, let water drop ~1 cm above bed
+  - label: Third Pour
+    water_g: 60
+    wait_seconds: 15
+  - label: Fourth Pour
+    water_g: 60
+    wait_seconds: 15
+  - label: Final Pour
+    water_g: 66
+    wait_seconds: 0
+    note: Gentle center pour; target total draw-down ~3:30
+source:
+  name: Matteo D'Ottavio
+  url: https://www.youtube.com/watch?v=xRCFT3OpCYQ
+tags: [light-roast, sweet, multi-pour, competition, advanced]

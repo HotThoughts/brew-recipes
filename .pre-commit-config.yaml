@@ -1,0 +1,27 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: [--multi]
+      - id: check-added-large-files
+      - id: check-merge-conflict
+
+  - repo: https://github.com/lycheeverse/lychee
+    rev: lychee-v0.24.2
+    hooks:
+      - id: lychee
+        args:
+          - --no-progress
+          - --timeout
+          - '30'
+          - --max-redirects
+          - '5'
+          - --max-retries
+          - '3'
+          - --accept
+          - '200..=299,301,302,429'
+          - --require-https
+        files: ^recipes/.*\.ya?ml$

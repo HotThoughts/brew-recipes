@@ -1,0 +1,104 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+title: BrewRecipe
+type: object
+required: [id, name, brewer, dose_g, water_ml, water_temp_c, grind_size, phases, source]
+additionalProperties: false
+properties:
+  id:
+    type: string
+    pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+    description: Globally unique kebab-case identifier
+  name:
+    type: string
+    minLength: 1
+  brewer:
+    type: string
+    enum: [V60, Chemex, Aeropress, Kalita, Orea, FrenchPress, StaggX, Origami, April, Other]
+  dose_g:
+    type: number
+    minimum: 5
+    maximum: 60
+    description: Coffee dose in grams
+  water_ml:
+    type: number
+    minimum: 50
+    maximum: 1000
+    description: Total brew water in ml
+  ratio:
+    type: string
+    pattern: '^1:\d+(\.\d+)?$'
+    description: Coffee-to-water ratio, e.g. "1:15"
+  water_temp_c:
+    type: number
+    minimum: 80
+    maximum: 100
+    description: Water temperature in Celsius
+  grind_size:
+    type: string
+    enum: [extra-coarse, coarse, medium-coarse, medium, medium-fine, fine, extra-fine]
+  description:
+    type: string
+    description: Short paragraph about the recipe's character or origin
+  phases:
+    type: array
+    minItems: 1
+    maxItems: 10
+    items:
+      type: object
+      required: [label, water_g]
+      additionalProperties: false
+      properties:
+        label:
+          type: string
+        water_g:
+          type: number
+          minimum: 0
+        wait_seconds:
+          type: number
+          minimum: 0
+          maximum: 300
+        pours:
+          type: integer
+          minimum: 1
+          maximum: 10
+          description: >
+            Number of sub-pours in this phase. When set, water_g is the amount
+            per sub-pour. Example: water_g: 50 + pours: 3 = 3 pours of 50g each
+            (150g total for the phase).
+        note:
+          type: string
+  source:
+    type: object
+    required: [name]
+    additionalProperties: false
+    properties:
+      name:
+        type: string
+        description: Creator or roaster name
+      url:
+        type: string
+        format: uri
+      competition:
+        type: string
+        description: Competition name and year, e.g. "World Brewers Cup 2016"
+  tags:
+    type: array
+    items:
+      type: string
+      enum:
+        - light-roast
+        - medium-roast
+        - dark-roast
+        - sweet
+        - acidic
+        - balanced
+        - multi-pour
+        - single-pour
+        - continuous-pour
+        - immersion
+        - bypass
+        - cold-brew
+        - competition
+        - beginner-friendly
+        - advanced
+    uniqueItems: true

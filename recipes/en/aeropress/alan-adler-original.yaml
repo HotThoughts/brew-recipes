@@ -1,0 +1,30 @@
+id: alan-adler-original
+name: Alan Adler Original
+brewer: Aeropress
+dose_g: 20
+water_ml: 90
+ratio: "1:4.5"
+water_temp_c: 80
+grind_size: medium-fine
+description: >
+  Alan Adler's original Aeropress recipe — the one printed on the box.
+  Produces a concentrated shot (not filter coffee) at a narrow 1:4.5 ratio.
+  Add hot water for an Americano, or drink as-is for an intense, clean cup.
+phases:
+  - label: Pour + Stir
+    water_g: 90
+    wait_seconds: 10
+    note: >
+      Pour all water at once to fill between level 1.5 and 2 on the chamber.
+      Stir gently with the paddle for 10 seconds. Insert plunger immediately —
+      no steep phase.
+  - label: Press
+    water_g: 0
+    wait_seconds: 0
+    note: >
+      Press slowly with the natural weight of your hands, 20-40 seconds. Stop
+      at the hiss. Dilute with hot water for Americano style.
+source:
+  name: Alan Adler / AeroPress, Inc.
+  url: https://honestcoffeeguide.com/brew-recipes/original-aeropress-recipe/
+tags: [light-roast, immersion, advanced]

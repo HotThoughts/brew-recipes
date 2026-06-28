@@ -1,0 +1,28 @@
+id: the-barn-1-cup-v60
+name: The Barn 1-Cup V60
+brewer: V60
+dose_g: 16
+water_ml: 250
+ratio: "1:15.6"
+water_temp_c: 96
+grind_size: medium-fine
+description: >
+  The Barn Berlin's daily-driver V60 recipe. A simple, repeatable pulsed-pour
+  approach. Keep pours within the "bagel ring" of the coffee bed and avoid
+  hitting the paper filter edges.
+phases:
+  - label: Bloom
+    water_g: 40
+    wait_seconds: 30
+  - label: Second Pour
+    water_g: 60
+    wait_seconds: 0
+  - label: Pulse Pours
+    water_g: 50
+    pours: 3
+    wait_seconds: 0
+    note: Three ~50g pours, pulsing gently between each
+source:
+  name: The Barn Berlin
+  url: https://thebarn.de
+tags: [light-roast, beginner-friendly, multi-pour]

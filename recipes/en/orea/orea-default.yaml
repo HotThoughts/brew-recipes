@@ -1,0 +1,30 @@
+id: orea-default
+name: Orea Official Recipe
+brewer: Orea
+dose_g: 18
+water_ml: 300
+ratio: "1:16.7"
+water_temp_c: 93
+grind_size: medium-coarse
+description: >
+  The recommended recipe from Orea UK for the V3 brewer with a flat-bottom
+  (Wave-style) filter. Built around a medium-coarse grind and three pours
+  that balance clarity with body. The final center pour helps flatten the
+  bed for even extraction. Target draw-down around 2:45–3:15.
+phases:
+  - label: Bloom
+    water_g: 50
+    wait_seconds: 35
+    note: Pour in circles to saturate evenly, let bloom
+  - label: Second Pour
+    water_g: 125
+    wait_seconds: 0
+    note: Gentle circular pour up to 175g total
+  - label: Final Pour
+    water_g: 125
+    wait_seconds: 0
+    note: Center pour up to 300g total, let draw down flat
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v3
+tags: [light-roast, medium-roast, beginner-friendly, multi-pour, balanced]
