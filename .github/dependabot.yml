@@ -1,6 +1,8 @@
 version: 2
 updates:
   - package-ecosystem: "github-actions"
+    commit-message:
+      prefix: "chore(ci)"
     directory: "/"
     schedule:
       interval: "weekly"
@@ -13,6 +15,8 @@ updates:
 
   - package-ecosystem: "npm"
     directory: "/"
+    commit-message:
+      prefix: "chore(ci)"
     schedule:
       interval: "weekly"
       day: "monday"
