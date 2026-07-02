@@ -1,0 +1,33 @@
+id: orea-big-boy-the-litre
+name: Big Boy 升量配方
+brewer: Orea
+variant: big-boy
+dose_g: 60
+water_ml: 1000
+ratio: '1:16.7'
+water_temp_c: 92
+grind_size: coarse
+description: 为 4+ 人萃取一整升咖啡。Big Boy + Wave 滤纸的四段大注水。保持注水速度 — 不是温柔细流的时候。
+phases:
+  - label: 闷蒸
+    water_g: 160
+    note: 绕圈注水，6–7 G/S
+  - label: 第二段注水
+    water_g: 280
+    wait_seconds: 60
+    note: 绕圈注水，6 G/S
+  - label: 第三段注水
+    water_g: 280
+    wait_seconds: 75
+    note: 绕圈注水，6 G/S
+  - label: 最终注水
+    water_g: 280
+    wait_seconds: 60
+    note: 绕圈注水，6 G/S
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-big-boy
+tags:
+  - light-roast
+  - multi-pour
+  - balanced

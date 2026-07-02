@@ -1,0 +1,29 @@
+home:
+  title: brew recipes
+  lede: A quiet archive of pour-over recipes — browse by brewer, compare parameters, and follow each pour step by step.
+  archive:
+    methodFiles: method files
+    brewers: brewers
+    languages: languages
+  ratioNA: ratio n/a
+  filterByBrewer: Filter by brewer
+  recipeGroups: Recipe groups by brewer
+
+detail:
+  breadcrumbMethods: methods
+  recipeNav: Recipe navigation
+  spec:
+    dose: dose
+    water: water
+    ratio: ratio
+    temperature: temperature
+    grind: grind
+    wait: wait
+  phases: pour phases
+  phaseSummary: "{water}g accounted for across {count} phases."
+  source: source
+  sourceLink: Source
+
+site:
+  title: brew-recipes
+  description: Browse community-curated pour-over brew recipes without reading raw YAML.

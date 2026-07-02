@@ -4,6 +4,7 @@ brewer: V60
 dose_g: 15
 water_ml: 250
 ratio: "1:16.7"
+variant: 1-cup
 water_temp_c: 100
 grind_size: medium-fine
 description: >

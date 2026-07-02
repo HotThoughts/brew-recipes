@@ -4,6 +4,7 @@ brewer: V60
 dose_g: 16
 water_ml: 250
 ratio: "1:15.6"
+variant: 1-cup
 water_temp_c: 96
 grind_size: medium-fine
 description: >
@@ -16,13 +17,11 @@ phases:
     wait_seconds: 30
   - label: Second Pour
     water_g: 60
-    wait_seconds: 0
   - label: Pulse Pours
     water_g: 50
     pours: 3
-    wait_seconds: 0
     note: Three ~50g pours, pulsing gently between each
 source:
   name: The Barn Berlin
-  url: https://thebarn.de
+  url: https://thebarn.de/blogs/the-barn-blog/v60-drip
 tags: [light-roast, beginner-friendly, multi-pour]

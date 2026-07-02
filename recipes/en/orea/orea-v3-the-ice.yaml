@@ -1,0 +1,33 @@
+id: orea-v3-the-ice
+name: V3 The Ice
+brewer: Orea
+variant: v3
+dose_g: 18
+water_ml: 160
+ratio: '1:8.9'
+water_temp_c: 94
+grind_size: medium
+description: A flash-brew iced recipe on the V3 with Wave filter. Brew 160ml over 140g of ice in the carafe. Four gentle spiral pours produce a bright, fruity flash brew that doesn't taste diluted. Stir and cool rapidly after brewing.
+phases:
+  - label: Bloom
+    water_g: 40
+    note: Gentle spiral pour onto 140g ice in carafe
+  - label: Second Pour
+    water_g: 40
+    wait_seconds: 40
+    note: Gentle spiral pour
+  - label: Third Pour
+    water_g: 40
+    wait_seconds: 20
+    note: Gentle spiral pour
+  - label: Final Pour
+    water_g: 40
+    wait_seconds: 20
+    note: Gentle spiral pour
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v3
+tags:
+  - light-roast
+  - cold-brew
+  - acidic

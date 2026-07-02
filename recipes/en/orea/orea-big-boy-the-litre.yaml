@@ -1,0 +1,33 @@
+id: orea-big-boy-the-litre
+name: Big Boy The Litre
+brewer: Orea
+variant: big-boy
+dose_g: 60
+water_ml: 1000
+ratio: '1:16.7'
+water_temp_c: 92
+grind_size: coarse
+description: One whole litre of coffee for 4+ people. Four large pours on the Big Boy with Wave filters. Keep the pour rate up — this is not the time for gentle trickling.
+phases:
+  - label: Bloom
+    water_g: 160
+    note: Spiral pour, 6–7 G/S
+  - label: Second Pour
+    water_g: 280
+    wait_seconds: 60
+    note: Spiral pour, 6 G/S
+  - label: Third Pour
+    water_g: 280
+    wait_seconds: 75
+    note: Spiral pour, 6 G/S
+  - label: Final Pour
+    water_g: 280
+    wait_seconds: 60
+    note: Spiral pour, 6 G/S
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-big-boy
+tags:
+  - light-roast
+  - multi-pour
+  - balanced

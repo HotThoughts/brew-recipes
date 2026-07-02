@@ -1,0 +1,30 @@
+id: orea-z1-lazy-sunday
+name: Z1 慵懒周日
+brewer: Orea
+variant: z1
+dose_g: 15
+water_ml: 250
+ratio: '1:16.7'
+water_temp_c: 96
+grind_size: medium
+description: Z1 通过 Melodrip 的轻松 3 段配方。慵懒周末的不二之选。更懒的版本：跳过闷蒸，两次 125g 注水，研磨稍细、注水稍慢。
+phases:
+  - label: 闷蒸
+    water_g: 50
+    note: 通过 Melodrip 绕圈注水
+  - label: 第二段注水
+    water_g: 100
+    wait_seconds: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 最终注水
+    water_g: 100
+    wait_seconds: 65
+    note: 通过 Melodrip 绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - beginner-friendly
+  - multi-pour
+  - balanced

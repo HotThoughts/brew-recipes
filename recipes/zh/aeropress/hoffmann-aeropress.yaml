@@ -1,0 +1,23 @@
+id: hoffmann-aeropress
+name: Hoffmann 爱乐压
+brewer: Aeropress
+dose_g: 11
+water_ml: 200
+ratio: "1:18.2"
+variant: standard
+water_temp_c: 100
+grind_size: medium-fine
+description: >
+  James Hoffmann 的终极爱乐压配方。采用较高粉水比，萃取出干净、茶感十足的咖啡。
+  轻扰动、最后才下压、轻柔旋转打破粉层。
+phases:
+  - label: 注水
+    water_g: 200
+    wait_seconds: 120
+    note: >
+      一次性注入全部水。等待 2 分钟。轻柔旋转打破粉层。再等 30 秒。
+      插入压杆轻轻下压——听到嘶嘶声时停止。
+source:
+  name: James Hoffmann
+  url: https://www.youtube.com/watch?v=j6VlT_jUVPc
+tags: [light-roast, immersion, beginner-friendly]

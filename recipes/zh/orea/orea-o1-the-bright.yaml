@@ -1,0 +1,30 @@
+id: orea-o1-the-bright
+name: O1 明亮风味
+brewer: Orea
+variant: o1
+dose_g: 18
+water_ml: 300
+ratio: '1:16.7'
+water_temp_c: 94
+grind_size: medium
+description: O1 + Wave 滤纸的简单 3 段配方。75/75/150 注水节奏产出明亮杯中风味，几乎不需思考 — 适合迷糊的早晨。
+phases:
+  - label: 闷蒸
+    water_g: 75
+    note: 绕圈注水
+  - label: 第二段注水
+    water_g: 75
+    wait_seconds: 30
+    note: 绕圈注水
+  - label: 最终注水
+    water_g: 150
+    wait_seconds: 30
+    note: 绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-o1
+tags:
+  - light-roast
+  - acidic
+  - multi-pour
+  - beginner-friendly

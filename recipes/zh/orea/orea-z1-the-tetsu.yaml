@@ -1,0 +1,37 @@
+id: orea-z1-the-tetsu
+name: Z1 Tetsu 浸泡法
+brewer: Orea
+variant: z1
+dose_g: 20
+water_ml: 300
+ratio: '1:15'
+water_temp_c: 94
+grind_size: coarse
+description: Tetsu Kasuya 的 Switch 配方适配 Z1 + Switch 适配器。使用两种水温 — 前三段用 94°C，最终浸泡段用 80°C。只有一个壶可在第三段后加入冷水。
+phases:
+  - label: 闷蒸 — 阀门关闭
+    water_g: 60
+    note: 关闭阀门，以 94°C 注水 60g
+  - label: 第二段注水 — 阀门打开
+    water_g: 60
+    wait_seconds: 40
+    note: 打开阀门，以 94°C 注水至 120g
+  - label: 第三段注水 — 阀门打开
+    water_g: 80
+    wait_seconds: 50
+    note: 继续以 94°C 注水至 200g
+  - label: 浸泡注水 — 阀门关闭
+    water_g: 100
+    wait_seconds: 30
+    note: 关闭阀门，以 80°C 注水至 300g
+  - label: 排放
+    water_g: 0
+    wait_seconds: 45
+    note: 打开阀门排放
+source:
+  name: Tetsu Kasuya / Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - immersion
+  - balanced

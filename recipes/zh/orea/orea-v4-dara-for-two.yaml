@@ -1,0 +1,33 @@
+id: orea-v4-dara-for-two
+name: V4 双人份 The Dara
+brewer: Orea
+variant: v4
+dose_g: 24
+water_ml: 400
+ratio: '1:16.7'
+water_temp_c: 92
+grind_size: medium-coarse
+description: The Dara 的 V4 Open Bottom 双人份版本。同样的平衡风味，更大的份量。
+phases:
+  - label: 闷蒸
+    water_g: 80
+    note: 绕圈注水均匀浸润
+  - label: 第二段注水
+    water_g: 100
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 120
+    wait_seconds: 50
+    note: 绕圈注水
+  - label: 最终注水
+    water_g: 100
+    wait_seconds: 50
+    note: 绕圈注水
+source:
+  name: DARA / Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - balanced
+  - multi-pour

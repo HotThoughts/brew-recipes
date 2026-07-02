@@ -1,0 +1,20 @@
+id: orea-v3-the-fine
+name: V3 The Fine
+brewer: Orea
+variant: v3
+dose_g: 12
+water_ml: 200
+ratio: '1:16.7'
+water_temp_c: 94
+grind_size: fine
+description: A community-favourite single-pour recipe on the V3 with Wave filter. First 50g in a slow circular pour, then 150g as a slow central pour. Very quick — always under 2 minutes.
+phases:
+  - label: Pour
+    water_g: 200
+    note: First 50g slow circular, remaining 150g slow central pour
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v3
+tags:
+  - light-roast
+  - single-pour

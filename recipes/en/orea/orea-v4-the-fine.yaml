@@ -1,0 +1,25 @@
+id: orea-v4-the-fine
+name: V4 The Fine
+brewer: Orea
+variant: v4
+dose_g: 16
+water_ml: 260
+ratio: '1:16.3'
+water_temp_c: 90
+grind_size: fine
+description: A two-pour recipe for sweet, punchy, juicy washed coffees. Bloom then one long slow pour at 4 G/S. Best with Wave filter; grind coarser for Flat + Negotiator. Not recommended for naturals or fermented coffees at this fine grind.
+phases:
+  - label: Bloom
+    water_g: 60
+    note: Spiral pour
+  - label: Long Pour
+    water_g: 200
+    wait_seconds: 40
+    note: Pour slowly at 4 G/S in a spiral to 260g
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - sweet
+  - single-pour

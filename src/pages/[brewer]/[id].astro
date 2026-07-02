@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t } from '../../lib/i18n';
+import {
+  formatSeconds,
+  getRecipeCollection,
+  getTotalPhaseWater,
+  getTotalWaitSeconds,
+  type Recipe,
+  withBase,
+} from '../../lib/recipes';
+
+export function getStaticPaths() {
+  const collection = getRecipeCollection();
+  const seen = new Set<string>();
+
+  return collection.recipes
+    .filter((r) => {
+      if (seen.has(r.id)) return false;
+      seen.add(r.id);
+      return true;
+    })
+    .map((recipe) => ({
+      params: { brewer: recipe.brewerSlug, id: recipe.id },
+      props: {
+        enRecipe:
+          collection.byLanguage.get('en')?.find((r) => r.id === recipe.id) ?? null,
+        zhRecipe:
+          collection.byLanguage.get('zh')?.find((r) => r.id === recipe.id) ?? null,
+      },
+    }));
+}
+
+const { enRecipe, zhRecipe } = Astro.props as {
+  enRecipe: Recipe | null;
+  zhRecipe: Recipe | null;
+};
+const mainRecipe = enRecipe ?? zhRecipe;
+if (!mainRecipe) return Astro.redirect('/');
+const allTags = [
+  ...new Set([...(enRecipe?.tags ?? []), ...(zhRecipe?.tags ?? [])]),
+];
+---
+
+<BaseLayout title={`${mainRecipe.name} | ${t.en.site.title} | ${t.zh.site.title}`} pageClass="detail-page">
+  <main class="recipe-detail">
+    <article class="recipe-article">
+      {
+        enRecipe && (
+          <div class="recipe-version lang-en">
+            <header class="recipe-header">
+              <div>
+                <p class="system-line">{enRecipe.brewer} / {enRecipe.id}</p>
+                <h1 class="page-title">{enRecipe.name}</h1>
+              </div>
+            </header>
+
+            {enRecipe.description && <p class="recipe-intro">{enRecipe.description}</p>}
+
+            {allTags.length > 0 && (
+              <ul class="tag-list" aria-label="Tags">
+                {allTags.map((tag) => <li>{tag}</li>)}
+              </ul>
+            )}
+
+            <section class="spec-grid" aria-label="Recipe specs">
+              <div><span class="label">{t.en.detail.spec.dose}</span><strong>{enRecipe.dose_g}g</strong></div>
+              <div><span class="label">{t.en.detail.spec.water}</span><strong>{enRecipe.water_ml}ml</strong></div>
+              <div><span class="label">{t.en.detail.spec.ratio}</span><strong>{enRecipe.ratio ?? 'n/a'}</strong></div>
+              <div><span class="label">{t.en.detail.spec.temperature}</span><strong>{enRecipe.water_temp_c}°C</strong></div>
+              <div><span class="label">{t.en.detail.spec.grind}</span><strong>{enRecipe.grind_size}</strong></div>
+              <div><span class="label">{t.en.detail.spec.wait}</span><strong>{formatSeconds(getTotalWaitSeconds(enRecipe), 'en')}</strong></div>
+            </section>
+
+            <section class="phase-section" aria-labelledby="phase-title-en">
+              <div class="section-heading compact">
+                <h2 id="phase-title-en">{t.en.detail.phases}</h2>
+                <p>{t.en.detail.phaseSummary
+                  .replace('{water}', String(enRecipe.phases.reduce((t, p) => t + getTotalPhaseWater(p), 0)))
+                  .replace('{count}', String(enRecipe.phases.length))}</p>
+              </div>
+              <ol class="phase-list">
+                {enRecipe.phases.map((phase, i) => (
+                  <li class="phase-row">
+                    <span class="phase-index">{String(i + 1).padStart(2, '0')}</span>
+                    <div class="phase-copy">
+                      <h3>{phase.label}</h3>
+                      {phase.note && <p>{phase.note}</p>}
+                    </div>
+                    <div class="phase-values">
+                      <span>{phase.water_g}g{phase.pours ? ` × ${phase.pours}` : ''}</span>
+                      <span>{formatSeconds(phase.wait_seconds, 'en')}</span>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <footer class="source-panel">
+              <div>
+                <span class="label">{t.en.detail.source}</span>
+                <strong>{enRecipe.source.name}</strong>
+                {enRecipe.source.competition && <span>{enRecipe.source.competition}</span>}
+              </div>
+              {enRecipe.source.url && <a href={enRecipe.source.url}>{t.en.detail.sourceLink}</a>}
+            </footer>
+          </div>
+        )
+      }
+
+      {
+        zhRecipe && (
+          <div class="recipe-version lang-zh">
+            <header class="recipe-header">
+              <div>
+                <p class="system-line">{zhRecipe.brewer} / {zhRecipe.id}</p>
+                <h1 class="page-title">{zhRecipe.name}</h1>
+              </div>
+            </header>
+
+            {zhRecipe.description && <p class="recipe-intro">{zhRecipe.description}</p>}
+
+            {allTags.length > 0 && (
+              <ul class="tag-list" aria-label="Tags">
+                {allTags.map((tag) => <li>{tag}</li>)}
+              </ul>
+            )}
+
+            <section class="spec-grid" aria-label="Recipe specs">
+              <div><span class="label">{t.zh.detail.spec.dose}</span><strong>{zhRecipe.dose_g}g</strong></div>
+              <div><span class="label">{t.zh.detail.spec.water}</span><strong>{zhRecipe.water_ml}ml</strong></div>
+              <div><span class="label">{t.zh.detail.spec.ratio}</span><strong>{zhRecipe.ratio ?? '无'}</strong></div>
+              <div><span class="label">{t.zh.detail.spec.temperature}</span><strong>{zhRecipe.water_temp_c}°C</strong></div>
+              <div><span class="label">{t.zh.detail.spec.grind}</span><strong>{zhRecipe.grind_size}</strong></div>
+              <div><span class="label">{t.zh.detail.spec.wait}</span><strong>{formatSeconds(getTotalWaitSeconds(zhRecipe), 'zh')}</strong></div>
+            </section>
+
+            <section class="phase-section" aria-labelledby="phase-title-zh">
+              <div class="section-heading compact">
+                <h2 id="phase-title-zh">{t.zh.detail.phases}</h2>
+                <p>{t.zh.detail.phaseSummary
+                  .replace('{water}', String(zhRecipe.phases.reduce((t, p) => t + getTotalPhaseWater(p), 0)))
+                  .replace('{count}', String(zhRecipe.phases.length))}</p>
+              </div>
+              <ol class="phase-list">
+                {zhRecipe.phases.map((phase, i) => (
+                  <li class="phase-row">
+                    <span class="phase-index">{String(i + 1).padStart(2, '0')}</span>
+                    <div class="phase-copy">
+                      <h3>{phase.label}</h3>
+                      {phase.note && <p>{phase.note}</p>}
+                    </div>
+                    <div class="phase-values">
+                      <span>{phase.water_g}g{phase.pours ? ` × ${phase.pours}` : ''}</span>
+                      <span>{formatSeconds(phase.wait_seconds, 'zh')}</span>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <footer class="source-panel">
+              <div>
+                <span class="label">{t.zh.detail.source}</span>
+                <strong>{zhRecipe.source.name}</strong>
+                {zhRecipe.source.competition && <span>{zhRecipe.source.competition}</span>}
+              </div>
+              {zhRecipe.source.url && <a href={zhRecipe.source.url}>{t.zh.detail.sourceLink}</a>}
+            </footer>
+          </div>
+        )
+      }
+
+      <nav class="detail-nav" aria-label="Recipe navigation">
+        <a href={withBase(`/#${mainRecipe.brewerSlug}`)}>
+          <span class="lang-en">← {mainRecipe.brewer} {t.en.detail.breadcrumbMethods}</span>
+          <span class="lang-zh">← {mainRecipe.brewer} {t.zh.detail.breadcrumbMethods}</span>
+        </a>
+      </nav>
+    </article>
+  </main>
+</BaseLayout>

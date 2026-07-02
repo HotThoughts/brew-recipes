@@ -1,0 +1,33 @@
+id: orea-v4-four-six
+name: V4 四六法
+brewer: Orea
+variant: v4
+dose_g: 20
+water_ml: 300
+ratio: '1:15'
+water_temp_c: 92
+grind_size: coarse
+description: Tetsu Kasuya 的 4:6 法则适配 V4 Wide + Fast Bottom。不仅是配方，更是框架 — 交换前两段注水量可增加甜度，拆分最后一段为三次可增加浓度。使用 Flat 滤纸 + Negotiator。
+phases:
+  - label: 第一段注水
+    water_g: 70
+    note: 绕圈注水
+  - label: 第二段注水
+    water_g: 50
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 90
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 最终注水
+    water_g: 90
+    wait_seconds: 40
+    note: 绕圈注水
+source:
+  name: Tetsu Kasuya / Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - multi-pour
+  - balanced

@@ -1,0 +1,37 @@
+id: orea-z1-the-tetsu
+name: Z1 The Tetsu
+brewer: Orea
+variant: z1
+dose_g: 20
+water_ml: 300
+ratio: '1:15'
+water_temp_c: 94
+grind_size: coarse
+description: Tetsu Kasuya's Switch recipe adapted for the Z1 with Switch adapter. Uses two water temperatures — 94°C for the first three pours, then 80°C for the final immersion pour. If you have one kettle, add cold water after the third pour.
+phases:
+  - label: Bloom — Valve Closed
+    water_g: 60
+    note: Close valve, pour 60g at 94°C
+  - label: Second Pour — Valve Open
+    water_g: 60
+    wait_seconds: 40
+    note: Open valve, pour to 120g at 94°C
+  - label: Third Pour — Valve Open
+    water_g: 80
+    wait_seconds: 50
+    note: Continue pouring to 200g at 94°C
+  - label: Immersion Pour — Valve Closed
+    water_g: 100
+    wait_seconds: 30
+    note: Close valve, pour to 300g at 80°C
+  - label: Drain
+    water_g: 0
+    wait_seconds: 45
+    note: Open valve and let drain
+source:
+  name: Tetsu Kasuya / Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - immersion
+  - balanced

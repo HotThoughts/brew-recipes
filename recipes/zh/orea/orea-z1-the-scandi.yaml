@@ -1,0 +1,25 @@
+id: orea-z1-the-scandi
+name: Z1 北欧简约
+brewer: Orea
+variant: z1
+dose_g: 12
+water_ml: 200
+ratio: '1:16.7'
+water_temp_c: 93
+grind_size: medium
+description: Z1 Melodrip 上的超简单 2 段配方。两次大快绕圈注水 — 每次 100g 在 20 秒内完成。简单、快速、出人意料地平衡。加 2g 粉并粗研磨可增加干净感。
+phases:
+  - label: 第一段注水
+    water_g: 100
+    note: 20 秒内通过 Melodrip 绕圈注水
+  - label: 第二段注水
+    water_g: 100
+    wait_seconds: 75
+    note: 20 秒内通过 Melodrip 绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - balanced
+  - beginner-friendly

@@ -1,0 +1,38 @@
+id: orea-z1-the-pulse
+name: Z1 The Pulse
+brewer: Orea
+variant: z1
+dose_g: 12
+water_ml: 200
+ratio: '1:16.7'
+water_temp_c: 96
+grind_size: medium-coarse
+description: A classic 5-pulse recipe on the Z1 via Melodrip. Easy to remember — 40/80/120/160/200g. Scale up to 15g (50/100/150/200/250) or 18g (60/120/180/240/300).
+phases:
+  - label: Bloom
+    water_g: 40
+    note: Circular pour via Melodrip
+  - label: Second Pour
+    water_g: 40
+    wait_seconds: 40
+    note: Circular pour via Melodrip
+  - label: Third Pour
+    water_g: 40
+    wait_seconds: 45
+    note: Circular pour via Melodrip
+  - label: Fourth Pour
+    water_g: 40
+    wait_seconds: 50
+    note: Circular pour via Melodrip
+  - label: Final Pour
+    water_g: 40
+    wait_seconds: 45
+    note: Circular pour via Melodrip
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - beginner-friendly
+  - multi-pour
+  - balanced

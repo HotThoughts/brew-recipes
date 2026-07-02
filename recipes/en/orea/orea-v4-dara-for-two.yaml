@@ -1,0 +1,33 @@
+id: orea-v4-dara-for-two
+name: V4 Dara For Two
+brewer: Orea
+variant: v4
+dose_g: 24
+water_ml: 400
+ratio: '1:16.7'
+water_temp_c: 92
+grind_size: medium-coarse
+description: The Dara scaled for two cups on the V4 Open Bottom. Same balanced profile, larger batch.
+phases:
+  - label: Bloom
+    water_g: 80
+    note: Spiral pour to saturate evenly
+  - label: Second Pour
+    water_g: 100
+    wait_seconds: 40
+    note: Spiral pour
+  - label: Third Pour
+    water_g: 120
+    wait_seconds: 50
+    note: Spiral pour
+  - label: Final Pour
+    water_g: 100
+    wait_seconds: 50
+    note: Spiral pour
+source:
+  name: DARA / Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - balanced
+  - multi-pour

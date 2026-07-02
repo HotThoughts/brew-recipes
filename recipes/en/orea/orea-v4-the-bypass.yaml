@@ -1,0 +1,32 @@
+id: orea-v4-the-bypass
+name: V4 The Bypass
+brewer: Orea
+variant: v4
+dose_g: 18
+water_ml: 290
+ratio: '1:16.1'
+water_temp_c: 96
+grind_size: medium-coarse
+description: A bypass recipe by UK Brewing Champion Matteo D'Ottavio for the V4 Open Bottom. After three circular-to-central pours, 15–30g of bypass water is added directly to the brewed coffee to taste. Bypass less for intensity, more for smoothness.
+phases:
+  - label: Bloom
+    water_g: 60
+    note: Circular pour, ending central
+  - label: Second Pour
+    water_g: 100
+    wait_seconds: 40
+    note: Circular then central at 4 G/S
+  - label: Third Pour
+    water_g: 100
+    wait_seconds: 50
+    note: Circular then central at 4 G/S
+  - label: Bypass
+    water_g: 30
+    note: Add 15–30g water directly to brewed coffee, to taste
+source:
+  name: Matteo D'Ottavio / Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - bypass
+  - balanced

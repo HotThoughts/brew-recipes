@@ -1,0 +1,29 @@
+id: orea-v3-the-mid
+name: V3 The Mid
+brewer: Orea
+variant: v3
+dose_g: 12
+water_ml: 200
+ratio: '1:16.7'
+water_temp_c: 92
+grind_size: medium
+description: A simple 3-pour recipe for the V3 with Flat filter + Negotiator. Half circular, half central pours work great for washed coffees and can handle naturals too. Control extraction time with pouring flow rate.
+phases:
+  - label: Bloom
+    water_g: 50
+    note: Spiral pour
+  - label: Second Pour
+    water_g: 75
+    wait_seconds: 40
+    note: Half circular, half central pour
+  - label: Final Pour
+    water_g: 75
+    wait_seconds: 65
+    note: Half circular, half central pour
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v3
+tags:
+  - light-roast
+  - balanced
+  - multi-pour

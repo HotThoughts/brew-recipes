@@ -7,6 +7,7 @@ A collection of pour-over coffee recipes in YAML format, curated for accuracy an
 ## Table of Contents
 
 - [Quick Start](#quick-start)
+- [Web UI](#web-ui)
 - [Recipe Format](#recipe-format)
 - [Local Development](#local-development)
 - [Schema Reference](#schema-reference)
@@ -18,6 +19,26 @@ A collection of pour-over coffee recipes in YAML format, curated for accuracy an
 Browse `recipes/<language>/<brewer>/` for recipes. Each file is a self-contained YAML document.
 
 **Brewers**: V60 · Chemex · Aeropress · Orea · April · Kalita · FrenchPress · StaggX · Origami
+
+## Web UI
+
+This repo includes a static Astro site for browsing the recipe database without opening raw YAML files.
+
+```bash
+# Start the local site
+npm run dev
+
+# Build the static site into dist/
+npm run build
+
+# Build with the GitHub Pages /brew-recipes base path
+GITHUB_PAGES=true npm run build
+
+# Preview the production build
+npm run preview
+```
+
+The site reads directly from `recipes/`, groups recipes by language and brewer, and renders static detail pages for every recipe. `npm test` also checks that every recipe has a generated detail page.
 
 Example:
 ```yaml
@@ -73,7 +94,7 @@ Translations share the same `id` across language directories — the app matches
 # Install dependencies (one-time)
 npm install
 
-# Validate all recipes — YAML syntax, JSON Schema, unique IDs
+# Validate recipes, typecheck, and build the site
 npm test
 ```
 

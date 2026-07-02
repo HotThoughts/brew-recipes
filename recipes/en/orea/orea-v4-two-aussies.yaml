@@ -1,0 +1,37 @@
+id: orea-v4-two-aussies
+name: V4 Two Aussies
+brewer: Orea
+variant: v4
+dose_g: 26
+water_ml: 500
+ratio: '1:19.2'
+water_temp_c: 97
+grind_size: coarse
+description: The Aussie scaled up for two. Slow down pouring speed to standard 5 G/S since there's more coffee and liquid. Adjust ratio by taste — increase dose or grind finer if too thin.
+phases:
+  - label: Bloom
+    water_g: 100
+    note: Spiral pour
+  - label: Second Pour
+    water_g: 100
+    wait_seconds: 40
+    note: Spiral pour
+  - label: Third Pour
+    water_g: 100
+    wait_seconds: 30
+    note: Spiral pour
+  - label: Fourth Pour
+    water_g: 100
+    wait_seconds: 30
+    note: Spiral pour
+  - label: Final Pour
+    water_g: 100
+    wait_seconds: 30
+    note: Spiral pour
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - multi-pour
+  - acidic

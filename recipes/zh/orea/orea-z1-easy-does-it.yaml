@@ -1,0 +1,38 @@
+id: orea-z1-easy-does-it
+name: Z1 Easy Does It
+brewer: Orea
+variant: z1
+dose_g: 16
+water_ml: 260
+ratio: '1:16.3'
+water_temp_c: 96
+grind_size: medium-coarse
+description: Z1 通过 Melodrip（必须使用）的标准脉冲配方。五次均匀注水，简单可重复。水洗密实咖啡可将最后两段合并为一次 100g 注水；日晒豆可粗 2 格并用 18g 粉量。
+phases:
+  - label: 闷蒸
+    water_g: 60
+    note: 通过 Melodrip 绕圈注水
+  - label: 第二段注水
+    water_g: 50
+    wait_seconds: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 第三段注水
+    water_g: 50
+    wait_seconds: 35
+    note: 通过 Melodrip 绕圈注水
+  - label: 第四段注水
+    water_g: 50
+    wait_seconds: 30
+    note: 通过 Melodrip 绕圈注水
+  - label: 最终注水
+    water_g: 50
+    wait_seconds: 30
+    note: 通过 Melodrip 绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - beginner-friendly
+  - multi-pour
+  - balanced

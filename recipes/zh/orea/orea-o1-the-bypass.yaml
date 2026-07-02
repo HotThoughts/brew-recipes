@@ -1,0 +1,32 @@
+id: orea-o1-the-bypass
+name: O1 The Bypass
+brewer: Orea
+variant: o1
+dose_g: 18
+water_ml: 290
+ratio: '1:16.1'
+water_temp_c: 96
+grind_size: medium
+description: Matteo D'Ottavio 为 O1 + Wave 滤纸设计的旁路配方。绕圈到中心的注水后加入 15–30g 旁路水。少旁路更浓郁，多旁路更顺滑。
+phases:
+  - label: 闷蒸
+    water_g: 60
+    note: 绕圈注水，转为中心
+  - label: 第二段注水
+    water_g: 100
+    wait_seconds: 40
+    note: 先绕圈后中心，4 G/S
+  - label: 第三段注水
+    water_g: 100
+    wait_seconds: 50
+    note: 先绕圈后中心，4 G/S
+  - label: 旁路注水
+    water_g: 30
+    note: 直接向萃取液中加入 15–30g 水，按口味调整
+source:
+  name: Matteo D'Ottavio / Orea UK
+  url: https://www.orea.uk/guides-o1
+tags:
+  - light-roast
+  - bypass
+  - balanced

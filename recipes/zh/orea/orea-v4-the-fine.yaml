@@ -1,0 +1,25 @@
+id: orea-v4-the-fine
+name: V4 The Fine
+brewer: Orea
+variant: v4
+dose_g: 16
+water_ml: 260
+ratio: '1:16.3'
+water_temp_c: 90
+grind_size: fine
+description: 适合甜美、有力的水洗咖啡的双注水配方。闷蒸后以 4 G/S 缓慢长注水。使用 Wave 滤纸效果最佳；Flat + Negotiator 需研磨稍粗。不建议用于日晒或发酵处理的咖啡豆。
+phases:
+  - label: 闷蒸
+    water_g: 60
+    note: 绕圈注水
+  - label: 长注水
+    water_g: 200
+    wait_seconds: 40
+    note: 以 4 G/S 缓慢绕圈注水至 260g
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - sweet
+  - single-pour

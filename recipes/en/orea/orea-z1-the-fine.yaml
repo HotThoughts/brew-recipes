@@ -1,0 +1,25 @@
+id: orea-z1-the-fine
+name: Z1 The Fine
+brewer: Orea
+variant: z1
+dose_g: 10
+water_ml: 200
+ratio: '1:20'
+water_temp_c: 92
+grind_size: fine
+description: A two-pour high-extraction recipe for the Z1 via Melodrip. Bloom then one long slow pour at 3 G/S. Great for washed coffees — go finer for more intensity, or explore lower temps (86–88°C) as you grind finer.
+phases:
+  - label: Bloom
+    water_g: 40
+    note: Spiral pour via Melodrip
+  - label: Long Pour
+    water_g: 160
+    wait_seconds: 40
+    note: Pour slowly at 3 G/S via Melodrip
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - sweet
+  - single-pour

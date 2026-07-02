@@ -1,0 +1,25 @@
+id: orea-v4-fine-for-two
+name: V4 Fine For Two
+brewer: Orea
+variant: v4
+dose_g: 24
+water_ml: 400
+ratio: '1:16.7'
+water_temp_c: 90
+grind_size: medium-fine
+description: The Fine scaled up for two cups using Sibarist Fast Flat filters. Bloom then one very slow continuous pour at 3 G/S — maintain a small water column, replacing water as it drains.
+phases:
+  - label: Bloom
+    water_g: 120
+    note: Spiral pour
+  - label: Long Pour
+    water_g: 280
+    wait_seconds: 40
+    note: Pour very slowly at 3 G/S — maintain water level, replace as it drains
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - sweet
+  - continuous-pour

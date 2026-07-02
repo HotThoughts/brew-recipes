@@ -1,0 +1,34 @@
+id: orea-v4-og-base
+name: 'V4 OG Base #2'
+brewer: Orea
+variant: v4
+dose_g: 18
+water_ml: 300
+ratio: '1:16.7'
+water_temp_c: 96
+grind_size: medium
+description: A flexible recipe from the V2 era, carried forward on the V4 Classic Bottom + Wave filter. Loved most with washed coffees. Grind finer for Fast Bottom, add central pours for Open/Apex.
+phases:
+  - label: Bloom
+    water_g: 60
+    note: Circular pour
+  - label: Second Pour
+    water_g: 80
+    wait_seconds: 30
+    note: Circular pour
+  - label: Third Pour
+    water_g: 80
+    wait_seconds: 40
+    note: Circular pour
+  - label: Final Pour
+    water_g: 80
+    wait_seconds: 40
+    note: Circular pour
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - multi-pour
+  - balanced
+  - beginner-friendly

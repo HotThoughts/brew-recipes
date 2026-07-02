@@ -1,0 +1,37 @@
+id: orea-z1-the-aussie
+name: Z1 The Aussie
+brewer: Orea
+variant: z1
+dose_g: 17
+water_ml: 250
+ratio: '1:14.7'
+water_temp_c: 97
+grind_size: coarse
+description: Z1 Melodrip 上的澳洲冲煮法 — 加大粉量、粗研磨、快注水。看到粉床干燥时注下一轮。适合驯服日晒豆的酒精味。
+phases:
+  - label: 闷蒸
+    water_g: 50
+    note: 通过 Melodrip 绕圈注水
+  - label: 第二段注水
+    water_g: 50
+    wait_seconds: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 第三段注水
+    water_g: 50
+    wait_seconds: 30
+    note: 通过 Melodrip 绕圈注水
+  - label: 第四段注水
+    water_g: 50
+    wait_seconds: 30
+    note: 通过 Melodrip 绕圈注水
+  - label: 最终注水
+    water_g: 50
+    wait_seconds: 30
+    note: 通过 Melodrip 绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - multi-pour
+  - acidic

@@ -1,0 +1,29 @@
+id: alan-adler-original
+name: Alan Adler 原始配方
+brewer: Aeropress
+dose_g: 20
+water_ml: 90
+ratio: "1:4.5"
+variant: standard
+water_temp_c: 80
+grind_size: medium-fine
+description: >
+  Alan Adler 印在爱乐压包装盒上的原始配方。以 1:4.5 的窄比例萃取出浓缩咖啡液
+  （非滴滤咖啡）。可加热水制成美式咖啡，也可直接饮用，口感浓郁、干净。
+phases:
+  - label: 注水 + 搅拌
+    water_g: 90
+    wait_seconds: 10
+    note: >
+      一次性注入全部水至腔体刻度 1.5 到 2 之间。用搅拌棒轻轻搅拌 10 秒。
+      立即插入压杆——无需闷蒸。
+  - label: 下压
+    water_g: 0
+    wait_seconds: 0
+    note: >
+      用双手自然重量缓慢下压，约 20-40 秒。听到嘶嘶声时停止。
+      加热水稀释即成美式风格。
+source:
+  name: Alan Adler / AeroPress, Inc.
+  url: https://honestcoffeeguide.com/brew-recipes/original-aeropress-recipe/
+tags: [light-roast, immersion, advanced]

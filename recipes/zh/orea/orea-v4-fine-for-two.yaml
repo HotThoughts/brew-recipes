@@ -1,0 +1,25 @@
+id: orea-v4-fine-for-two
+name: V4 双人份 The Fine
+brewer: Orea
+variant: v4
+dose_g: 24
+water_ml: 400
+ratio: '1:16.7'
+water_temp_c: 90
+grind_size: medium-fine
+description: 使用 Sibarist Fast Flat 滤纸的 The Fine 双人份版本。闷蒸后以 3 G/S 超慢连续注水 — 保持小水位，边排边补。
+phases:
+  - label: 闷蒸
+    water_g: 120
+    note: 绕圈注水
+  - label: 长注水
+    water_g: 280
+    wait_seconds: 40
+    note: 以 3 G/S 超慢注水 — 保持水位，边排边补
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - sweet
+  - continuous-pour

@@ -4,6 +4,7 @@ brewer: April
 dose_g: 17
 water_ml: 250
 ratio: "1:14.7"
+variant: standard
 water_temp_c: 92
 grind_size: coarse
 description: >
@@ -27,6 +28,6 @@ phases:
     wait_seconds: 0
     note: After the 30g pour, lift the brewer slightly and give a gentle spin.
 source:
-  name: Patrik Rolf / April Coffee Roasters
+  name: The Grumpy Olive
   url: https://www.thegrumpyolive.com/coffee-101-how-to-brew-with-the-april-brewer/
 tags: [light-roast, multi-pour, beginner-friendly, sweet]

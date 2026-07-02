@@ -1,0 +1,29 @@
+home:
+  title: 手冲方法
+  lede: 一座安静的手冲配方档案库 — 按滤杯浏览，对比冲煮参数，逐步跟随每一个注水阶段。
+  archive:
+    methodFiles: 方法文件
+    brewers: 滤杯种类
+    languages: 语言
+  ratioNA: 比例 n/a
+  filterByBrewer: 按滤杯筛选
+  recipeGroups: 按滤杯分组
+
+detail:
+  breadcrumbMethods: 方法
+  recipeNav: 配方导航
+  spec:
+    dose: 粉量
+    water: 水量
+    ratio: 粉水比
+    temperature: 水温
+    grind: 研磨度
+    wait: 等待
+  phases: 注水阶段
+  phaseSummary: "{water}g 水量，共 {count} 个阶段。"
+  source: 来源
+  sourceLink: 查看来源
+
+site:
+  title: 手冲配方
+  description: 浏览社区精选手冲配方，无需阅读原始 YAML 文件。

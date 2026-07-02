@@ -1,0 +1,33 @@
+id: orea-z1-the-hybrid
+name: Z1 混合法
+brewer: Orea
+variant: z1
+dose_g: 16
+water_ml: 260
+ratio: '1:16.3'
+water_temp_c: 94
+grind_size: medium-coarse
+description: Matteo D'Ottavio 为 Z1 + Switch 适配器设计的混合渗滤-浸泡配方。前两段渗滤，然后关闭阀门进行最终浸泡。浸泡更久口感更厚重，更短则更轻盈。
+phases:
+  - label: 闷蒸 — 阀门关闭
+    water_g: 60
+    note: 关闭阀门，通过 Melodrip 绕圈注水
+  - label: 第二段注水 — 阀门打开
+    water_g: 100
+    wait_seconds: 40
+    note: 打开阀门，通过 Melodrip 绕圈注水
+  - label: 浸泡注水 — 阀门关闭
+    water_g: 100
+    wait_seconds: 60
+    note: 关闭阀门，注水至 260g
+  - label: 排放
+    water_g: 0
+    wait_seconds: 60
+    note: 打开阀门排放
+source:
+  name: Matteo D'Ottavio / Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - immersion
+  - balanced

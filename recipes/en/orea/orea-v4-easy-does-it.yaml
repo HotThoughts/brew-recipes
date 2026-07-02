@@ -1,0 +1,38 @@
+id: orea-v4-easy-does-it
+name: V4 Easy Does It
+brewer: Orea
+variant: v4
+dose_g: 16
+water_ml: 260
+ratio: '1:16.3'
+water_temp_c: 94
+grind_size: medium-coarse
+description: The go-to V4 pulse recipe. Five even pours at ~50g each keep the structure simple and repeatable. Works with Fast Bottom and Flat filter + Negotiator; grind coarser for Classic Bottom, add central pouring for Open/Apex.
+phases:
+  - label: Bloom
+    water_g: 60
+    note: Spiral pour to saturate evenly
+  - label: Second Pour
+    water_g: 50
+    wait_seconds: 40
+    note: Spiral pour
+  - label: Third Pour
+    water_g: 50
+    wait_seconds: 35
+    note: Spiral pour
+  - label: Fourth Pour
+    water_g: 50
+    wait_seconds: 30
+    note: Spiral pour
+  - label: Final Pour
+    water_g: 50
+    wait_seconds: 30
+    note: Spiral pour
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - beginner-friendly
+  - multi-pour
+  - balanced

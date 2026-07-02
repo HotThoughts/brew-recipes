@@ -1,0 +1,34 @@
+id: orea-z1-the-champ
+name: Z1 The Champ
+brewer: Orea
+variant: z1
+dose_g: 17
+water_ml: 270
+ratio: '1:15.9'
+water_temp_c: 93
+grind_size: medium
+description: Martin Wölfl 2024 年世界冲煮杯冠军配方适配 Z1 Melodrip。随着萃取推进增大注水量和流速。多汁、高品质的结果。
+phases:
+  - label: 闷蒸
+    water_g: 60
+    note: 通过 Melodrip 绕圈注水
+  - label: 第二段注水
+    water_g: 60
+    wait_seconds: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 第三段注水
+    water_g: 50
+    wait_seconds: 45
+    note: 通过 Melodrip 绕圈注水
+  - label: 最终注水
+    water_g: 100
+    wait_seconds: 50
+    note: 通过 Melodrip 绕圈注水，增大流速
+source:
+  name: Martin Wölfl / Orea UK
+  url: https://www.orea.uk/guides-z1
+  competition: World Brewers Cup 2024
+tags:
+  - light-roast
+  - competition
+  - multi-pour

@@ -1,0 +1,25 @@
+id: orea-z1-the-fine
+name: Z1 The Fine
+brewer: Orea
+variant: z1
+dose_g: 10
+water_ml: 200
+ratio: '1:20'
+water_temp_c: 92
+grind_size: fine
+description: Z1 Melodrip 上的双注水高萃取配方。闷蒸后以 3 G/S 缓慢长注水。适合水洗咖啡 — 更细研磨可增加浓度，或探索低温 (86–88°C)。
+phases:
+  - label: 闷蒸
+    water_g: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 长注水
+    water_g: 160
+    wait_seconds: 40
+    note: 通过 Melodrip 以 3 G/S 缓慢注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - sweet
+  - single-pour

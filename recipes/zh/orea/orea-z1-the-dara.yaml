@@ -1,0 +1,33 @@
+id: orea-z1-the-dara
+name: Z1 The Dara
+brewer: Orea
+variant: z1
+dose_g: 12
+water_ml: 200
+ratio: '1:16.7'
+water_temp_c: 94
+grind_size: medium
+description: DARA 的平衡配方适配 Z1 Melodrip。按 60g/135g/225g/300g 可放大至 18g 粉量。尝试研磨稍粗并减慢注水速度，获得不同杯中风味。
+phases:
+  - label: 闷蒸
+    water_g: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 第二段注水
+    water_g: 50
+    wait_seconds: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 第三段注水
+    water_g: 60
+    wait_seconds: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 最终注水
+    water_g: 50
+    wait_seconds: 40
+    note: 通过 Melodrip 绕圈注水
+source:
+  name: DARA / Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - balanced
+  - multi-pour

@@ -1,0 +1,37 @@
+id: orea-v4-the-aussie
+name: V4 The Aussie
+brewer: Orea
+variant: v4
+dose_g: 17
+water_ml: 250
+ratio: '1:14.7'
+water_temp_c: 97
+grind_size: coarse
+description: Inspired by Australian Brewers Cup competitors — dose up, grind coarse, pour fast. Works well for fermented coffees where you want to tame boozy notes and reach a tea-like body. Pour next when you see the dry coffee bed appear.
+phases:
+  - label: Bloom
+    water_g: 50
+    note: Spiral pour
+  - label: Second Pour
+    water_g: 50
+    wait_seconds: 40
+    note: Spiral pour
+  - label: Third Pour
+    water_g: 50
+    wait_seconds: 30
+    note: Spiral pour
+  - label: Fourth Pour
+    water_g: 50
+    wait_seconds: 30
+    note: Spiral pour
+  - label: Final Pour
+    water_g: 50
+    wait_seconds: 30
+    note: Spiral pour
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - multi-pour
+  - acidic

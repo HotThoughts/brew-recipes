@@ -1,0 +1,38 @@
+id: orea-v4-easy-for-two
+name: V4 双人份 Easy Does It
+brewer: Orea
+variant: v4
+dose_g: 25
+water_ml: 400
+ratio: '1:16'
+water_temp_c: 94
+grind_size: coarse
+description: Easy Does It 的双人份放大版。比单人份研磨稍粗，保持 5 G/S 稳定注水速度。
+phases:
+  - label: 闷蒸
+    water_g: 100
+    note: 绕圈注水均匀浸润
+  - label: 第二段注水
+    water_g: 75
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 75
+    wait_seconds: 45
+    note: 绕圈注水
+  - label: 第四段注水
+    water_g: 75
+    wait_seconds: 35
+    note: 绕圈注水
+  - label: 最终注水
+    water_g: 75
+    wait_seconds: 45
+    note: 绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - beginner-friendly
+  - multi-pour
+  - balanced

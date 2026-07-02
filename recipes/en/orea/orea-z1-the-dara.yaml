@@ -1,0 +1,33 @@
+id: orea-z1-the-dara
+name: Z1 The Dara
+brewer: Orea
+variant: z1
+dose_g: 12
+water_ml: 200
+ratio: '1:16.7'
+water_temp_c: 94
+grind_size: medium
+description: DARA's balanced recipe adapted for the Z1 via Melodrip. Scale up to 18g by pouring to 60g/135g/225g/300g. Try grinding slightly coarser and pouring slower for a different cup profile.
+phases:
+  - label: Bloom
+    water_g: 40
+    note: Spiral pour via Melodrip
+  - label: Second Pour
+    water_g: 50
+    wait_seconds: 40
+    note: Spiral pour via Melodrip
+  - label: Third Pour
+    water_g: 60
+    wait_seconds: 40
+    note: Spiral pour via Melodrip
+  - label: Final Pour
+    water_g: 50
+    wait_seconds: 40
+    note: Spiral pour via Melodrip
+source:
+  name: DARA / Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - balanced
+  - multi-pour

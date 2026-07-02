@@ -1,0 +1,29 @@
+id: orea-z1-the-micro
+name: Z1 微量浸泡
+brewer: Orea
+variant: z1
+dose_g: 10
+water_ml: 170
+ratio: '1:17'
+water_temp_c: 95
+grind_size: medium
+description: Z1 + Switch 适配器的全浸泡配方。开阀门短闷蒸，然后关闭阀门注满腔体。简单干净，适合各种咖啡。
+phases:
+  - label: 闷蒸 — 阀门打开
+    water_g: 20
+    note: 打开阀门，通过 Melodrip 绕圈注水 20g
+  - label: 浸泡注水 — 阀门关闭
+    water_g: 150
+    wait_seconds: 40
+    note: 关闭阀门，以 3 G/S 缓慢绕圈注水 150g
+  - label: 排放
+    water_g: 0
+    wait_seconds: 80
+    note: 打开阀门排放
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - immersion
+  - balanced

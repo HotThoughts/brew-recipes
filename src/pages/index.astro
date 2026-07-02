@@ -1,0 +1,243 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../lib/i18n';
+import {
+  formatRecipeCount,
+  getBrewerGroups,
+  getRecipeCollection,
+  type LanguageCode,
+  type Recipe,
+  withBase,
+} from '../lib/recipes';
+
+const collection = getRecipeCollection();
+
+// Deduplicate by id — each unique recipe renders once with both language names
+const uniqueRecipes = [
+  ...new Map(collection.recipes.map((r) => [r.id, r])).values(),
+];
+
+const groups = getBrewerGroups(uniqueRecipes).map((group) => ({
+  ...group,
+  variants: [...new Set(group.recipes.map((r) => r.variant).filter(Boolean))].sort(),
+}));
+
+function getLangVersion(id: string, lang: LanguageCode): Recipe | undefined {
+  return collection.byLanguage.get(lang)?.find((r) => r.id === id);
+}
+---
+
+<BaseLayout title={`${t.en.site.title} | ${t.zh.site.title}`} pageClass="home-page">
+  <main class="home-hero">
+    <section class="intro-panel" aria-labelledby="home-title">
+      <h1 id="home-title" class="page-title">
+          <span class="lang-en">{t.en.home.title}</span>
+          <span class="lang-zh">{t.zh.home.title}</span>
+          <span class="cursor" aria-hidden="true"></span>
+        </h1>
+      <p class="lede">
+        <span class="lang-en">{t.en.home.lede}</span>
+        <span class="lang-zh">{t.zh.home.lede}</span>
+      </p>
+    </section>
+
+    <aside class="archive-summary" aria-label="Archive summary">
+      <div class="summary-row">
+        <span class="summary-value">{uniqueRecipes.length}</span>
+        <span class="summary-label"><span class="lang-en">{t.en.home.archive.methodFiles}</span><span class="lang-zh">{t.zh.home.archive.methodFiles}</span></span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-value">{groups.length}</span>
+        <span class="summary-label"><span class="lang-en">{t.en.home.archive.brewers}</span><span class="lang-zh">{t.zh.home.archive.brewers}</span></span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-value">{collection.languages.length}</span>
+        <span class="summary-label"><span class="lang-en">{t.en.home.archive.languages}</span><span class="lang-zh">{t.zh.home.archive.languages}</span></span>
+      </div>
+    </aside>
+
+    <nav class="brewer-jump" aria-label="Filter by brewer">
+      {groups.map((group) => (
+        <button
+          type="button"
+          class="brewer-toggle"
+          data-brewer={group.brewerSlug}
+          aria-pressed="false"
+        >
+          {group.brewer}
+        </button>
+      ))}
+    </nav>
+  </main>
+
+  <section class="brewer-index" aria-label="Recipe groups by brewer">
+
+    <section class="recipe-groups" aria-label="Recipe groups">
+      {groups.map((group) => (
+        <section
+          id={group.brewerSlug}
+          class="recipe-group filtered-out"
+          data-brewer={group.brewerSlug}
+        >
+          <div class="group-heading">
+            <h2>{group.brewer}</h2>
+            <span class="group-count"><span class="lang-en">{formatRecipeCount(group.recipes.length, 'en')}</span><span class="lang-zh">{formatRecipeCount(group.recipes.length, 'zh')}</span></span>
+            {group.variants.length > 1 && (
+              <div class="variant-filters">
+                {group.variants.map((v) => (
+                  <button
+                    type="button"
+                    class="variant-pill"
+                    data-variant={v}
+                    data-brewer={group.brewerSlug}
+                  >{v}</button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div class="recipe-list">
+            {group.recipes.map((recipe) => {
+              const en = getLangVersion(recipe.id, 'en');
+              const zh = getLangVersion(recipe.id, 'zh');
+              return (
+                <a class="recipe-row" href={withBase(recipe.urlPath)} data-variant={recipe.variant ?? ''}>
+                  <span class="recipe-main">
+                    <span class="recipe-name">
+                      <span class="lang-en">{en?.name ?? recipe.name}</span>
+                      <span class="lang-zh">{zh?.name ?? en?.name ?? recipe.name}</span>
+                    </span>
+                    {en?.description && (
+                      <span class="recipe-description lang-en">{en.description}</span>
+                    )}
+                    {zh?.description && (
+                      <span class="recipe-description lang-zh">{zh.description}</span>
+                    )}
+                  </span>
+                  <span class="recipe-stats" aria-label={`${recipe.name} stats`}>
+                    {recipe.ratio ? <span>{recipe.ratio}</span> : <span><span class="lang-en">{t.en.home.ratioNA}</span><span class="lang-zh">{t.zh.home.ratioNA}</span></span>}
+                    <span>{recipe.dose_g}g</span>
+                    <span>{recipe.water_ml}ml</span>
+                    <span>{recipe.water_temp_c}°C</span>
+                    <span>{recipe.grind_size}</span>
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+    </section>
+  </section>
+</BaseLayout>
+
+<script>
+  // ── Brewer filter toggle ──
+  const toggles = document.querySelectorAll('.brewer-toggle');
+  const groups = document.querySelectorAll('.recipe-group');
+  const variantPills = document.querySelectorAll('.variant-pill');
+
+  toggles.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const isActive = btn.getAttribute('aria-pressed') === 'true';
+      btn.setAttribute('aria-pressed', isActive ? 'false' : 'true');
+      applyAllFilters();
+    });
+  });
+
+  variantPills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      pill.classList.toggle('active');
+      applyAllFilters();
+    });
+  });
+
+  // ── Pre-select brewer from URL hash ──
+  const hash = window.location.hash.slice(1);
+  if (hash) {
+    const match = document.querySelector(`.brewer-toggle[data-brewer="${CSS.escape(hash)}"]`);
+    if (match) {
+      match.setAttribute('aria-pressed', 'true');
+      applyAllFilters();
+    }
+  }
+
+  function applyAllFilters() {
+    const activeBrewers = [...toggles]
+      .filter((btn) => btn.getAttribute('aria-pressed') === 'true')
+      .map((btn) => btn.dataset.brewer);
+
+    // Collect active variant pills, grouped by brewer
+    const activeVariants = new Map();
+    variantPills.forEach((pill) => {
+      if (pill.classList.contains('active')) {
+        const b = pill.dataset.brewer;
+        if (!activeVariants.has(b)) activeVariants.set(b, new Set());
+        activeVariants.get(b).add(pill.dataset.variant);
+      }
+    });
+
+    const hero = document.querySelector('.home-hero');
+
+    // Default: nothing shown until a brewer is selected
+    if (activeBrewers.length === 0) {
+      const update = () => {
+        hero.classList.remove('compact');
+        groups.forEach((g) => {
+          g.classList.remove('entering');
+          g.classList.add('filtered-out');
+        });
+      };
+      if (document.startViewTransition) {
+        document.startViewTransition(() => update());
+      } else {
+        update();
+      }
+      return;
+    }
+
+    const update = () => {
+      hero.classList.add('compact');
+      groups.forEach((g, gi) => {
+        const brewer = g.dataset.brewer;
+        const brewerMatch = activeBrewers.includes(brewer);
+
+        if (!brewerMatch) {
+          g.classList.remove('entering');
+          g.classList.add('filtered-out');
+          return;
+        }
+
+        // Group is visible — now filter rows by variant within it
+      const rows = g.querySelectorAll('.recipe-row');
+      const variantsForBrewer = activeVariants.get(brewer);
+      const hasVariantFilter = variantsForBrewer && variantsForBrewer.size > 0;
+
+      rows.forEach((row) => {
+        if (hasVariantFilter && !variantsForBrewer.has(row.dataset.variant)) {
+          row.classList.remove('entering');
+          row.classList.add('filtered-out');
+        } else {
+          row.classList.remove('filtered-out');
+        }
+      });
+
+      // Animate group entrance
+      g.classList.remove('filtered-out');
+      g.classList.add('entering');
+      g.style.animationDelay = `${gi * 60}ms`;
+      g.addEventListener('animationend', function onEnd() {
+        g.classList.remove('entering');
+        g.style.animationDelay = '';
+        g.removeEventListener('animationend', onEnd);
+      }, { once: true });
+    });
+    };
+
+    if (document.startViewTransition) {
+      document.startViewTransition(() => update());
+    } else {
+      update();
+    }
+  }
+</script>

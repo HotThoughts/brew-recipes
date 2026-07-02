@@ -1,0 +1,26 @@
+id: april-base
+name: April 基础配方 (Sustainable Profile)
+brewer: April
+dose_g: 13
+water_ml: 200
+ratio: "1:15.4"
+variant: standard
+water_temp_c: 94
+grind_size: medium-coarse
+description: >
+  April Coffee 的基础 Sustainable Profile——April Brewer 的推荐基准方案。
+  两次等量 100g 注水（每次分为 60g 绕圈注水加 40g 中心注水）萃取出干净、
+  平衡的一杯。目标 TDS 1.25–1.35%，总萃取时间 2:00–3:00。研磨参考：
+  Comandante ~9 格（中等偏粗）。简化方案可将每段 100g 改为单次连续绕圈注水。
+phases:
+  - label: 第一段注水
+    water_g: 100
+    wait_seconds: 30
+    note: 60g 绕圈注水后 40g 中心注水；0:00 开始计时
+  - label: 第二段注水
+    water_g: 100
+    note: 0:30 时 60g 绕圈注水后 40g 中心注水；让其自然流完
+source:
+  name: April Coffee Roasters
+  url: https://www.aprilcoffeeroasters.com/pages/coffee-inf-recipes
+tags: [light-roast, balanced, beginner-friendly, multi-pour]

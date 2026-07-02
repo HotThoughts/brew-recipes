@@ -1,0 +1,27 @@
+id: osmotic-flow-v60
+name: 渗透流 V60
+brewer: V60
+dose_g: 18
+water_ml: 300
+ratio: "1:16.7"
+variant: 1-cup
+water_temp_c: 93
+grind_size: medium-coarse
+description: >
+  日本渗透流冲煮法强调在整个萃取过程中保持水位刚好高于咖啡粉床，
+  创造出温和的渗透萃取效果。单次、非常缓慢的连续注水，需要精准的控壶技巧。
+phases:
+  - label: 闷蒸
+    water_g: 45
+    wait_seconds: 30
+    note: 在中心挖一个小坑，轻柔地向坑中注水
+  - label: 渗透注水
+    water_g: 255
+    wait_seconds: 0
+    note: >
+      单次缓慢连续注水，始终保持水位在粉床上方 1-2cm。
+      约需 2 分钟。不要扰动粉层。
+source:
+  name: 日本渗透流冲煮法
+  url: https://www.youtube.com/watch?v=kqQDYf8BmIA
+tags: [light-roast, single-pour, advanced, sweet]

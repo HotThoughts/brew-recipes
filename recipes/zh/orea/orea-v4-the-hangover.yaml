@@ -1,0 +1,36 @@
+id: orea-v4-the-hangover
+name: V4 宿醉大杯
+brewer: Orea
+variant: v4
+dose_g: 32
+water_ml: 600
+ratio: '1:18.8'
+water_temp_c: 90
+grind_size: coarse
+description: 需要 500ml 以上咖啡时的选择。V4 Fast Bottom + Wave 滤纸，五次缓慢绕圈注水。注水速度稍慢 — 滤杯中粉量很大。适合一人、两人或三人。
+phases:
+  - label: 闷蒸
+    water_g: 120
+    note: 缓慢绕圈注水
+  - label: 第二段注水
+    water_g: 120
+    wait_seconds: 45
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 120
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 第四段注水
+    water_g: 120
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 最终注水
+    water_g: 120
+    wait_seconds: 40
+    note: 绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - multi-pour

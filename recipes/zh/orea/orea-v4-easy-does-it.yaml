@@ -1,0 +1,38 @@
+id: orea-v4-easy-does-it
+name: V4 Easy Does It
+brewer: Orea
+variant: v4
+dose_g: 16
+water_ml: 260
+ratio: '1:16.3'
+water_temp_c: 94
+grind_size: medium-coarse
+description: V4 标准脉冲注水配方。五次均匀的约 50g 注水，结构简单且可重复。使用 Fast Bottom + Flat 滤纸 + Negotiator；Classic Bottom 研磨稍粗，Open/Apex Bottom 增加中心注水。
+phases:
+  - label: 闷蒸
+    water_g: 60
+    note: 绕圈注水均匀浸润
+  - label: 第二段注水
+    water_g: 50
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 50
+    wait_seconds: 35
+    note: 绕圈注水
+  - label: 第四段注水
+    water_g: 50
+    wait_seconds: 30
+    note: 绕圈注水
+  - label: 最终注水
+    water_g: 50
+    wait_seconds: 30
+    note: 绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - beginner-friendly
+  - multi-pour
+  - balanced

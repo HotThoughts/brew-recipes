@@ -1,0 +1,29 @@
+id: orea-v3-the-wide
+name: V3 The Wide
+brewer: Orea
+variant: v3
+dose_g: 10
+water_ml: 200
+ratio: '1:20'
+water_temp_c: 96
+grind_size: fine
+description: A high-extraction, wide-ratio recipe for the V3 with Flat filter + Negotiator. Half circular, half central pours. Works best with washed coffees — adapt grind and pouring speed if drawdown is slow.
+phases:
+  - label: Bloom
+    water_g: 50
+    note: Spiral pour
+  - label: Second Pour
+    water_g: 75
+    wait_seconds: 60
+    note: Half circular, half central pour
+  - label: Final Pour
+    water_g: 75
+    wait_seconds: 60
+    note: Half circular, half central pour
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v3
+tags:
+  - light-roast
+  - balanced
+  - multi-pour

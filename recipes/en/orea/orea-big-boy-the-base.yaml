@@ -1,0 +1,29 @@
+id: orea-big-boy-the-base
+name: Big Boy The Base
+brewer: Orea
+variant: big-boy
+dose_g: 40
+water_ml: 600
+ratio: '1:15'
+water_temp_c: 92
+grind_size: coarse
+description: The base Big Boy recipe for 2+ cups. Three big pours at a 6–7 G/S pour rate keep the wide 8cm bed saturated. Don't pour too slowly — feed the beast. Uses Big Boy Wave filters.
+phases:
+  - label: Bloom
+    water_g: 100
+    note: Spiral pour, 6–7 G/S
+  - label: Second Pour
+    water_g: 250
+    wait_seconds: 45
+    note: Spiral pour, 6 G/S
+  - label: Final Pour
+    water_g: 250
+    wait_seconds: 75
+    note: Spiral pour, 6 G/S
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-big-boy
+tags:
+  - light-roast
+  - multi-pour
+  - balanced
