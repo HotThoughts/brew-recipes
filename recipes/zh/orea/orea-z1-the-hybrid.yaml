@@ -19,7 +19,7 @@ phases:
   - label: 浸泡注水 — 阀门关闭
     water_g: 100
     wait_seconds: 60
-    note: 关闭阀门，注水至 260g
+    note: 关闭阀门，绕圈注水至 260g
   - label: 排放
     water_g: 0
     wait_seconds: 60

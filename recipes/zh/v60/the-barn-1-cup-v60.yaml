@@ -14,12 +14,14 @@ phases:
   - label: 闷蒸
     water_g: 40
     wait_seconds: 30
+    note: 绕圈注水
   - label: 第二段注水
     water_g: 60
+    note: 绕圈注水
   - label: 分段注水
     water_g: 50
     pours: 3
-    note: 三次约 50g 的注水，每次之间轻柔间隔
+    note: 绕圈注水。三次约 50g 的注水，每次之间轻柔间隔
 source:
   name: The Barn Berlin
   url: https://thebarn.de/blogs/the-barn-blog/v60-drip

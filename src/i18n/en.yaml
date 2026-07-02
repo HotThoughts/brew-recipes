@@ -21,6 +21,12 @@ detail:
     wait: wait
   phases: pour phases
   phaseSummary: "{water}g accounted for across {count} phases."
+  pour:
+    label: Pour style
+    spiral: spiral
+    circular: circular
+    center: center
+    swirl: swirl
   source: source
   sourceLink: Source
 

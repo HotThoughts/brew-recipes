@@ -15,12 +15,14 @@ phases:
   - label: Bloom
     water_g: 40
     wait_seconds: 30
+    note: Circular pour
   - label: Second Pour
     water_g: 60
+    note: Circular pour
   - label: Pulse Pours
     water_g: 50
     pours: 3
-    note: Three ~50g pours, pulsing gently between each
+    note: Circular pour. Three ~50g pours, pulsing gently between each
 source:
   name: The Barn Berlin
   url: https://thebarn.de/blogs/the-barn-blog/v60-drip

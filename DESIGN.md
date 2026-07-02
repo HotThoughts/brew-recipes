@@ -181,6 +181,15 @@ This is a flat system. No box-shadows, no layered cards, no z-index stacking bey
 - **Outline:** 2px solid transparent, outline-offset 3px
 - **Selector:** `:focus-visible` only — no focus ring on mouse clicks
 
+### Pour-Style Glyphs
+- **Purpose:** A four-symbol vocabulary that surfaces the pour gesture buried in each phase note, so the motion is glanceable without reading prose.
+- **Set:** `spiral` (an Archimedean spiral traced center-out), `circular` (two concentric rings), `center` (a target with an incoming stream arrow), `swirl` (a rotation arrow for agitating the brewer).
+- **Style:** Line-art on a 24×24 viewBox, `1.6` stroke width, round caps and joins, no fills except the center dot. The glyph is a mark, drawn in Deep Violet ink (`--ink`) at `22px` so it reads as a symbol, not a bullet — never Honey Gold, never a filled shape.
+- **Label:** Set in the archival caption voice — Cormorant Garamond italic, lowercase, `1rem`, Violet Gray. The serif italic deliberately contrasts the monospace note prose so the annotation never reads as another line of text.
+- **Placement:** A quiet `.pour-styles` flex row inside the phase copy block, sitting between the phase heading and the note (`gap: 8px 18px`). Never boxed, never a card. Result is a three-register phase entry: serif heading → glyph + italic caption → mono note.
+- **Derivation:** Styles are detected from the phase note text (EN and ZH keywords) via `getPourStyles()`, ordered by first occurrence, capped at two per phase. Purely additive — the prose note stays intact below the glyphs.
+- **i18n:** Labels resolve through `detail.pour` in each language file (e.g. `spiral` → `螺旋`, `circular` → `绕圈`); the glyph is language-neutral.
+
 ## 6. Do's and Don'ts
 
 ### Do:

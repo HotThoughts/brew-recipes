@@ -20,13 +20,15 @@ phases:
   - label: Second Pour
     water_g: 100
     wait_seconds: 30
+    note: Circular pour
   - label: Third Pour
     water_g: 50
     wait_seconds: 30
+    note: Circular pour
   - label: Final Pour + Spin
     water_g: 30
     wait_seconds: 0
-    note: After the 30g pour, lift the brewer slightly and give a gentle spin.
+    note: Circular pour. After the 30g pour, lift the brewer slightly and give a gentle spin.
 source:
   name: The Grumpy Olive
   url: https://www.thegrumpyolive.com/coffee-101-how-to-brew-with-the-april-brewer/

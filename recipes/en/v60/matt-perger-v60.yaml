@@ -15,14 +15,15 @@ phases:
   - label: Bloom
     water_g: 50
     wait_seconds: 30
-    note: Stir vigorously in a cross-pattern to maximize saturation
+    note: Pour then stir vigorously in a cross-pattern to maximize saturation
   - label: Second Pour
     water_g: 50
     wait_seconds: 30
+    note: Spiral pour
   - label: Final Pour
     water_g: 100
     wait_seconds: 0
-    note: When water drains halfway, tap/swirl to flatten bed ("Rao spin")
+    note: Spiral pour. When water drains halfway, tap/swirl to flatten bed ("Rao spin")
 source:
   name: Matt Perger
   url: https://www.youtube.com/watch?v=MPDfn--vxK8

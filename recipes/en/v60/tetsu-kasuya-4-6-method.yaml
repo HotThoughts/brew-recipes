@@ -15,19 +15,23 @@ phases:
   - label: Bloom (40% — sweetness)
     water_g: 60
     wait_seconds: 45
-    note: Smaller bloom emphasizes sweetness; larger bloom emphasizes acidity
+    note: Circular pour ~10s. Smaller bloom emphasizes sweetness; larger bloom emphasizes acidity
   - label: Second Pour (40%)
     water_g: 60
     wait_seconds: 45
+    note: Circular pour ~10s
   - label: Third Pour (60% — strength)
     water_g: 60
     wait_seconds: 45
+    note: Circular pour ~10s
   - label: Fourth Pour (60%)
     water_g: 60
     wait_seconds: 45
+    note: Circular pour ~10s
   - label: Final Pour (60%)
     water_g: 60
     wait_seconds: 45
+    note: Circular pour ~10s
 source:
   name: Tetsu Kasuya
   url: https://www.youtube.com/watch?v=wmCW8xSWGZY

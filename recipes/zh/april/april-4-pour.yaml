@@ -19,13 +19,15 @@ phases:
   - label: 第二段注水
     water_g: 100
     wait_seconds: 30
+    note: 绕圈注水
   - label: 第三段注水
     water_g: 50
     wait_seconds: 30
+    note: 绕圈注水
   - label: 最后一段注水 + 旋转
     water_g: 30
     wait_seconds: 0
-    note: 注入 30g 后，轻轻提起滤杯做一个轻柔的旋转。
+    note: 绕圈注水。注入 30g 后，轻轻提起滤杯做一个轻柔的旋转。
 source:
   name: The Grumpy Olive
   url: https://www.thegrumpyolive.com/coffee-101-how-to-brew-with-the-april-brewer/

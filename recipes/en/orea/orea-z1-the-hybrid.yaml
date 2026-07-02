@@ -19,7 +19,7 @@ phases:
   - label: Immersion Pour — Valve Closed
     water_g: 100
     wait_seconds: 60
-    note: Close valve, pour to 260g
+    note: Close valve, spiral pour to 260g
   - label: Drain
     water_g: 0
     wait_seconds: 60

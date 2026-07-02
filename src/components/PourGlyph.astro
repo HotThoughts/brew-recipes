@@ -1,0 +1,65 @@
+---
+import type { PourStyle } from '../lib/recipes';
+
+interface Props {
+  style: PourStyle;
+}
+
+const { style } = Astro.props;
+
+// Archimedean spiral traced center-out, so "spiral pour" reads as an expanding path.
+const spiralPath = (() => {
+  const cx = 12;
+  const cy = 12;
+  const maxR = 7.6;
+  const turns = 1.75;
+  const steps = 64;
+  const thetaMax = turns * 2 * Math.PI;
+  const points: string[] = [];
+
+  for (let i = 0; i <= steps; i += 1) {
+    const theta = (i / steps) * thetaMax;
+    const r = (theta / thetaMax) * maxR;
+    points.push(`${(cx + r * Math.cos(theta)).toFixed(2)} ${(cy + r * Math.sin(theta)).toFixed(2)}`);
+  }
+
+  return `M${points.join(' L ')}`;
+})();
+---
+
+<svg
+  class="pour-glyph"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {style === 'spiral' && <path d={spiralPath} />}
+
+  {style === 'circular' && (
+    <>
+      <circle cx="12" cy="12" r="7.2" />
+      <circle cx="12" cy="12" r="3.4" />
+    </>
+  )}
+
+  {style === 'center' && (
+    <>
+      <circle cx="12" cy="13" r="6" />
+      <circle cx="12" cy="13" r="1.6" fill="currentColor" stroke="none" />
+      <path d="M12 2 L12 5.4" />
+      <path d="M9.9 3.7 L12 6 L14.1 3.7" />
+    </>
+  )}
+
+  {style === 'swirl' && (
+    <>
+      <path d="M12 5 A7 7 0 1 1 5 12" />
+      <path d="M4.25 13.3 L5 12 L5.75 13.3" />
+    </>
+  )}
+</svg>

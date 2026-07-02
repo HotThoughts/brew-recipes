@@ -15,7 +15,7 @@ phases:
   - label: 长注水
     water_g: 160
     wait_seconds: 40
-    note: 通过 Melodrip 以 3 G/S 缓慢注水
+    note: 通过 Melodrip 以 3 G/S 缓慢绕圈注水
 source:
   name: Orea UK
   url: https://www.orea.uk/guides-z1

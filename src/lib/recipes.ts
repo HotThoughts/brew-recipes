@@ -184,6 +184,28 @@ export function formatRecipeCount(count: number, language: LanguageCode = 'en'):
   return `${count} ${count === 1 ? 'method' : 'methods'}`;
 }
 
+export type PourStyle = 'spiral' | 'circular' | 'center' | 'swirl';
+
+const POUR_STYLE_PATTERNS: { style: PourStyle; test: RegExp }[] = [
+  { style: 'spiral', test: /spiral|螺旋/i },
+  { style: 'circular', test: /circular|circle|concentric|绕圈|画圈/i },
+  { style: 'center', test: /central|centre|center|中心/i },
+  { style: 'swirl', test: /swirl|摇晃|旋转/i },
+];
+
+export function getPourStyles(note?: string): PourStyle[] {
+  if (!note) return [];
+
+  return POUR_STYLE_PATTERNS.reduce<{ style: PourStyle; index: number }[]>((acc, { style, test }) => {
+    const match = note.match(test);
+    if (match?.index !== undefined) acc.push({ style, index: match.index });
+    return acc;
+  }, [])
+    .sort((a, b) => a.index - b.index)
+    .map((entry) => entry.style)
+    .slice(0, 2);
+}
+
 export function getTotalPhaseWater(phase: Phase): number {
   return phase.water_g * (phase.pours ?? 1);
 }

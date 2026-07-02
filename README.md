@@ -2,14 +2,17 @@
 
 [![Validate Recipes](https://github.com/HotThoughts/brew-recipes/actions/workflows/validate.yaml/badge.svg)](https://github.com/HotThoughts/brew-recipes/actions/workflows/validate.yaml)
 
-A collection of pour-over coffee recipes in YAML format, curated for accuracy and annotated for clarity.
+A community-curated collection of pour-over coffee recipes in YAML format, with a bilingual (EN/ZH) static website for easy browsing. Validated by JSON Schema and built with Astro.
+
+**Live site:** [hotthoughts.github.io/brew-recipes](https://hotthoughts.github.io/brew-recipes)
 
 ## Table of Contents
 
 - [Quick Start](#quick-start)
-- [Web UI](#web-ui)
 - [Recipe Format](#recipe-format)
+- [Web UI](#web-ui)
 - [Local Development](#local-development)
+- [Deployment](#deployment)
 - [Schema Reference](#schema-reference)
 - [Contributing](#contributing)
 - [License](#license)
@@ -17,28 +20,6 @@ A collection of pour-over coffee recipes in YAML format, curated for accuracy an
 ## Quick Start
 
 Browse `recipes/<language>/<brewer>/` for recipes. Each file is a self-contained YAML document.
-
-**Brewers**: V60 · Chemex · Aeropress · Orea · April · Kalita · FrenchPress · StaggX · Origami
-
-## Web UI
-
-This repo includes a static Astro site for browsing the recipe database without opening raw YAML files.
-
-```bash
-# Start the local site
-npm run dev
-
-# Build the static site into dist/
-npm run build
-
-# Build with the GitHub Pages /brew-recipes base path
-GITHUB_PAGES=true npm run build
-
-# Preview the production build
-npm run preview
-```
-
-The site reads directly from `recipes/`, groups recipes by language and brewer, and renders static detail pages for every recipe. `npm test` also checks that every recipe has a generated detail page.
 
 Example:
 ```yaml
@@ -49,12 +30,18 @@ brewer: V60
 dose_g: 20
 water_ml: 300
 ratio: "1:15"
+variant: 1-cup
 water_temp_c: 92
 grind_size: coarse
+description: >
+  Tetsu Kasuya's winning 2016 World Brewers Cup recipe. The first 40% of water
+  controls flavor balance (sweetness vs acidity), the remaining 60% controls
+  strength/body.
 phases:
   - label: Bloom (40% — sweetness)
     water_g: 60
     wait_seconds: 45
+    note: Smaller bloom emphasizes sweetness; larger bloom emphasizes acidity
   - label: Second Pour (40%)
     water_g: 60
     wait_seconds: 45
@@ -74,17 +61,28 @@ Every recipe follows the schema at [`schema.yaml`](schema.yaml).
 |-------|------|-------------|
 | `id` | string | Globally unique kebab-case identifier |
 | `name` | string | Human-readable recipe name |
-| `brewer` | enum | V60, Chemex, Aeropress, Orea, Kalita, April, … |
-| `dose_g` | number | Coffee dose (5–60 g) |
-| `water_ml` | number | Total brew water (50–1000 ml) |
-| `ratio` | string | Coffee:water ratio, e.g. `"1:15"` |
+| `brewer` | enum | V60, Chemex, Aeropress, Orea, Kalita, April, FrenchPress, StaggX, Origami, Other |
+| `dose_g` | number | Coffee dose (5–80 g) |
+| `water_ml` | number | Total brew water (50–1200 ml) |
+| `ratio` | string | Coffee:water ratio, e.g. `"1:15"` (optional) |
+| `variant` | string | Brewer-specific variant, e.g. `"1-cup"`, `"v3"`, `"155"` (optional) |
 | `water_temp_c` | number | Water temperature (80–100 °C) |
-| `grind_size` | enum | extra-coarse … extra-fine |
-| `phases` | array | Pouring phases with `water_g`, timing, and notes |
-| `source` | object | Attribution (name, url, competition) |
-| `tags` | array | light-roast, sweet, multi-pour, beginner-friendly, … |
+| `grind_size` | enum | extra-coarse, coarse, medium-coarse, medium, medium-fine, fine, extra-fine |
+| `description` | string | Short paragraph about the recipe's character or origin (optional) |
+| `phases` | array | Pouring phases (1–10). Each has `label`, `water_g`, optional `wait_seconds` (0–300s), `pours` (sub-pour count), and `note` |
+| `source` | object | Attribution. Required: `name`. Optional: `url`, `competition` |
+| `tags` | array | See [`schema.yaml`](schema.yaml) for the canonical tag list (roast level, flavor profile, pour style, difficulty, etc.) |
 
-Translations share the same `id` across language directories — the app matches by ID.
+Translations share the same `id` across language directories — the website matches recipes by ID to link translations automatically.
+
+## Web UI
+
+This repo includes a static [Astro](https://astro.build) site that lets you browse the recipe database without opening raw YAML files. The live site is deployed at **[hotthoughts.github.io/brew-recipes](https://hotthoughts.github.io/brew-recipes)**.
+
+Features:
+- **Homepage** — all recipes grouped by brewer with dose, ratio, and tags at a glance
+- **Detail pages** — each recipe shows phases with timing, grind size, water temperature, source attribution, and tags
+- **i18n** — supports English and Chinese (简体中文); the header has a language switcher, and translations are auto-linked by recipe `id`
 
 ## Local Development
 
@@ -94,15 +92,40 @@ Translations share the same `id` across language directories — the app matches
 # Install dependencies (one-time)
 npm install
 
-# Validate recipes, typecheck, and build the site
+# Start the Astro dev server with hot-reload
+npm run dev
+
+# Type-check TypeScript sources
+npm run check
+
+# Validate all recipes — YAML syntax, JSON Schema, unique IDs
+npm run validate
+
+# Build the static site to dist/
+npm run build
+
+# Check that every recipe has a generated detail page
+npm run check:site
+
+# Full pipeline — validate, type-check, build, check-site
 npm test
 ```
 
 CI runs the same `npm test` command on every push and pull request.
 
+## Deployment
+
+The site is deployed to **GitHub Pages** on every push to `main` via [`.github/workflows/deploy.yaml`](.github/workflows/deploy.yaml). It builds with `GITHUB_PAGES=true` so the base path is set to `/brew-recipes`.
+
+To preview a production build locally:
+```bash
+GITHUB_PAGES=true npm run build
+npm run preview
+```
+
 ## Schema Reference
 
-All recipes must conform to [`schema.yaml`](schema.yaml) (JSON Schema draft-07). The schema defines required fields, value ranges, and tag categories. It is the single source of truth for the recipe format.
+All recipes must conform to [`schema.yaml`](schema.yaml) (JSON Schema draft-07). The schema defines required fields, value ranges, tag enum values, and phase structure. It is the single source of truth for the recipe format.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidance on adding or translating recipes.
 
