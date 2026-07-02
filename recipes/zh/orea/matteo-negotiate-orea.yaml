@@ -15,7 +15,7 @@ phases:
   - label: 闷蒸
     water_g: 54
     wait_seconds: 40
-    note: 将滤纸"谈判"压入滤杯；3倍粉量闷蒸，轻柔摇晃
+    note: 将滤纸"谈判"压入滤杯；3倍粉量绕圈注水闷蒸，轻柔摇晃
   - label: 第二段注水
     water_g: 60
     wait_seconds: 15
@@ -23,9 +23,11 @@ phases:
   - label: 第三段注水
     water_g: 60
     wait_seconds: 15
+    note: 绕圈注水
   - label: 第四段注水
     water_g: 60
     wait_seconds: 15
+    note: 绕圈注水
   - label: 最后一段注水
     water_g: 66
     wait_seconds: 0

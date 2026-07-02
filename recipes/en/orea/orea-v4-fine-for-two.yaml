@@ -15,7 +15,7 @@ phases:
   - label: Long Pour
     water_g: 280
     wait_seconds: 40
-    note: Pour very slowly at 3 G/S — maintain water level, replace as it drains
+    note: Spiral pour very slowly at 3 G/S — maintain water level, replace as it drains
 source:
   name: Orea UK
   url: https://www.orea.uk/guides-v4

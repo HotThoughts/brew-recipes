@@ -15,20 +15,23 @@ phases:
   - label: Bloom
     water_g: 50
     wait_seconds: 45
-    note: Swirl gently at 0:10-0:15 to knock grounds off walls
+    note: Spiral pour. Swirl gently at 0:10-0:15 to knock grounds off walls
   - label: Second Pour
     water_g: 50
     wait_seconds: 10
+    note: Spiral pour
   - label: Third Pour
     water_g: 50
     wait_seconds: 10
+    note: Spiral pour
   - label: Fourth Pour
     water_g: 50
     wait_seconds: 10
+    note: Spiral pour
   - label: Final Pour
     water_g: 50
     wait_seconds: 0
-    note: Swirl gently to flatten bed, let draw down
+    note: Spiral pour. Swirl gently to flatten bed, let draw down
 source:
   name: James Hoffmann
   url: https://www.youtube.com/watch?v=1oB1oDrDkHM

@@ -15,7 +15,7 @@ phases:
   - label: Long Pour
     water_g: 160
     wait_seconds: 40
-    note: Pour slowly at 3 G/S via Melodrip
+    note: Spiral pour slowly at 3 G/S via Melodrip
 source:
   name: Orea UK
   url: https://www.orea.uk/guides-z1

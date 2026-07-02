@@ -17,7 +17,7 @@ phases:
   - label: Bloom
     water_g: 54
     wait_seconds: 40
-    note: Negotiate filter into brewer; 3× coffee weight bloom with gentle swirl
+    note: Negotiate filter into brewer; 3× coffee weight circular pour bloom with gentle swirl
   - label: Second Pour
     water_g: 60
     wait_seconds: 15
@@ -25,9 +25,11 @@ phases:
   - label: Third Pour
     water_g: 60
     wait_seconds: 15
+    note: Circular pour
   - label: Fourth Pour
     water_g: 60
     wait_seconds: 15
+    note: Circular pour
   - label: Final Pour
     water_g: 66
     wait_seconds: 0

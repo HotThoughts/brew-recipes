@@ -15,7 +15,7 @@ phases:
   - label: 长注水
     water_g: 280
     wait_seconds: 40
-    note: 以 3 G/S 超慢注水 — 保持水位，边排边补
+    note: 以 3 G/S 缓慢绕圈注水 — 保持水位，边排边补
 source:
   name: Orea UK
   url: https://www.orea.uk/guides-v4

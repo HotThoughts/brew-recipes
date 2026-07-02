@@ -14,19 +14,23 @@ phases:
   - label: 闷蒸（40% — 甜感）
     water_g: 60
     wait_seconds: 45
-    note: 较小的闷蒸注水强调甜感，较大的闷蒸注水强调酸质
+    note: 绕圈注水约 10 秒。较小的闷蒸注水强调甜感，较大的闷蒸注水强调酸质
   - label: 第二段（40%）
     water_g: 60
     wait_seconds: 45
+    note: 绕圈注水约 10 秒
   - label: 第三段（60% — 浓度）
     water_g: 60
     wait_seconds: 45
+    note: 绕圈注水约 10 秒
   - label: 第四段（60%）
     water_g: 60
     wait_seconds: 45
+    note: 绕圈注水约 10 秒
   - label: 最后一段（60%）
     water_g: 60
     wait_seconds: 45
+    note: 绕圈注水约 10 秒
 source:
   name: 粕谷哲 (Tetsu Kasuya)
   url: https://www.youtube.com/watch?v=wmCW8xSWGZY

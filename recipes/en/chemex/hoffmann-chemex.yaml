@@ -15,7 +15,7 @@ phases:
   - label: Bloom
     water_g: 60
     wait_seconds: 45
-    note: Swirl vigorously to saturate all grounds
+    note: Circular pour, then swirl vigorously to saturate all grounds
   - label: Main Pour
     water_g: 440
     wait_seconds: 0

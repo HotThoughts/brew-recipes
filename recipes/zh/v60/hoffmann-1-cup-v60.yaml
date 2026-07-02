@@ -14,20 +14,23 @@ phases:
   - label: 闷蒸
     water_g: 50
     wait_seconds: 45
-    note: 0:10-0:15 时轻柔旋转，将粘在壁上的咖啡粉冲下
+    note: 绕圈注水。0:10-0:15 时轻柔旋转，将粘在壁上的咖啡粉冲下
   - label: 第二段注水
     water_g: 50
     wait_seconds: 10
+    note: 绕圈注水
   - label: 第三段注水
     water_g: 50
     wait_seconds: 10
+    note: 绕圈注水
   - label: 第四段注水
     water_g: 50
     wait_seconds: 10
+    note: 绕圈注水
   - label: 最后一段注水
     water_g: 50
     wait_seconds: 0
-    note: 轻柔旋转使粉床平整，让其自然流完
+    note: 绕圈注水。轻柔旋转使粉床平整，让其自然流完
 source:
   name: James Hoffmann
   url: https://www.youtube.com/watch?v=1oB1oDrDkHM

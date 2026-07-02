@@ -14,7 +14,7 @@ phases:
   - label: 闷蒸
     water_g: 60
     wait_seconds: 45
-    note: 用力摇晃使所有咖啡粉充分浸润
+    note: 绕圈注水后用力摇晃，使所有咖啡粉充分浸润
   - label: 主注水
     water_g: 440
     wait_seconds: 0
