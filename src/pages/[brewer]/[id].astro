@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PourGlyph from '../../components/PourGlyph.astro';
 import { t } from '../../lib/i18n';
 import {
   formatSeconds,
+  getPourStyles,
   getRecipeCollection,
   getTotalPhaseWater,
   getTotalWaitSeconds,
@@ -80,19 +82,32 @@ const allTags = [
                   .replace('{count}', String(enRecipe.phases.length))}</p>
               </div>
               <ol class="phase-list">
-                {enRecipe.phases.map((phase, i) => (
-                  <li class="phase-row">
-                    <span class="phase-index">{String(i + 1).padStart(2, '0')}</span>
-                    <div class="phase-copy">
-                      <h3>{phase.label}</h3>
-                      {phase.note && <p>{phase.note}</p>}
-                    </div>
-                    <div class="phase-values">
-                      <span>{phase.water_g}g{phase.pours ? ` × ${phase.pours}` : ''}</span>
-                      <span>{formatSeconds(phase.wait_seconds, 'en')}</span>
-                    </div>
-                  </li>
-                ))}
+                {enRecipe.phases.map((phase, i) => {
+                  const pourStyles = getPourStyles(phase.note);
+                  return (
+                    <li class="phase-row">
+                      <span class="phase-index">{String(i + 1).padStart(2, '0')}</span>
+                      <div class="phase-copy">
+                        <h3>{phase.label}</h3>
+                        {pourStyles.length > 0 && (
+                          <ul class="pour-styles" aria-label={t.en.detail.pour.label}>
+                            {pourStyles.map((pourStyle) => (
+                              <li>
+                                <PourGlyph style={pourStyle} />
+                                <span>{t.en.detail.pour[pourStyle]}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {phase.note && <p>{phase.note}</p>}
+                      </div>
+                      <div class="phase-values">
+                        <span>{phase.water_g}g{phase.pours ? ` × ${phase.pours}` : ''}</span>
+                        <span>{formatSeconds(phase.wait_seconds, 'en')}</span>
+                      </div>
+                    </li>
+                  );
+                })}
               </ol>
             </section>
 
@@ -143,19 +158,32 @@ const allTags = [
                   .replace('{count}', String(zhRecipe.phases.length))}</p>
               </div>
               <ol class="phase-list">
-                {zhRecipe.phases.map((phase, i) => (
-                  <li class="phase-row">
-                    <span class="phase-index">{String(i + 1).padStart(2, '0')}</span>
-                    <div class="phase-copy">
-                      <h3>{phase.label}</h3>
-                      {phase.note && <p>{phase.note}</p>}
-                    </div>
-                    <div class="phase-values">
-                      <span>{phase.water_g}g{phase.pours ? ` × ${phase.pours}` : ''}</span>
-                      <span>{formatSeconds(phase.wait_seconds, 'zh')}</span>
-                    </div>
-                  </li>
-                ))}
+                {zhRecipe.phases.map((phase, i) => {
+                  const pourStyles = getPourStyles(phase.note);
+                  return (
+                    <li class="phase-row">
+                      <span class="phase-index">{String(i + 1).padStart(2, '0')}</span>
+                      <div class="phase-copy">
+                        <h3>{phase.label}</h3>
+                        {pourStyles.length > 0 && (
+                          <ul class="pour-styles" aria-label={t.zh.detail.pour.label}>
+                            {pourStyles.map((pourStyle) => (
+                              <li>
+                                <PourGlyph style={pourStyle} />
+                                <span>{t.zh.detail.pour[pourStyle]}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {phase.note && <p>{phase.note}</p>}
+                      </div>
+                      <div class="phase-values">
+                        <span>{phase.water_g}g{phase.pours ? ` × ${phase.pours}` : ''}</span>
+                        <span>{formatSeconds(phase.wait_seconds, 'zh')}</span>
+                      </div>
+                    </li>
+                  );
+                })}
               </ol>
             </section>
 

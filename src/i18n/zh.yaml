@@ -21,6 +21,12 @@ detail:
     wait: 等待
   phases: 注水阶段
   phaseSummary: "{water}g 水量，共 {count} 个阶段。"
+  pour:
+    label: 注水方式
+    spiral: 螺旋
+    circular: 绕圈
+    center: 中心
+    swirl: 摇晃
   source: 来源
   sourceLink: 查看来源
 

@@ -671,6 +671,38 @@
     font-size: 0.82rem;
   }
 
+  .pour-styles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 18px;
+    padding: 0;
+    margin: 2px 0 4px;
+    list-style: none;
+  }
+
+  .pour-styles li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pour-styles li span {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--ink-light);
+  }
+
+  .pour-glyph {
+    width: 22px;
+    height: 22px;
+    flex: none;
+    color: var(--ink);
+    overflow: visible;
+  }
+
   .phase-values {
     display: grid;
     justify-items: end;
