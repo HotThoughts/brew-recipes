@@ -1,0 +1,33 @@
+id: orea-v3-the-ice
+name: V3 冰饮
+brewer: Orea
+variant: v3
+dose_g: 18
+water_ml: 160
+ratio: '1:8.9'
+water_temp_c: 94
+grind_size: medium
+description: V3 + Wave 滤纸的冰手冲配方。在分享壶中加 140g 冰块萃取 160ml。四段柔和绕圈注水产出明亮果味冰饮，不会稀释。萃取后搅拌快速冷却。
+phases:
+  - label: 闷蒸
+    water_g: 40
+    note: 柔和绕圈注水至分享壶中的 140g 冰块上
+  - label: 第二段注水
+    water_g: 40
+    wait_seconds: 40
+    note: 柔和绕圈注水
+  - label: 第三段注水
+    water_g: 40
+    wait_seconds: 20
+    note: 柔和绕圈注水
+  - label: 最终注水
+    water_g: 40
+    wait_seconds: 20
+    note: 柔和绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v3
+tags:
+  - light-roast
+  - cold-brew
+  - acidic

@@ -1,0 +1,30 @@
+id: orea-v3-the-bright
+name: V3 The Bright
+brewer: Orea
+variant: v3
+dose_g: 18
+water_ml: 300
+ratio: '1:16.7'
+water_temp_c: 94
+grind_size: medium
+description: A super-easy 3-pour recipe on the V3 with Wave filter. The 75/75/150 pouring cadence makes a bright, happy cup with minimal effort — perfect for sleepy mornings.
+phases:
+  - label: Bloom
+    water_g: 75
+    note: Circular pour
+  - label: Second Pour
+    water_g: 75
+    wait_seconds: 30
+    note: Circular pour
+  - label: Final Pour
+    water_g: 150
+    wait_seconds: 30
+    note: Circular pour
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v3
+tags:
+  - light-roast
+  - acidic
+  - multi-pour
+  - beginner-friendly

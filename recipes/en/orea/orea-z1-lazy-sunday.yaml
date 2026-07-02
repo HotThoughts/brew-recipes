@@ -1,0 +1,30 @@
+id: orea-z1-lazy-sunday
+name: Z1 Lazy Sunday
+brewer: Orea
+variant: z1
+dose_g: 15
+water_ml: 250
+ratio: '1:16.7'
+water_temp_c: 96
+grind_size: medium
+description: 'An easy 3-pour recipe for the Z1 via Melodrip. Kick back on lazy weekends. Make it Extra Lazy: skip the bloom, pour in two 125g pours with a slightly finer grind and slower speed.'
+phases:
+  - label: Bloom
+    water_g: 50
+    note: Spiral pour via Melodrip
+  - label: Second Pour
+    water_g: 100
+    wait_seconds: 40
+    note: Spiral pour via Melodrip
+  - label: Final Pour
+    water_g: 100
+    wait_seconds: 65
+    note: Spiral pour via Melodrip
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - beginner-friendly
+  - multi-pour
+  - balanced

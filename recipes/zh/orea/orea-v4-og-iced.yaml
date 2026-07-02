@@ -1,0 +1,33 @@
+id: orea-v4-og-iced
+name: V4 经典冰饮
+brewer: Orea
+variant: v4
+dose_g: 18
+water_ml: 160
+ratio: '1:8.9'
+water_temp_c: 92
+grind_size: medium
+description: V4 Classic Bottom + Wave 滤纸的冰手冲配方。在分享壶中加入 140g 冰块，萃取 160ml。四段注水产出明亮果味的冰饮。萃取后搅拌快速冷却。
+phases:
+  - label: 闷蒸
+    water_g: 40
+    note: Circular pour onto 140g ice in carafe
+  - label: 第二段注水
+    water_g: 40
+    wait_seconds: 30
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 40
+    wait_seconds: 20
+    note: 绕圈注水
+  - label: 最终注水
+    water_g: 40
+    wait_seconds: 30
+    note: 绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - cold-brew
+  - acidic

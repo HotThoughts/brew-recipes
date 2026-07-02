@@ -1,0 +1,38 @@
+id: orea-z1-the-pulse
+name: Z1 脉冲注水
+brewer: Orea
+variant: z1
+dose_g: 12
+water_ml: 200
+ratio: '1:16.7'
+water_temp_c: 96
+grind_size: medium-coarse
+description: Z1 Melodrip 上的经典 5 段脉冲配方。好记 — 40/80/120/160/200g。可放大至 15g (50/100/150/200/250) 或 18g (60/120/180/240/300)。
+phases:
+  - label: 闷蒸
+    water_g: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 第二段注水
+    water_g: 40
+    wait_seconds: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 第三段注水
+    water_g: 40
+    wait_seconds: 45
+    note: 通过 Melodrip 绕圈注水
+  - label: 第四段注水
+    water_g: 40
+    wait_seconds: 50
+    note: 通过 Melodrip 绕圈注水
+  - label: 最终注水
+    water_g: 40
+    wait_seconds: 45
+    note: 通过 Melodrip 绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - beginner-friendly
+  - multi-pour
+  - balanced

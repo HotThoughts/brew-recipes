@@ -1,0 +1,34 @@
+id: orea-z1-the-champ
+name: Z1 The Champ
+brewer: Orea
+variant: z1
+dose_g: 17
+water_ml: 270
+ratio: '1:15.9'
+water_temp_c: 93
+grind_size: medium
+description: Martin Wölfl's World Brewers Cup 2024 winning recipe adapted for the Z1 via Melodrip. Enlarge pours and increase flow rate as the brew progresses. Juicy, high-quality results.
+phases:
+  - label: Bloom
+    water_g: 60
+    note: Circular pour via Melodrip
+  - label: Second Pour
+    water_g: 60
+    wait_seconds: 40
+    note: Circular pour via Melodrip
+  - label: Third Pour
+    water_g: 50
+    wait_seconds: 45
+    note: Circular pour via Melodrip
+  - label: Final Pour
+    water_g: 100
+    wait_seconds: 50
+    note: Circular pour via Melodrip, increase flow rate
+source:
+  name: Martin Wölfl / Orea UK
+  url: https://www.orea.uk/guides-z1
+  competition: World Brewers Cup 2024
+tags:
+  - light-roast
+  - competition
+  - multi-pour

@@ -1,0 +1,37 @@
+id: orea-z1-four-six
+name: Z1 四六法
+brewer: Orea
+variant: z1
+dose_g: 14
+water_ml: 225
+ratio: '1:16.1'
+water_temp_c: 94
+grind_size: medium-coarse
+description: Tetsu Kasuya 的 4:6 法则适配 Z1 Melodrip。五段注水的灵活框架 — 交换前两段注水量可增加亮度，均匀分配则更平衡。
+phases:
+  - label: 第一段注水
+    water_g: 35
+    note: 通过 Melodrip 绕圈注水
+  - label: 第二段注水
+    water_g: 55
+    wait_seconds: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 第三段注水
+    water_g: 45
+    wait_seconds: 40
+    note: 通过 Melodrip 绕圈注水
+  - label: 第四段注水
+    water_g: 45
+    wait_seconds: 25
+    note: 通过 Melodrip 绕圈注水
+  - label: 最终注水
+    water_g: 45
+    wait_seconds: 20
+    note: 通过 Melodrip 绕圈注水
+source:
+  name: Tetsu Kasuya / Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - multi-pour
+  - balanced

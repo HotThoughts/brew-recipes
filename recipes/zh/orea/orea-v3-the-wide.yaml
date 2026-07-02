@@ -1,0 +1,29 @@
+id: orea-v3-the-wide
+name: V3 宽比例
+brewer: Orea
+variant: v3
+dose_g: 10
+water_ml: 200
+ratio: '1:20'
+water_temp_c: 96
+grind_size: fine
+description: V3 + Flat 滤纸 + Negotiator 的高萃取宽比例配方。半绕圈半中心注水。最适合水洗咖啡 — 若流速慢则调整研磨和注水速度。
+phases:
+  - label: 闷蒸
+    water_g: 50
+    note: 绕圈注水
+  - label: 第二段注水
+    water_g: 75
+    wait_seconds: 60
+    note: 半绕圈半中心注水
+  - label: 最终注水
+    water_g: 75
+    wait_seconds: 60
+    note: 半绕圈半中心注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v3
+tags:
+  - light-roast
+  - balanced
+  - multi-pour

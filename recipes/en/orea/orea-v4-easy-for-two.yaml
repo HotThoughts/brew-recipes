@@ -1,0 +1,38 @@
+id: orea-v4-easy-for-two
+name: V4 Easy For Two
+brewer: Orea
+variant: v4
+dose_g: 25
+water_ml: 400
+ratio: '1:16'
+water_temp_c: 94
+grind_size: coarse
+description: Easy Does It scaled up for two cups. Grind coarser than the single-cup version and maintain a steady 5 G/S pour rate throughout.
+phases:
+  - label: Bloom
+    water_g: 100
+    note: Spiral pour to saturate evenly
+  - label: Second Pour
+    water_g: 75
+    wait_seconds: 40
+    note: Spiral pour
+  - label: Third Pour
+    water_g: 75
+    wait_seconds: 45
+    note: Spiral pour
+  - label: Fourth Pour
+    water_g: 75
+    wait_seconds: 35
+    note: Spiral pour
+  - label: Final Pour
+    water_g: 75
+    wait_seconds: 45
+    note: Spiral pour
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - beginner-friendly
+  - multi-pour
+  - balanced

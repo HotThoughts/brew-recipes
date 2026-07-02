@@ -1,0 +1,33 @@
+id: orea-z1-the-hybrid
+name: Z1 The Hybrid
+brewer: Orea
+variant: z1
+dose_g: 16
+water_ml: 260
+ratio: '1:16.3'
+water_temp_c: 94
+grind_size: medium-coarse
+description: A hybrid percolation-immersion recipe by Matteo D'Ottavio for the Z1 with Switch adapter. Percolate the first two pours, then close the valve for a final immersion. Steep longer for more body, shorter for lighter texture.
+phases:
+  - label: Bloom — Valve Closed
+    water_g: 60
+    note: Close valve, spiral pour via Melodrip
+  - label: Second Pour — Valve Open
+    water_g: 100
+    wait_seconds: 40
+    note: Open valve, spiral pour via Melodrip
+  - label: Immersion Pour — Valve Closed
+    water_g: 100
+    wait_seconds: 60
+    note: Close valve, pour to 260g
+  - label: Drain
+    water_g: 0
+    wait_seconds: 60
+    note: Open valve and let drain
+source:
+  name: Matteo D'Ottavio / Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - immersion
+  - balanced

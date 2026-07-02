@@ -1,0 +1,28 @@
+id: orea-z1-the-clever
+name: Z1 The Clever
+brewer: Orea
+variant: z1
+dose_g: 10
+water_ml: 166
+ratio: '1:16.6'
+water_temp_c: 92
+grind_size: medium-fine
+description: An immersion recipe for the Z1 with Switch adapter, adapted from James Hoffmann's Clever method. Add water first, then coffee on top — stir gently to saturate. No Melodrip needed. Steep 2 minutes then open valve.
+phases:
+  - label: Add Coffee
+    water_g: 0
+    note: Close valve, add 166ml water, then 10g coffee on top. Stir gently to saturate
+  - label: Steep
+    water_g: 0
+    wait_seconds: 120
+    note: Let steep with valve closed
+  - label: Drain
+    water_g: 0
+    note: Open valve and let drain
+source:
+  name: James Hoffmann / Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - immersion
+  - beginner-friendly

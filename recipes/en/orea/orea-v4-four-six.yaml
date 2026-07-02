@@ -1,0 +1,33 @@
+id: orea-v4-four-six
+name: V4 The Four Six
+brewer: Orea
+variant: v4
+dose_g: 20
+water_ml: 300
+ratio: '1:15'
+water_temp_c: 92
+grind_size: coarse
+description: Tetsu Kasuya's 4:6 method adapted for the V4 Wide + Fast Bottom. A framework, not just a recipe — swap the first two pour sizes for more sweetness, or split the last pour into three for more strength. Uses Flat filter + Negotiator.
+phases:
+  - label: First Pour
+    water_g: 70
+    note: Circular pour
+  - label: Second Pour
+    water_g: 50
+    wait_seconds: 40
+    note: Circular pour
+  - label: Third Pour
+    water_g: 90
+    wait_seconds: 40
+    note: Circular pour
+  - label: Final Pour
+    water_g: 90
+    wait_seconds: 40
+    note: Circular pour
+source:
+  name: Tetsu Kasuya / Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - multi-pour
+  - balanced

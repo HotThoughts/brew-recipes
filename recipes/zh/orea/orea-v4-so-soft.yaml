@@ -1,0 +1,33 @@
+id: orea-v4-so-soft
+name: V4 So Soft
+brewer: Orea
+variant: v4
+dose_g: 16
+water_ml: 250
+ratio: '1:15.6'
+water_temp_c: 92
+grind_size: coarse
+description: V4 Wide + Apex Bottom 使用 Sibarist Fast Conical 滤纸的锥形配方。柔和干净的结果，适合多种咖啡。第一段注水先绕圈再转中心。
+phases:
+  - label: 闷蒸
+    water_g: 50
+    note: 先 10g 绕圈，后 40g 中心注水
+  - label: 第二段注水
+    water_g: 50
+    wait_seconds: 30
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 100
+    wait_seconds: 30
+    note: 绕圈注水
+  - label: 最终注水
+    water_g: 50
+    wait_seconds: 30
+    note: 中心注水
+source:
+  name: Mordy / Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - balanced
+  - multi-pour

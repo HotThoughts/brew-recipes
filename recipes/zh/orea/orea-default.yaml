@@ -1,29 +1,32 @@
 id: orea-default
-name: Orea 官方冲煮方案
+name: V3 基础双人份
 brewer: Orea
 dose_g: 18
 water_ml: 300
 ratio: "1:16.7"
-water_temp_c: 93
-grind_size: medium-coarse
+variant: v3
+water_temp_c: 94
+grind_size: medium
 description: >
-  Orea UK 为 V3 滤杯推荐的官方方案，搭配平底（蛋糕）滤纸。以中等偏粗的研磨度和三段注水
-  为基础，在清晰度与醇厚度之间取得平衡。最后一段中心注水有助于粉床平整，萃取更均匀。
-  目标流完时间约 2:45–3:15。
+  V3 + Wave 滤纸的经典脉冲配方。四段均匀绕圈注水在更大杯量中带来更多平衡感。
+  从 V60 或 Kalita 过渡会很熟悉。
 phases:
   - label: 闷蒸
-    water_g: 50
-    wait_seconds: 35
-    note: 绕圈注水均匀浸润，静置排气
+    water_g: 60
+    note: 绕圈注水均匀浸润
   - label: 第二段注水
-    water_g: 125
-    wait_seconds: 0
-    note: 轻柔绕圈注水至总重 175g
-  - label: 最后一段注水
-    water_g: 125
-    wait_seconds: 0
-    note: 中心注水至总重 300g，让粉床平整流完
+    water_g: 80
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 80
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 最终注水
+    water_g: 80
+    wait_seconds: 40
+    note: 绕圈注水
 source:
   name: Orea UK
   url: https://www.orea.uk/guides-v3
-tags: [light-roast, medium-roast, beginner-friendly, multi-pour, balanced]
+tags: [light-roast, beginner-friendly, multi-pour, balanced]

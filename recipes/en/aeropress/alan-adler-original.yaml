@@ -4,6 +4,7 @@ brewer: Aeropress
 dose_g: 20
 water_ml: 90
 ratio: "1:4.5"
+variant: standard
 water_temp_c: 80
 grind_size: medium-fine
 description: >

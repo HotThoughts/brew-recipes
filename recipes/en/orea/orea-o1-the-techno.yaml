@@ -1,0 +1,33 @@
+id: orea-o1-the-techno
+name: O1 The Techno
+brewer: Orea
+variant: o1
+dose_g: 12
+water_ml: 200
+ratio: '1:16.1'
+water_temp_c: 94
+grind_size: medium-coarse
+description: Mordy's progressive recipe for the O1 with Flat filter + Negotiator. Pours go from circular to mixed to central, and from bigger to smaller. For Wave filters, grind slightly finer.
+phases:
+  - label: Bloom
+    water_g: 40
+    note: Circular pour
+  - label: Second Pour
+    water_g: 80
+    wait_seconds: 30
+    note: Circular pour
+  - label: Third Pour
+    water_g: 40
+    wait_seconds: 50
+    note: 20g circular then 20g central pour
+  - label: Final Pour
+    water_g: 40
+    wait_seconds: 25
+    note: Central pour
+source:
+  name: Mordy / Orea UK
+  url: https://www.orea.uk/guides-o1
+tags:
+  - light-roast
+  - multi-pour
+  - balanced

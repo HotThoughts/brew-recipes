@@ -1,0 +1,33 @@
+id: orea-big-boy-the-pulse
+name: Big Boy The Pulse
+brewer: Orea
+variant: big-boy
+dose_g: 40
+water_ml: 600
+ratio: '1:15'
+water_temp_c: 92
+grind_size: coarse
+description: A 4-pulse recipe for the Big Boy with Wave filters. One pour per minute keeps the bed refreshed. Don't pour too slowly — maintain good water volume over the wide bed.
+phases:
+  - label: Bloom
+    water_g: 150
+    note: Spiral pour, 6–7 G/S
+  - label: Second Pour
+    water_g: 150
+    wait_seconds: 60
+    note: Spiral pour, 6 G/S
+  - label: Third Pour
+    water_g: 150
+    wait_seconds: 45
+    note: Spiral pour, 6 G/S
+  - label: Final Pour
+    water_g: 150
+    wait_seconds: 45
+    note: Spiral pour, 6 G/S
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-big-boy
+tags:
+  - light-roast
+  - multi-pour
+  - balanced

@@ -4,6 +4,7 @@ brewer: April
 dose_g: 13
 water_ml: 200
 ratio: "1:15.4"
+variant: standard
 water_temp_c: 94
 grind_size: medium-coarse
 description: >

@@ -1,4 +1,6 @@
 node_modules/
+dist/
+.astro/
 *.log
 .DS_Store
 
@@ -16,3 +18,14 @@ node_modules/
 
 # Claude Code local config
 .claude/
+.agents/
+.codex/
+.github/skills/
+.github/hooks/
+.impeccable/
+.playwright-mcp
+skills-lock.json
+
+# Dev artifacts (screenshots, Playwright snapshots)
+/*.png
+/*.yml

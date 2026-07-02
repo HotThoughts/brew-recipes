@@ -1,30 +1,32 @@
 id: orea-default
-name: Orea Official Recipe
+name: V3 Base Two
 brewer: Orea
 dose_g: 18
 water_ml: 300
 ratio: "1:16.7"
-water_temp_c: 93
-grind_size: medium-coarse
+variant: v3
+water_temp_c: 94
+grind_size: medium
 description: >
-  The recommended recipe from Orea UK for the V3 brewer with a flat-bottom
-  (Wave-style) filter. Built around a medium-coarse grind and three pours
-  that balance clarity with body. The final center pour helps flatten the
-  bed for even extraction. Target draw-down around 2:45–3:15.
+  The classic V3 pulse recipe with Wave filter. Four even spiral pours bring
+  out balance in a bigger cup. Familiar if transitioning from V60 or Kalita.
 phases:
   - label: Bloom
-    water_g: 50
-    wait_seconds: 35
-    note: Pour in circles to saturate evenly, let bloom
+    water_g: 60
+    note: Spiral pour to saturate evenly
   - label: Second Pour
-    water_g: 125
-    wait_seconds: 0
-    note: Gentle circular pour up to 175g total
+    water_g: 80
+    wait_seconds: 40
+    note: Spiral pour
+  - label: Third Pour
+    water_g: 80
+    wait_seconds: 40
+    note: Spiral pour
   - label: Final Pour
-    water_g: 125
-    wait_seconds: 0
-    note: Center pour up to 300g total, let draw down flat
+    water_g: 80
+    wait_seconds: 40
+    note: Spiral pour
 source:
   name: Orea UK
   url: https://www.orea.uk/guides-v3
-tags: [light-roast, medium-roast, beginner-friendly, multi-pour, balanced]
+tags: [light-roast, beginner-friendly, multi-pour, balanced]

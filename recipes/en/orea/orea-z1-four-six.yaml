@@ -1,0 +1,37 @@
+id: orea-z1-four-six
+name: Z1 The Four Six
+brewer: Orea
+variant: z1
+dose_g: 14
+water_ml: 225
+ratio: '1:16.1'
+water_temp_c: 94
+grind_size: medium-coarse
+description: Tetsu Kasuya's 4:6 method adapted for the Z1 via Melodrip. Five pours with an easy framework — swap first two pour sizes for more brightness, or pour evenly for balance.
+phases:
+  - label: First Pour
+    water_g: 35
+    note: Circular pour via Melodrip
+  - label: Second Pour
+    water_g: 55
+    wait_seconds: 40
+    note: Circular pour via Melodrip
+  - label: Third Pour
+    water_g: 45
+    wait_seconds: 40
+    note: Circular pour via Melodrip
+  - label: Fourth Pour
+    water_g: 45
+    wait_seconds: 25
+    note: Circular pour via Melodrip
+  - label: Final Pour
+    water_g: 45
+    wait_seconds: 20
+    note: Circular pour via Melodrip
+source:
+  name: Tetsu Kasuya / Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - multi-pour
+  - balanced

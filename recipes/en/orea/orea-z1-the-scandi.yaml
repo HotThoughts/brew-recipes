@@ -1,0 +1,25 @@
+id: orea-z1-the-scandi
+name: Z1 The Scandi
+brewer: Orea
+variant: z1
+dose_g: 12
+water_ml: 200
+ratio: '1:16.7'
+water_temp_c: 93
+grind_size: medium
+description: A super-simple 2-pour recipe on the Z1 via Melodrip. Two big fast circular pours — 100g in 20 seconds each. Easy, quick, and surprisingly balanced. Add 2g coffee and grind coarser for more intensity with cleanliness.
+phases:
+  - label: First Pour
+    water_g: 100
+    note: Circular pour within 20 seconds via Melodrip
+  - label: Second Pour
+    water_g: 100
+    wait_seconds: 75
+    note: Circular pour within 20 seconds via Melodrip
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - balanced
+  - beginner-friendly

@@ -1,0 +1,33 @@
+id: orea-o1-the-techno
+name: O1 The Techno
+brewer: Orea
+variant: o1
+dose_g: 12
+water_ml: 200
+ratio: '1:16.1'
+water_temp_c: 94
+grind_size: medium-coarse
+description: Mordy 为 O1 + Flat 滤纸 + Negotiator 设计的渐进式配方。注水从绕圈到混合到中心，从大到小。Wave 滤纸需研磨稍细。
+phases:
+  - label: 闷蒸
+    water_g: 40
+    note: 绕圈注水
+  - label: 第二段注水
+    water_g: 80
+    wait_seconds: 30
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 40
+    wait_seconds: 50
+    note: 20g 绕圈后 20g 中心注水
+  - label: 最终注水
+    water_g: 40
+    wait_seconds: 25
+    note: 中心注水
+source:
+  name: Mordy / Orea UK
+  url: https://www.orea.uk/guides-o1
+tags:
+  - light-roast
+  - multi-pour
+  - balanced

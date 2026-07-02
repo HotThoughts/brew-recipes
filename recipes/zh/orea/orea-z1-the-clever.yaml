@@ -1,0 +1,28 @@
+id: orea-z1-the-clever
+name: Z1 聪明杯法
+brewer: Orea
+variant: z1
+dose_g: 10
+water_ml: 166
+ratio: '1:16.6'
+water_temp_c: 92
+grind_size: medium-fine
+description: Z1 + Switch 适配器的浸泡配方，改编自 James Hoffmann 的聪明杯方法。先加水后加粉 — 轻柔搅拌使咖啡饱和。无需 Melodrip。浸泡 2 分钟后开阀门。
+phases:
+  - label: 加入咖啡粉
+    water_g: 0
+    note: 关闭阀门，加入 166ml 水，再加 10g 咖啡粉。轻柔搅拌使咖啡饱和
+  - label: 浸泡
+    water_g: 0
+    wait_seconds: 120
+    note: 关闭阀门浸泡
+  - label: 排放
+    water_g: 0
+    note: 打开阀门排放
+source:
+  name: James Hoffmann / Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - immersion
+  - beginner-friendly

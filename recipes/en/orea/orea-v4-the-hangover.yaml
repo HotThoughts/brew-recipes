@@ -1,0 +1,36 @@
+id: orea-v4-the-hangover
+name: V4 The Hangover
+brewer: Orea
+variant: v4
+dose_g: 32
+water_ml: 600
+ratio: '1:18.8'
+water_temp_c: 90
+grind_size: coarse
+description: When you need 500+ ml of coffee. Five slow circular pours on the V4 Fast Bottom + Wave filter. Slow your pour rate slightly — there's a lot of coffee in the brewer. Works for one, two, or three thirsty people.
+phases:
+  - label: Bloom
+    water_g: 120
+    note: Slow circular pour
+  - label: Second Pour
+    water_g: 120
+    wait_seconds: 45
+    note: Circular pour
+  - label: Third Pour
+    water_g: 120
+    wait_seconds: 40
+    note: Circular pour
+  - label: Fourth Pour
+    water_g: 120
+    wait_seconds: 40
+    note: Circular pour
+  - label: Final Pour
+    water_g: 120
+    wait_seconds: 40
+    note: Circular pour
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - multi-pour

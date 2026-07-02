@@ -1,0 +1,33 @@
+id: orea-big-boy-the-pulse
+name: Big Boy 脉冲注水
+brewer: Orea
+variant: big-boy
+dose_g: 40
+water_ml: 600
+ratio: '1:15'
+water_temp_c: 92
+grind_size: coarse
+description: Big Boy + Wave 滤纸的 4 段脉冲配方。每分钟一段注水保持粉床活力。不要注水太慢 — 在宽粉床上保持足够水位。
+phases:
+  - label: 闷蒸
+    water_g: 150
+    note: 绕圈注水，6–7 G/S
+  - label: 第二段注水
+    water_g: 150
+    wait_seconds: 60
+    note: 绕圈注水，6 G/S
+  - label: 第三段注水
+    water_g: 150
+    wait_seconds: 45
+    note: 绕圈注水，6 G/S
+  - label: 最终注水
+    water_g: 150
+    wait_seconds: 45
+    note: 绕圈注水，6 G/S
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-big-boy
+tags:
+  - light-roast
+  - multi-pour
+  - balanced

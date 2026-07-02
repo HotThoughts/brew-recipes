@@ -1,0 +1,37 @@
+id: orea-v4-two-aussies
+name: V4 双人份 The Aussie
+brewer: Orea
+variant: v4
+dose_g: 26
+water_ml: 500
+ratio: '1:19.2'
+water_temp_c: 97
+grind_size: coarse
+description: The Aussie 的双人份版本。由于粉量和液量更大，注水速度降至标准 5 G/S。若太薄可增加粉量或研磨稍细。
+phases:
+  - label: 闷蒸
+    water_g: 100
+    note: 绕圈注水
+  - label: 第二段注水
+    water_g: 100
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 100
+    wait_seconds: 30
+    note: 绕圈注水
+  - label: 第四段注水
+    water_g: 100
+    wait_seconds: 30
+    note: 绕圈注水
+  - label: 最终注水
+    water_g: 100
+    wait_seconds: 30
+    note: 绕圈注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - multi-pour
+  - acidic

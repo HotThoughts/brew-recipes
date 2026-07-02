@@ -17,17 +17,20 @@ properties:
   dose_g:
     type: number
     minimum: 5
-    maximum: 60
+    maximum: 80
     description: Coffee dose in grams
   water_ml:
     type: number
     minimum: 50
-    maximum: 1000
+    maximum: 1200
     description: Total brew water in ml
   ratio:
     type: string
     pattern: '^1:\d+(\.\d+)?$'
     description: Coffee-to-water ratio, e.g. "1:15"
+  variant:
+    type: string
+    description: Brewer-specific variant, e.g. "1-cup", "2-cup", "155", "185", "type-a", "negotiator"
   water_temp_c:
     type: number
     minimum: 80

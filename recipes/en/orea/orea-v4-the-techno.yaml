@@ -1,0 +1,33 @@
+id: orea-v4-the-techno
+name: V4 The Techno
+brewer: Orea
+variant: v4
+dose_g: 12
+water_ml: 200
+ratio: '1:16.1'
+water_temp_c: 94
+grind_size: medium-coarse
+description: A progressive recipe by Mordy for the V4 Open Bottom — pours go from bigger to smaller, and from circular to mixed to central. Best with Flat filter + Negotiator or Open/Apex Bottom.
+phases:
+  - label: Bloom
+    water_g: 40
+    note: Circular pour
+  - label: Second Pour
+    water_g: 80
+    wait_seconds: 30
+    note: Circular pour
+  - label: Third Pour
+    water_g: 40
+    wait_seconds: 50
+    note: 20g circular then 20g central pour
+  - label: Final Pour
+    water_g: 40
+    wait_seconds: 25
+    note: Central pour
+source:
+  name: Mordy / Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - multi-pour
+  - balanced

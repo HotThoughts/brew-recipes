@@ -1,0 +1,29 @@
+id: orea-z1-the-micro
+name: Z1 The Micro
+brewer: Orea
+variant: z1
+dose_g: 10
+water_ml: 170
+ratio: '1:17'
+water_temp_c: 95
+grind_size: medium
+description: A full-immersion recipe for the Z1 with Switch adapter. Open valve for a short bloom, then close and fill the chamber. Simple and clean results for any coffee type.
+phases:
+  - label: Bloom — Valve Open
+    water_g: 20
+    note: Open valve, spiral pour 20g via Melodrip
+  - label: Immersion Pour — Valve Closed
+    water_g: 150
+    wait_seconds: 40
+    note: Close valve, spiral pour 150g slowly at 3 G/S
+  - label: Drain
+    water_g: 0
+    wait_seconds: 80
+    note: Open valve and let drain
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - immersion
+  - balanced

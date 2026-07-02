@@ -1,0 +1,38 @@
+id: orea-z1-easy-does-it
+name: Z1 Easy Does It
+brewer: Orea
+variant: z1
+dose_g: 16
+water_ml: 260
+ratio: '1:16.3'
+water_temp_c: 96
+grind_size: medium-coarse
+description: The go-to Z1 pulse recipe using the Melodrip dish (mandatory). Five even pours keep it simple and repeatable. For dense washed coffee, combine last 2 pours into one 100g pour; for soluble naturals, go 2 clix coarser and use 18g dose.
+phases:
+  - label: Bloom
+    water_g: 60
+    note: Spiral pour via Melodrip
+  - label: Second Pour
+    water_g: 50
+    wait_seconds: 40
+    note: Spiral pour via Melodrip
+  - label: Third Pour
+    water_g: 50
+    wait_seconds: 35
+    note: Spiral pour via Melodrip
+  - label: Fourth Pour
+    water_g: 50
+    wait_seconds: 30
+    note: Spiral pour via Melodrip
+  - label: Final Pour
+    water_g: 50
+    wait_seconds: 30
+    note: Spiral pour via Melodrip
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-z1
+tags:
+  - light-roast
+  - beginner-friendly
+  - multi-pour
+  - balanced

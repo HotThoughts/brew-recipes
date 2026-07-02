@@ -1,0 +1,33 @@
+id: orea-v4-dara
+name: V4 The Dara
+brewer: Orea
+variant: v4
+dose_g: 12
+water_ml: 200
+ratio: '1:16.7'
+water_temp_c: 92
+grind_size: medium
+description: A recipe by DARA from Madrid for the V4 Open Bottom. Balanced and consistent results across all coffee types. Scale up to 18g by pouring to 60g/135g/225g/300g.
+phases:
+  - label: Bloom
+    water_g: 40
+    note: Spiral pour to saturate evenly
+  - label: Second Pour
+    water_g: 50
+    wait_seconds: 40
+    note: Spiral pour
+  - label: Third Pour
+    water_g: 60
+    wait_seconds: 40
+    note: Spiral pour
+  - label: Final Pour
+    water_g: 50
+    wait_seconds: 40
+    note: Spiral pour
+source:
+  name: DARA / Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - balanced
+  - multi-pour

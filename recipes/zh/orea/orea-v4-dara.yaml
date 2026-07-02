@@ -1,0 +1,33 @@
+id: orea-v4-dara
+name: V4 The Dara
+brewer: Orea
+variant: v4
+dose_g: 12
+water_ml: 200
+ratio: '1:16.7'
+water_temp_c: 92
+grind_size: medium
+description: 来自马德里 DARA 的 V4 Open Bottom 配方。各种咖啡豆都能获得平衡且一致的结果。可按 60g/135g/225g/300g 放大至 18g 粉量。
+phases:
+  - label: 闷蒸
+    water_g: 40
+    note: 绕圈注水均匀浸润
+  - label: 第二段注水
+    water_g: 50
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 60
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 最终注水
+    water_g: 50
+    wait_seconds: 40
+    note: 绕圈注水
+source:
+  name: DARA / Orea UK
+  url: https://www.orea.uk/guides-v4
+tags:
+  - light-roast
+  - balanced
+  - multi-pour

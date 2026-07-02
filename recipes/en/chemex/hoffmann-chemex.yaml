@@ -4,6 +4,7 @@ brewer: Chemex
 dose_g: 30
 water_ml: 500
 ratio: "1:16.7"
+variant: standard
 water_temp_c: 100
 grind_size: medium-coarse
 description: >
@@ -24,5 +25,5 @@ phases:
       breaks to drops.
 source:
   name: James Hoffmann
-  url: https://www.youtube.com/watch?v=1oB1oDrDkHM
+  url: https://www.youtube.com/watch?v=ikt-X5x7yoc
 tags: [medium-roast, beginner-friendly, continuous-pour]

@@ -1,0 +1,20 @@
+id: orea-v3-the-fine
+name: V3 细研磨
+brewer: Orea
+variant: v3
+dose_g: 12
+water_ml: 200
+ratio: '1:16.7'
+water_temp_c: 94
+grind_size: fine
+description: V3 + Wave 滤纸的社区热门单注水配方。先 50g 缓慢绕圈，然后 150g 缓慢中心注水。速度很快 — 总是 2 分钟内完成。
+phases:
+  - label: 注水
+    water_g: 200
+    note: 先 50g 缓慢绕圈，后 150g 缓慢中心注水
+source:
+  name: Orea UK
+  url: https://www.orea.uk/guides-v3
+tags:
+  - light-roast
+  - single-pour

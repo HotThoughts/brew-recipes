@@ -1,0 +1,26 @@
+id: the-barn-1-cup-v60
+name: The Barn 单人份 V60
+brewer: V60
+dose_g: 16
+water_ml: 250
+ratio: "1:15.6"
+variant: 1-cup
+water_temp_c: 96
+grind_size: medium-fine
+description: >
+  The Barn Berlin 的日常 V60 配方。简单、可重复的分段注水方式。
+  注水保持在粉床的"贝果圈"范围内，避免冲到滤纸边缘。
+phases:
+  - label: 闷蒸
+    water_g: 40
+    wait_seconds: 30
+  - label: 第二段注水
+    water_g: 60
+  - label: 分段注水
+    water_g: 50
+    pours: 3
+    note: 三次约 50g 的注水，每次之间轻柔间隔
+source:
+  name: The Barn Berlin
+  url: https://thebarn.de/blogs/the-barn-blog/v60-drip
+tags: [light-roast, beginner-friendly, multi-pour]

@@ -1,0 +1,849 @@
+@layer reset, base, layout, components, motion;
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html {
+    min-height: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    min-height: 100%;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
+
+@layer base {
+  :root {
+    --paper: oklch(0.925 0.027 302);
+    --paper-quiet: oklch(0.955 0.016 302);
+    --surface: oklch(0.895 0.034 302);
+    --surface-strong: oklch(0.835 0.052 301);
+    --ink: oklch(0.245 0.052 299);
+    --ink-light: oklch(0.445 0.05 300);
+    --muted: oklch(0.55 0.047 300);
+    --rule: oklch(0.765 0.058 300);
+    --highlight: oklch(0.73 0.083 298);
+    --honey: oklch(0.78 0.148 75);
+    --white: oklch(1 0 0);
+
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-mono: 'Space Mono', 'SFMono-Regular', Consolas, monospace;
+    --font-body: var(--font-mono);
+
+    --shell: min(1120px, calc(100vw - 32px));
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --radius: 10px;
+    --focus: 0 0 0 3px oklch(0.78 0.148 75 / 0.45);
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 85% 18%, oklch(0.73 0.083 298 / 0.32), transparent 13rem),
+      linear-gradient(180deg, var(--paper-quiet), var(--paper));
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--highlight);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    border-radius: 6px;
+    box-shadow: var(--focus);
+    outline: 2px solid transparent;
+    outline-offset: 3px;
+  }
+
+  .texture-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.36;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+  }
+
+  .site-shell {
+    position: relative;
+    z-index: 10;
+    width: var(--shell);
+    margin: 0 auto;
+    padding: 32px 0 56px;
+  }
+}
+
+@layer layout {
+  .site-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-bottom: clamp(48px, 8vw, 92px);
+    color: var(--ink-light);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .site-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+  }
+
+  .site-nav a {
+    transition: color 180ms var(--ease-out);
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .lang-opt.active {
+    color: var(--ink);
+  }
+
+  .lang-sep {
+    color: var(--rule);
+    user-select: none;
+  }
+
+  .site-nav a:hover,
+  .brand-mark:hover {
+    color: var(--ink);
+  }
+
+  .home-hero,
+  .listing-layout,
+  .recipe-detail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(40px, 7vw, 84px);
+  }
+
+  .home-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+    align-items: end;
+    min-height: 46vh;
+  }
+
+  .brewer-jump {
+    grid-column: 1 / -1;
+    view-transition-name: brewer-tags;
+  }
+
+  .archive-summary {
+    view-transition-name: archive-stats;
+  }
+
+  /* Compact: brewer selected — pills move next to title, hero collapses */
+  .home-hero.compact {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    min-height: auto;
+    gap: 24px;
+    padding-bottom: clamp(28px, 5vw, 56px);
+  }
+
+  .home-hero.compact .lede,
+  .home-hero.compact .archive-summary {
+    display: none;
+  }
+
+  .home-hero.compact .brewer-jump {
+    grid-column: auto;
+  }
+
+  .home-hero.compact .page-title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    transition: font-size 400ms var(--ease-out);
+  }
+
+  .intro-panel,
+  .listing-intro,
+  .recipe-header {
+    display: grid;
+    gap: 24px;
+  }
+
+  .page-title {
+    max-width: 11ch;
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 10vw, 6rem);
+    font-weight: 400;
+    line-height: 0.93;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    text-shadow: 0 0 2px oklch(0.73 0.083 298 / 0.2);
+  }
+
+  .lede,
+  .recipe-intro {
+    max-width: 66ch;
+    color: var(--ink);
+    font-size: 0.95rem;
+    text-wrap: pretty;
+  }
+
+  .system-line,
+  .label,
+  .summary-label,
+  .brewer-count,
+  .group-heading span {
+    color: var(--ink-light);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-style: italic;
+  }
+
+  .brewer-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .archive-summary,
+  .spec-grid,
+  .source-panel {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: oklch(1 0 0 / 0.2);
+  }
+
+  .archive-summary {
+    display: grid;
+  }
+
+  .summary-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .summary-row:last-child {
+    border-bottom: 0;
+  }
+
+  .summary-value {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    line-height: 1;
+  }
+
+  .brewer-index,
+  .phase-section {
+    display: grid;
+    gap: 22px;
+    padding-top: clamp(44px, 8vw, 88px);
+  }
+
+  .recipe-groups {
+    display: grid;
+  }
+
+  .section-heading {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.38fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: baseline;
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+  }
+
+  .section-heading.compact {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .section-heading h2,
+  .group-heading h2,
+  .phase-copy h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .section-heading h2,
+  .group-heading h2 {
+    font-size: clamp(2.6rem, 6.5vw, 4.2rem);
+    letter-spacing: -0.015em;
+  }
+
+  .group-heading h2 {
+    color: var(--ink);
+  }
+
+  .section-heading p {
+    max-width: 62ch;
+    color: var(--ink-light);
+    font-size: 0.85rem;
+  }
+
+  .brewer-list,
+  .recipe-list,
+  .phase-list {
+    display: grid;
+  }
+}
+
+@layer components {
+  .cursor {
+    display: inline-block;
+    width: 0.22em;
+    height: 0.78em;
+    margin-left: 0.08em;
+    background: var(--highlight);
+    vertical-align: -0.08em;
+    animation: blink 1.2s infinite;
+  }
+
+  .brewer-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    padding: 9px 18px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    transition:
+      border-color 180ms var(--ease-out),
+      background-color 180ms var(--ease-out),
+      color 180ms var(--ease-out),
+      transform 180ms var(--ease-out);
+  }
+
+  .brewer-toggle:hover {
+    border-color: var(--ink-light);
+    background: oklch(1 0 0 / 0.22);
+    transform: translateY(-1px);
+  }
+
+  .brewer-toggle:active {
+    transform: scale(0.96);
+  }
+
+  .brewer-toggle[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    font-weight: 700;
+  }
+
+  .brewer-toggle[aria-pressed="true"]:hover {
+    background: var(--ink-light);
+    color: var(--paper);
+    border-color: var(--ink-light);
+  }
+
+  /* Language visibility — default: show en, hide zh.
+     Scoped under body so the body's own lang-* class doesn't
+     cascade display:none onto the page root. */
+  body .lang-zh {
+    display: none;
+  }
+
+  body.lang-zh .lang-en {
+    display: none;
+  }
+
+  body.lang-zh .lang-zh {
+    display: revert;
+  }
+
+  /* Recipe detail dual-language blocks */
+  .recipe-version {
+    display: none;
+  }
+
+  body.lang-en .recipe-version.lang-en,
+  body:not([class*="lang-"]) .recipe-version.lang-en {
+    display: contents;
+  }
+
+  body.lang-zh .recipe-version.lang-zh {
+    display: contents;
+  }
+
+  .brewer-row,
+  .recipe-row,
+  .phase-row {
+    display: grid;
+    gap: 18px;
+    border-top: 1px solid var(--rule);
+    transition:
+      background-color 180ms var(--ease-out),
+      color 180ms var(--ease-out);
+  }
+
+  .brewer-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 22px 0;
+  }
+
+  .brewer-row:hover,
+  .recipe-row:hover {
+    color: var(--ink-light);
+    background: oklch(1 0 0 / 0.16);
+  }
+
+  .brewer-name {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    line-height: 0.95;
+  }
+
+  .listing-intro {
+    max-width: 760px;
+  }
+
+  .detail-nav a,
+  .source-panel a {
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 180ms var(--ease-out), transform 200ms var(--ease-out);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .detail-nav a:hover,
+  .source-panel a:hover {
+    color: var(--ink-light);
+    transform: translateX(-4px);
+  }
+
+  .recipe-group {
+    display: grid;
+    grid-template-columns: minmax(140px, 0.26fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 56px);
+    align-items: start;
+    scroll-margin-top: 24px;
+    padding-top: clamp(44px, 8vw, 88px);
+  }
+
+  .recipe-group:first-child {
+    padding-top: clamp(24px, 5vw, 52px);
+  }
+
+  .group-heading {
+    display: grid;
+    gap: 4px;
+  }
+
+  .group-count {
+    color: var(--ink-light);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .variant-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 10px;
+  }
+
+  .variant-pill {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--ink-light);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: color 180ms var(--ease-out);
+    text-underline-offset: 4px;
+  }
+
+  .variant-pill:hover {
+    color: var(--ink);
+  }
+
+  .variant-pill.active {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+
+  .recipe-row.filtered-out {
+    display: none;
+  }
+
+  .recipe-row {
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.52fr);
+    padding: 20px 0;
+    transition:
+      background-color 180ms var(--ease-out),
+      color 180ms var(--ease-out),
+      transform 200ms var(--ease-out);
+  }
+
+  .recipe-row:hover {
+    transform: translateX(4px);
+  }
+
+  .recipe-main {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .recipe-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1;
+  }
+
+  .recipe-description {
+    display: -webkit-box;
+    max-width: 68ch;
+    overflow: hidden;
+    color: var(--ink-light);
+    font-size: 0.82rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .recipe-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: start;
+    gap: 8px;
+  }
+
+  .recipe-stats > span {
+    color: var(--ink-light);
+    font-size: 0.72rem;
+  }
+
+  .recipe-stats > span:not(:last-child)::after {
+    content: '·';
+    margin: 0 7px;
+    color: var(--rule);
+  }
+
+  .tag-list li {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    padding: 3px 10px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink-light);
+    font-size: 0.7rem;
+  }
+
+  .detail-nav {
+    margin-top: clamp(28px, 5vw, 54px);
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-light);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .recipe-article {
+    display: grid;
+    gap: clamp(28px, 5vw, 54px);
+  }
+
+  .recipe-header {
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
+    align-items: start;
+  }
+
+  .recipe-header .page-title {
+    max-width: 13ch;
+  }
+
+  .recipe-intro {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    line-height: 1.18;
+  }
+
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .spec-grid div {
+    min-width: 0;
+    padding: 16px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .spec-grid div:last-child {
+    border-right: 0;
+  }
+
+  .spec-grid strong,
+  .source-panel strong {
+    display: block;
+    overflow-wrap: anywhere;
+    font-size: 0.94rem;
+    font-weight: 400;
+  }
+
+  .phase-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .phase-row {
+    grid-template-columns: 58px minmax(0, 1fr) minmax(130px, auto);
+    align-items: start;
+    padding: 18px 0;
+  }
+
+  .phase-index,
+  .phase-values {
+    color: var(--ink-light);
+    font-size: 0.78rem;
+  }
+
+  .phase-copy {
+    display: grid;
+    gap: 6px;
+  }
+
+  .phase-copy h3 {
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+  }
+
+  .phase-copy p {
+    max-width: 62ch;
+    color: var(--ink-light);
+    font-size: 0.82rem;
+  }
+
+  .phase-values {
+    display: grid;
+    justify-items: end;
+    gap: 4px;
+    white-space: nowrap;
+  }
+
+  .source-panel {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    padding: 18px;
+  }
+
+  .source-panel div {
+    display: grid;
+    gap: 2px;
+  }
+
+  .source-panel span:not(.label) {
+    color: var(--ink-light);
+    font-size: 0.78rem;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+    margin: 20px 0 0;
+    list-style: none;
+  }
+}
+
+@layer motion {
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .recipe-group.filtered-out {
+    display: none;
+  }
+
+  .recipe-group.entering {
+    animation: slide-up 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@media (max-width: 820px) {
+  :root {
+    --shell: min(100vw - 24px, 720px);
+  }
+
+  .site-shell {
+    padding-top: 20px;
+  }
+
+  .site-header {
+    padding-bottom: 44px;
+  }
+
+  .home-hero,
+  .recipe-header,
+  .recipe-row,
+  .section-heading,
+  .recipe-group {
+    grid-template-columns: 1fr;
+  }
+
+  .page-title {
+    max-width: 9ch;
+    font-size: clamp(3.4rem, 18vw, 5rem);
+  }
+
+  .archive-summary {
+    max-width: 420px;
+  }
+
+  .recipe-stats {
+    justify-content: flex-start;
+  }
+
+  .spec-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .spec-grid div {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .spec-grid div:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .spec-grid div:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+
+  .recipe-detail {
+    gap: 28px;
+  }
+
+  .recipe-header .page-title {
+    max-width: 10ch;
+    font-size: clamp(3.1rem, 14vw, 4.45rem);
+    line-height: 0.96;
+  }
+
+  .recipe-intro {
+    font-size: clamp(1.35rem, 6vw, 1.7rem);
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header,
+  .detail-nav,
+  .source-panel,
+  .brewer-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .site-nav {
+    align-items: flex-start;
+  }
+
+  .brewer-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .phase-row {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .phase-values {
+    grid-column: 2;
+    justify-items: start;
+  }
+
+  .recipe-description {
+    -webkit-line-clamp: 3;
+  }
+}

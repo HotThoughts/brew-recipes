@@ -1,0 +1,29 @@
+id: matt-perger-v60
+name: Matt Perger V60
+brewer: V60
+dose_g: 12
+water_ml: 200
+ratio: "1:16.7"
+variant: 1-cup
+water_temp_c: 97
+grind_size: medium-fine
+description: >
+  Matt Perger 来自 2013 年世界手冲大赛的高萃取率 V60 技法。特点是大胆地
+  搅拌闷蒸，研磨度比典型手冲配方更细。目标萃取率约 20.8%。
+phases:
+  - label: 闷蒸
+    water_g: 50
+    wait_seconds: 30
+    note: 以十字交叉方式用力搅拌，最大化浸润
+  - label: 第二段注水
+    water_g: 50
+    wait_seconds: 30
+  - label: 最后一段注水
+    water_g: 100
+    wait_seconds: 0
+    note: 水位降至一半时，轻敲并旋转使粉床平整（"Rao Spin"）
+source:
+  name: Matt Perger
+  url: https://www.youtube.com/watch?v=MPDfn--vxK8
+  competition: 2013 年世界手冲大赛
+tags: [light-roast, competition, advanced]

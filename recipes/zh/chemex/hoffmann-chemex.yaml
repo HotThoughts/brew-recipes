@@ -1,0 +1,27 @@
+id: hoffmann-chemex
+name: Hoffmann Chemex
+brewer: Chemex
+dose_g: 30
+water_ml: 500
+ratio: "1:16.7"
+variant: standard
+water_temp_c: 100
+grind_size: medium-coarse
+description: >
+  James Hoffmann 的 Chemex 配方。Chemex 的厚滤纸和大容量滤杯需要更粗的研磨度
+  和更长的萃取时间。单次闷蒸加连续注水的方式适合 Chemex 较慢的流速。
+phases:
+  - label: 闷蒸
+    water_g: 60
+    wait_seconds: 45
+    note: 用力摇晃使所有咖啡粉充分浸润
+  - label: 主注水
+    water_g: 440
+    wait_seconds: 0
+    note: >
+      同心圆连续注水，约 2:00 达到 500g。注水完成后轻轻搅拌一次，
+      然后让其自然流完。水流变为滴落时取出滤纸。
+source:
+  name: James Hoffmann
+  url: https://www.youtube.com/watch?v=ikt-X5x7yoc
+tags: [medium-roast, beginner-friendly, continuous-pour]

@@ -4,6 +4,7 @@ brewer: V60
 dose_g: 12
 water_ml: 200
 ratio: "1:16.7"
+variant: 1-cup
 water_temp_c: 97
 grind_size: medium-fine
 description: >
@@ -24,6 +25,6 @@ phases:
     note: When water drains halfway, tap/swirl to flatten bed ("Rao spin")
 source:
   name: Matt Perger
-  url: https://www.youtube.com/watch?v=1oB1oDrDkHM
+  url: https://www.youtube.com/watch?v=MPDfn--vxK8
   competition: World Brewers Cup 2013
 tags: [light-roast, competition, advanced]

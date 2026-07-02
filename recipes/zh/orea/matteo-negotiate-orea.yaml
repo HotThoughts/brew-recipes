@@ -4,6 +4,7 @@ brewer: Orea
 dose_g: 18
 water_ml: 300
 ratio: "1:16.7"
+variant: v3
 water_temp_c: 93
 grind_size: medium
 description: >
