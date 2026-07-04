@@ -186,6 +186,10 @@ export function formatRecipeCount(count: number, language: LanguageCode = 'en'):
 
 export type PourStyle = 'spiral' | 'circular' | 'center' | 'swirl';
 
+export const TASTE_VALUES = ['sweet', 'acidic', 'balanced'] as const;
+
+export const ROAST_VALUES = ['light-roast', 'medium-roast', 'dark-roast', 'omni-roast'] as const;
+
 const POUR_STYLE_PATTERNS: { style: PourStyle; test: RegExp }[] = [
   { style: 'spiral', test: /spiral|螺旋/i },
   { style: 'circular', test: /circular|circle|concentric|绕圈|画圈/i },

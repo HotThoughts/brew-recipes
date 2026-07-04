@@ -5,6 +5,8 @@ import {
   formatRecipeCount,
   getBrewerGroups,
   getRecipeCollection,
+  ROAST_VALUES,
+  TASTE_VALUES,
   type LanguageCode,
   type Recipe,
   withBase,
@@ -17,6 +19,10 @@ const uniqueRecipes = [
   ...new Map(collection.recipes.map((r) => [r.id, r])).values(),
 ];
 
+const recipeTags = new Set(uniqueRecipes.flatMap((recipe) => recipe.tags ?? []));
+const availableTasteValues = TASTE_VALUES.filter((value) => recipeTags.has(value));
+const availableRoastValues = ROAST_VALUES.filter((value) => recipeTags.has(value));
+
 const groups = getBrewerGroups(uniqueRecipes).map((group) => ({
   ...group,
   variants: [...new Set(group.recipes.map((r) => r.variant).filter(Boolean))].sort(),
@@ -24,6 +30,10 @@ const groups = getBrewerGroups(uniqueRecipes).map((group) => ({
 
 function getLangVersion(id: string, lang: LanguageCode): Recipe | undefined {
   return collection.byLanguage.get(lang)?.find((r) => r.id === id);
+}
+
+function matchingTags(recipe: Recipe, values: readonly string[]): string {
+  return (recipe.tags ?? []).filter((tag) => values.includes(tag)).join(' ');
 }
 ---
 
@@ -56,19 +66,66 @@ function getLangVersion(id: string, lang: LanguageCode): Recipe | undefined {
       </div>
     </aside>
 
-    <nav class="brewer-jump" aria-label="Filter by brewer">
-      {groups.map((group) => (
-        <button
-          type="button"
-          class="brewer-toggle"
-          data-brewer={group.brewerSlug}
-          aria-pressed="false"
-        >
-          {group.brewer}
-        </button>
-      ))}
-    </nav>
+    <section class="filter-bar" aria-label={t.en.home.filterByBrewer}>
+      <div class="filter-row">
+        <h3 class="filter-section-title">
+          <span class="lang-en">{t.en.home.filterTitleBrewer}</span>
+          <span class="lang-zh">{t.zh.home.filterTitleBrewer}</span>
+        </h3>
+        <div class="filter-pills">
+          {groups.map((group) => (
+            <button
+              type="button"
+              class="filter-toggle"
+              data-brewer={group.brewerSlug}
+              aria-pressed="false"
+            >
+              {group.brewer}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div class="filter-row">
+        <h3 class="filter-section-title">
+          <span class="lang-en">{t.en.home.filterTitleTaste}</span>
+          <span class="lang-zh">{t.zh.home.filterTitleTaste}</span>
+        </h3>
+        <div class="filter-pills">
+          {availableTasteValues.map((taste) => (
+            <button type="button" class="filter-toggle" data-taste={taste} aria-pressed="false">
+              <span class="lang-en">{t.en.home.taste[taste]}</span>
+              <span class="lang-zh">{t.zh.home.taste[taste]}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div class="filter-row">
+        <h3 class="filter-section-title">
+          <span class="lang-en">{t.en.home.filterTitleRoast}</span>
+          <span class="lang-zh">{t.zh.home.filterTitleRoast}</span>
+        </h3>
+        <div class="filter-pills">
+          {availableRoastValues.map((roast) => (
+            <button type="button" class="filter-toggle" data-roast={roast} aria-pressed="false">
+              <span class="lang-en">{t.en.home.roast[roast]}</span>
+              <span class="lang-zh">{t.zh.home.roast[roast]}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
   </main>
+
+  <div class="empty-state filtered-out">
+    <p class="empty-heading">
+      <span class="lang-en">{t.en.home.empty.heading}</span>
+      <span class="lang-zh">{t.zh.home.empty.heading}</span>
+    </p>
+    <p class="empty-hint">
+      <span class="lang-en">{t.en.home.empty.hint}</span>
+      <span class="lang-zh">{t.zh.home.empty.hint}</span>
+    </p>
+  </div>
 
   <section class="brewer-index" aria-label="Recipe groups by brewer">
 
@@ -101,7 +158,13 @@ function getLangVersion(id: string, lang: LanguageCode): Recipe | undefined {
               const en = getLangVersion(recipe.id, 'en');
               const zh = getLangVersion(recipe.id, 'zh');
               return (
-                <a class="recipe-row" href={withBase(recipe.urlPath)} data-variant={recipe.variant ?? ''}>
+                <a
+                  class="recipe-row"
+                  href={withBase(recipe.urlPath)}
+                  data-variant={recipe.variant ?? ''}
+                  data-taste={matchingTags(recipe, TASTE_VALUES)}
+                  data-roast={matchingTags(recipe, ROAST_VALUES)}
+                >
                   <span class="recipe-main">
                     <span class="recipe-name">
                       <span class="lang-en">{en?.name ?? recipe.name}</span>
@@ -133,14 +196,20 @@ function getLangVersion(id: string, lang: LanguageCode): Recipe | undefined {
 
 <script>
   // ── Brewer filter toggle ──
-  const toggles = document.querySelectorAll('.brewer-toggle');
+  const brewerToggles = document.querySelectorAll('.filter-toggle[data-brewer]');
   const groups = document.querySelectorAll('.recipe-group');
   const variantPills = document.querySelectorAll('.variant-pill');
+  const emptyState = document.querySelector('.empty-state');
 
-  toggles.forEach((btn) => {
+  brewerToggles.forEach((btn) => {
     btn.addEventListener('click', () => {
       const isActive = btn.getAttribute('aria-pressed') === 'true';
       btn.setAttribute('aria-pressed', isActive ? 'false' : 'true');
+      if (isActive) {
+        variantPills.forEach((pill) => {
+          if (pill.dataset.brewer === btn.dataset.brewer) pill.classList.remove('active');
+        });
+      }
       applyAllFilters();
     });
   });
@@ -152,20 +221,66 @@ function getLangVersion(id: string, lang: LanguageCode): Recipe | undefined {
     });
   });
 
-  // ── Pre-select brewer from URL hash ──
+  // ── Taste filter toggle ──
+  const tasteToggles = document.querySelectorAll('.filter-toggle[data-taste]');
+
+  tasteToggles.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const isActive = btn.getAttribute('aria-pressed') === 'true';
+      btn.setAttribute('aria-pressed', isActive ? 'false' : 'true');
+      applyAllFilters();
+    });
+  });
+
+  // ── Roast filter toggle ──
+  const roastToggles = document.querySelectorAll('.filter-toggle[data-roast]');
+
+  roastToggles.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const isActive = btn.getAttribute('aria-pressed') === 'true';
+      btn.setAttribute('aria-pressed', isActive ? 'false' : 'true');
+      applyAllFilters();
+    });
+  });
+
+  // ── Pre-select filters from URL hash ──
+  // Format: /#[brewerSlug][&taste=t1[,t2]*][&roast=r1[,r2]*]
   const hash = window.location.hash.slice(1);
   if (hash) {
-    const match = document.querySelector(`.brewer-toggle[data-brewer="${CSS.escape(hash)}"]`);
-    if (match) {
-      match.setAttribute('aria-pressed', 'true');
-      applyAllFilters();
+    const segments = hash.split('&');
+    const brewerSlug = segments[0];
+    if (brewerSlug) {
+      const match = document.querySelector(`.filter-toggle[data-brewer="${CSS.escape(brewerSlug)}"]`);
+      if (match) match.setAttribute('aria-pressed', 'true');
     }
+    for (let i = 1; i < segments.length; i++) {
+      const [key, value] = segments[i].split('=');
+      if (!value) continue;
+      const attr = key === 'taste' ? 'data-taste' : key === 'roast' ? 'data-roast' : null;
+      if (attr) {
+        value.split(',').forEach((v) => {
+          const pill = document.querySelector(`.filter-toggle[${attr}="${CSS.escape(v)}"]`);
+          if (pill) pill.setAttribute('aria-pressed', 'true');
+        });
+      }
+    }
+    applyAllFilters();
   }
 
   function applyAllFilters() {
-    const activeBrewers = [...toggles]
+    const activeBrewers = [...brewerToggles]
       .filter((btn) => btn.getAttribute('aria-pressed') === 'true')
       .map((btn) => btn.dataset.brewer);
+
+    // Collect active taste toggles
+    const activeTastes = [...tasteToggles]
+      .filter((btn) => btn.getAttribute('aria-pressed') === 'true')
+      .map((btn) => btn.dataset.taste);
+
+    // Collect active roast toggles
+    const activeRoasts = [...roastToggles]
+      .filter((btn) => btn.getAttribute('aria-pressed') === 'true')
+      .map((btn) => btn.dataset.roast);
 
     // Collect active variant pills, grouped by brewer
     const activeVariants = new Map();
@@ -178,11 +293,16 @@ function getLangVersion(id: string, lang: LanguageCode): Recipe | undefined {
     });
 
     const hero = document.querySelector('.home-hero');
+    const hasBrewerFilter = activeBrewers.length > 0;
+    const hasTasteFilter = activeTastes.length > 0;
+    const hasRoastFilter = activeRoasts.length > 0;
 
-    // Default: nothing shown until a brewer is selected
-    if (activeBrewers.length === 0) {
+    // Default: nothing shown until a filter is selected
+    if (!hasBrewerFilter && !hasTasteFilter && !hasRoastFilter) {
       const update = () => {
         hero.classList.remove('compact');
+        emptyState.classList.add('filtered-out');
+        variantPills.forEach((pill) => pill.classList.remove('active'));
         groups.forEach((g) => {
           g.classList.remove('entering');
           g.classList.add('filtered-out');
@@ -197,10 +317,18 @@ function getLangVersion(id: string, lang: LanguageCode): Recipe | undefined {
     }
 
     const update = () => {
-      hero.classList.add('compact');
+      // Collapse hero when any filter is selected
+      if (hasBrewerFilter || hasTasteFilter || hasRoastFilter) {
+        hero.classList.add('compact');
+      } else {
+        hero.classList.remove('compact');
+      }
+
+      let totalVisible = 0;
+
       groups.forEach((g, gi) => {
         const brewer = g.dataset.brewer;
-        const brewerMatch = activeBrewers.includes(brewer);
+        const brewerMatch = !hasBrewerFilter || activeBrewers.includes(brewer);
 
         if (!brewerMatch) {
           g.classList.remove('entering');
@@ -208,30 +336,70 @@ function getLangVersion(id: string, lang: LanguageCode): Recipe | undefined {
           return;
         }
 
-        // Group is visible — now filter rows by variant within it
-      const rows = g.querySelectorAll('.recipe-row');
-      const variantsForBrewer = activeVariants.get(brewer);
-      const hasVariantFilter = variantsForBrewer && variantsForBrewer.size > 0;
+        // Group is visible — now filter rows by variant and taste within it
+        const rows = g.querySelectorAll('.recipe-row');
+        const variantsForBrewer = activeVariants.get(brewer);
+        const hasVariantFilter = variantsForBrewer && variantsForBrewer.size > 0;
 
-      rows.forEach((row) => {
-        if (hasVariantFilter && !variantsForBrewer.has(row.dataset.variant)) {
-          row.classList.remove('entering');
-          row.classList.add('filtered-out');
+        let groupVisible = 0;
+
+        rows.forEach((row) => {
+          let hidden = false;
+
+          // Variant filter
+          if (hasVariantFilter && !variantsForBrewer.has(row.dataset.variant)) {
+            hidden = true;
+          }
+
+          // Taste filter — row must have at least one of the active tastes
+          if (!hidden && hasTasteFilter) {
+            const rowTastes = (row.dataset.taste || '').split(' ').filter(Boolean);
+            if (!rowTastes.some((t) => activeTastes.includes(t))) {
+              hidden = true;
+            }
+          }
+
+          // Roast filter — row must have at least one of the active roasts
+          if (!hidden && hasRoastFilter) {
+            const rowRoasts = (row.dataset.roast || '').split(' ').filter(Boolean);
+            if (!rowRoasts.some((r) => activeRoasts.includes(r))) {
+              hidden = true;
+            }
+          }
+
+          if (hidden) {
+            row.classList.add('filtered-out');
+          } else {
+            row.classList.remove('filtered-out');
+            groupVisible++;
+          }
+        });
+
+        totalVisible += groupVisible;
+
+        // Show group only if it has visible recipes
+        if (groupVisible === 0) {
+          g.classList.remove('entering');
+          g.classList.add('filtered-out');
         } else {
-          row.classList.remove('filtered-out');
+          g.classList.remove('filtered-out');
+          g.classList.add('entering');
+          g.style.animationDelay = `${gi * 60}ms`;
+          g.addEventListener('animationend', function onEnd() {
+            g.classList.remove('entering');
+            g.style.animationDelay = '';
+            g.removeEventListener('animationend', onEnd);
+          }, { once: true });
         }
       });
 
-      // Animate group entrance
-      g.classList.remove('filtered-out');
-      g.classList.add('entering');
-      g.style.animationDelay = `${gi * 60}ms`;
-      g.addEventListener('animationend', function onEnd() {
-        g.classList.remove('entering');
-        g.style.animationDelay = '';
-        g.removeEventListener('animationend', onEnd);
-      }, { once: true });
-    });
+      // Show empty state when nothing matches, hide recipe groups
+      if (totalVisible === 0) {
+        emptyState.classList.remove('filtered-out');
+        groups.forEach((g) => g.classList.add('filtered-out'));
+      } else {
+        emptyState.classList.add('filtered-out');
+      }
     };
 
     if (document.startViewTransition) {

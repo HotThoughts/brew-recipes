@@ -7,6 +7,22 @@ home:
     languages: 语言
   ratioNA: 比例 n/a
   filterByBrewer: 按滤杯筛选
+  filterByTaste: 按风味筛选
+  filterTitleBrewer: 滤杯
+  filterTitleTaste: 风味特征
+  filterTitleRoast: 烘焙程度
+  taste:
+    sweet: 甘甜
+    acidic: 酸质
+    balanced: 平衡
+  roast:
+    light-roast: 浅烘
+    medium-roast: 中烘
+    dark-roast: 深烘
+    omni-roast: 全能
+  empty:
+    heading: 没有匹配的配方
+    hint: 尝试调整或清除上方的筛选条件。
   recipeGroups: 按滤杯分组
 
 detail:
