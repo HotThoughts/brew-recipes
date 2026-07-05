@@ -72,6 +72,7 @@ export class AsciiRenderer {
   private running = false;
   private reduced = false;
   private disposed = false;
+  private contextLost = false;
 
   constructor(canvas: HTMLCanvasElement, scene: AsciiScene, opts: AsciiRendererOptions) {
     this.canvas = canvas;
@@ -109,9 +110,12 @@ export class AsciiRenderer {
 
     // Perspective cameras hardcode aspect=1 in scene builders; correct
     // it to the actual render-target shape so geometry isn't distorted.
+    // Camera.type is typed as `string` in Three.js, so a runtime check
+    // doesn't narrow the union; the cast is intentional.
     if (this.scene.camera.type === 'PerspectiveCamera') {
-      (this.scene.camera as THREE.PerspectiveCamera).aspect = this.cols / this.rows;
-      (this.scene.camera as THREE.PerspectiveCamera).updateProjectionMatrix();
+      const cam = this.scene.camera as THREE.PerspectiveCamera;
+      cam.aspect = this.cols / this.rows;
+      cam.updateProjectionMatrix();
     }
 
     this.target = new THREE.WebGLRenderTarget(this.cols, this.rows);
@@ -121,15 +125,35 @@ export class AsciiRenderer {
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    this.drawBackground();
+    // WebGL context loss — the browser can reclaim GPU resources at any time
+    // (tab switch, driver recovery, memory pressure). Stop the loop and flag
+    // so paint() knows not to draw stale data.
+    const glCanvas = this.gl.domElement;
+    glCanvas.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault();
+      console.warn('[ascii] WebGL context lost — stopping renderer');
+      this.contextLost = true;
+      this.stop();
+    });
+    glCanvas.addEventListener('webglcontextrestored', () => {
+      console.warn('[ascii] WebGL context restored — reinitializing renderer');
+      this.contextLost = false;
+      try {
+        this.target = new THREE.WebGLRenderTarget(this.cols, this.rows);
+        this.pixelBuffer = new Uint8Array(this.cols * this.rows * 4);
+      } catch (err) {
+        console.error('[ascii] Failed to recreate render target on context restore', err);
+        this.contextLost = true;
+        return;
+      }
+      this.start();
+    });
+
     this.renderOnce();
   }
 
-  private drawBackground() {
-    this.ctx.clearRect(0, 0, this.cols * this.cellW, this.rows * this.cellH);
-  }
-
   private renderOnce() {
+    if (this.contextLost) return;
     this.scene.update(0, this.elapsed);
     this.gl.setRenderTarget(this.target);
     this.gl.clear();
@@ -140,6 +164,7 @@ export class AsciiRenderer {
   }
 
   private paint() {
+    if (this.contextLost) return;
     this.ctx.clearRect(0, 0, this.cols * this.cellW, this.rows * this.cellH);
     if (!this.transparentBackground) {
       this.ctx.fillStyle = this.paper;
@@ -165,23 +190,28 @@ export class AsciiRenderer {
   }
 
   private loop = (now: number) => {
-    if (!this.running || this.disposed) return;
+    if (!this.running || this.disposed || this.contextLost) return;
     this.raf = requestAnimationFrame(this.loop);
     const dt = now - this.last;
     if (dt < this.frameMs) return;
     this.last = now - (dt % this.frameMs);
     this.elapsed += dt / 1000;
-    this.scene.update(dt / 1000, this.elapsed);
-    this.gl.setRenderTarget(this.target);
-    this.gl.clear();
-    this.gl.render(this.scene.scene, this.scene.camera);
-    this.gl.readRenderTargetPixels(this.target, 0, 0, this.cols, this.rows, this.pixelBuffer);
-    this.gl.setRenderTarget(null);
-    this.paint();
+    try {
+      this.scene.update(dt / 1000, this.elapsed);
+      this.gl.setRenderTarget(this.target);
+      this.gl.clear();
+      this.gl.render(this.scene.scene, this.scene.camera);
+      this.gl.readRenderTargetPixels(this.target, 0, 0, this.cols, this.rows, this.pixelBuffer);
+      this.gl.setRenderTarget(null);
+      this.paint();
+    } catch (err) {
+      console.error('[ascii] Render loop error — stopping renderer', err);
+      this.stop();
+    }
   };
 
   start() {
-    if (this.disposed || this.running) return;
+    if (this.disposed || this.running || this.contextLost) return;
     if (this.reduced) {
       // Single static frame, no loop.
       this.renderOnce();

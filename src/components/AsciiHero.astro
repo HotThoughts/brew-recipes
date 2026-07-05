@@ -22,11 +22,13 @@
         fillContainer: true,
         transparentBackground: true,
       });
-    } catch {
-      return; // WebGL unavailable — leave canvas empty
+    } catch (err) {
+      console.error('[ascii] Failed to initialize hero scene', err);
+      return;
     }
 
     const r = renderer;
+
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -38,16 +40,29 @@
     );
     io.observe(canvas);
 
-    document.addEventListener('visibilitychange', () => {
+    const onVisibilityChange = () => {
       if (document.hidden) r.stop();
       else r.start();
-    });
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
-    canvas.parentElement?.addEventListener('pointermove', (ev) => {
+    const onPointerMove = (ev: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
+      // Guard: when the hero collapses to .compact the canvas is display:none
+      // and getBoundingClientRect returns zero-area, producing NaN.
+      if (rect.width === 0 || rect.height === 0) return;
       const nx = ((ev.clientX - rect.left) / rect.width) * 2 - 1;
       const ny = -(((ev.clientY - rect.top) / rect.height) * 2 - 1);
       r.pointer(nx, ny);
-    });
+    };
+    canvas.parentElement?.addEventListener('pointermove', onPointerMove);
+
+    // Teardown on page unload.
+    window.addEventListener('beforeunload', () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      canvas.parentElement?.removeEventListener('pointermove', onPointerMove);
+      io.disconnect();
+      r.dispose();
+    }, { once: true });
   });
 </script>

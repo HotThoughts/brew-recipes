@@ -22,6 +22,7 @@ const { style, variant = 'phase' } = Astro.props;
   // display:none version never intersects so it stays paused, and starts
   // when its version becomes visible and scrolls into view.
   const renderers = new Map<HTMLCanvasElement, AsciiRenderer>();
+  const observers = new Map<HTMLCanvasElement, IntersectionObserver>();
 
   function init(canvas: HTMLCanvasElement, style: PourStyle) {
     const variant = canvas.dataset.variant === 'guide' ? 'guide' : 'phase';
@@ -35,8 +36,9 @@ const { style, variant = 'phase' } = Astro.props;
         fillContainer: variant === 'guide',
         transparentBackground: true,
       });
-    } catch {
-      return; // WebGL unavailable
+    } catch (err) {
+      console.error('[ascii] Failed to initialize pour scene', err);
+      return;
     }
     const r = renderer;
     renderers.set(canvas, r);
@@ -51,10 +53,23 @@ const { style, variant = 'phase' } = Astro.props;
       { threshold: 0.1 },
     );
     io.observe(canvas);
+    observers.set(canvas, io);
 
-    document.addEventListener('visibilitychange', () => {
+    const onVisibilityChange = () => {
       if (document.hidden) r.stop();
-    });
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    // Cleanup per-canvas resources when the canvas is removed from DOM
+    // or on page unload.
+    const cleanup = () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      io.disconnect();
+      observers.delete(canvas);
+      r.dispose();
+      renderers.delete(canvas);
+    };
+    window.addEventListener('beforeunload', cleanup, { once: true });
   }
 
   function versionVisible(canvas: HTMLCanvasElement): boolean {
@@ -66,12 +81,13 @@ const { style, variant = 'phase' } = Astro.props;
   // IntersectionObserver does not fire when an ancestor toggles between
   // display:none and display:contents, so handle language switches
   // explicitly: start renderers in the now-visible version, stop the rest.
-  window.addEventListener('langchange', () => {
+  const onLangChange = () => {
     renderers.forEach((r, canvas) => {
       if (versionVisible(canvas)) r.start();
       else r.stop();
     });
-  });
+  };
+  window.addEventListener('langchange', onLangChange);
 
   function scan() {
     document
@@ -81,8 +97,30 @@ const { style, variant = 'phase' } = Astro.props;
         const style = canvas.dataset.pourStyle as PourStyle;
         init(canvas, style);
       });
+
+    // Prune stale entries for canvases no longer in the DOM.
+    renderers.forEach((r, canvas) => {
+      if (!canvas.isConnected) {
+        r.dispose();
+        renderers.delete(canvas);
+        const io = observers.get(canvas);
+        if (io) { io.disconnect(); observers.delete(canvas); }
+      }
+    });
   }
 
+  const onHashChange = () => setTimeout(scan, 50);
+  window.addEventListener('hashchange', onHashChange);
+
   scan();
-  window.addEventListener('hashchange', () => setTimeout(scan, 50));
+
+  // Full teardown on unload.
+  window.addEventListener('beforeunload', () => {
+    window.removeEventListener('langchange', onLangChange);
+    window.removeEventListener('hashchange', onHashChange);
+    observers.forEach((io) => io.disconnect());
+    observers.clear();
+    renderers.forEach((r) => r.dispose());
+    renderers.clear();
+  }, { once: true });
 </script>

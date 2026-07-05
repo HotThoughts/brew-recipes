@@ -15,12 +15,57 @@ const INK = 0xffffff; // bright so luminance ramp is dense; renderer colors glyp
 
 function disposeObjects(scene: THREE.Scene) {
   scene.traverse((obj) => {
-    const mesh = obj as THREE.Mesh;
-    if (mesh.geometry) mesh.geometry.dispose();
-    const mat = mesh.material;
-    if (Array.isArray(mat)) mat.forEach((m) => m.dispose());
-    else if (mat) (mat as THREE.Material).dispose();
+    if (obj instanceof THREE.Mesh || obj instanceof THREE.Line || obj instanceof THREE.Points) {
+      const geo = obj.geometry;
+      if (geo) geo.dispose();
+    }
+    if (obj instanceof THREE.Mesh) {
+      const mat = obj.material;
+      if (Array.isArray(mat)) mat.forEach((m) => m.dispose());
+      else if (mat) mat.dispose();
+    }
   });
+}
+
+/* ─────────────────────── Shape helpers ─────────────────────── */
+
+/** Build a static spiral line from center outward. */
+function spiralPath(segments: number, maxRadius: number, turns: number): Float32Array {
+  const pts = new Float32Array((segments + 1) * 3);
+  for (let i = 0; i <= segments; i++) {
+    const t = i / segments;
+    const r = maxRadius * t;
+    const a = t * Math.PI * 2 * turns;
+    pts[i * 3] = Math.cos(a) * r;
+    pts[i * 3 + 1] = Math.sin(a) * r;
+    pts[i * 3 + 2] = 0;
+  }
+  return pts;
+}
+
+/** Build a static circle outline. */
+function circlePath(segments: number, radius: number): Float32Array {
+  const pts = new Float32Array((segments + 1) * 3);
+  for (let i = 0; i <= segments; i++) {
+    const a = (i / segments) * Math.PI * 2;
+    pts[i * 3] = Math.cos(a) * radius;
+    pts[i * 3 + 1] = Math.sin(a) * radius;
+    pts[i * 3 + 2] = 0;
+  }
+  return pts;
+}
+
+/** Build an arc from `startA` through `sweep` radians. */
+function arcPath(segments: number, radius: number, startA: number, sweep: number): Float32Array {
+  const pts = new Float32Array((segments + 1) * 3);
+  for (let i = 0; i <= segments; i++) {
+    const t = i / segments;
+    const a = startA + t * sweep;
+    pts[i * 3] = Math.cos(a) * radius;
+    pts[i * 3 + 1] = Math.sin(a) * radius;
+    pts[i * 3 + 2] = 0;
+  }
+  return pts;
 }
 
 /* ───────────────────────── Hero: V60 cone + spiral pour ───────────────────────── */
@@ -268,30 +313,10 @@ function makePoints(positions: Float32Array, size: number, opacity: number): THR
   return new THREE.Points(geo, mat);
 }
 
-/** Build a static spiral line from center outward. */
-function spiralPath(segments: number, maxRadius: number, turns: number): Float32Array {
-  const pts = new Float32Array((segments + 1) * 3);
-  for (let i = 0; i <= segments; i++) {
-    const t = i / segments;
-    const r = maxRadius * t;
-    const a = t * Math.PI * 2 * turns;
-    pts[i * 3] = Math.cos(a) * r;
-    pts[i * 3 + 1] = Math.sin(a) * r;
-    pts[i * 3 + 2] = 0;
-  }
-  return pts;
-}
-
-/** Build a static circle outline. */
-function circlePath(segments: number, radius: number): Float32Array {
-  const pts = new Float32Array((segments + 1) * 3);
-  for (let i = 0; i <= segments; i++) {
-    const a = (i / segments) * Math.PI * 2;
-    pts[i * 3] = Math.cos(a) * radius;
-    pts[i * 3 + 1] = Math.sin(a) * radius;
-    pts[i * 3 + 2] = 0;
-  }
-  return pts;
+/** Get the attribute, or bail if the geometry has been disposed. */
+function getAttr(obj: THREE.BufferGeometry, name: string): THREE.BufferAttribute | null {
+  const attr = obj.getAttribute(name);
+  return attr as THREE.BufferAttribute | undefined ?? null;
 }
 
 export function pourScene(style: PourStyle): AsciiScene {
@@ -325,110 +350,110 @@ export function pourScene(style: PourStyle): AsciiScene {
   // Style-specific gesture geometry and animation.
   let update: (_dt: number, elapsed: number) => void;
 
-  if (style === 'spiral') {
-    // Static spiral path from center outward.
-    const spiralLine = makeLine(spiralPath(80, POUR_BED_RADIUS * 0.92, 2.5), 0.25);
-    scene.add(spiralLine);
+  switch (style) {
+    case 'spiral': {
+      // Static spiral path from center outward.
+      const spiralLine = makeLine(spiralPath(80, POUR_BED_RADIUS * 0.92, 2.5), 0.25);
+      scene.add(spiralLine);
 
-    update = (_dt, elapsed) => {
-      const pos = head.geometry.getAttribute('position') as THREE.BufferAttribute;
-      for (let i = 0; i < headCount; i++) {
-        const offset = (i / headCount);
-        const t = (offset + elapsed * 0.15) % 1;
-        const r = POUR_BED_RADIUS * 0.92 * t;
-        const a = t * Math.PI * 2 * 2.5;
-        pos.setXYZ(i, Math.cos(a) * r, Math.sin(a) * r, 0);
-      }
-      pos.needsUpdate = true;
-    };
-  } else if (style === 'circular') {
-    // Two concentric ring outlines.
-    const ring1 = makeLine(circlePath(48, POUR_BED_RADIUS * 0.72), 0.22);
-    const ring2 = makeLine(circlePath(48, POUR_BED_RADIUS * 0.38), 0.22);
-    scene.add(ring1, ring2);
-
-    update = (_dt, elapsed) => {
-      const pos = head.geometry.getAttribute('position') as THREE.BufferAttribute;
-      for (let i = 0; i < headCount; i++) {
-        const ring = i < 3 ? POUR_BED_RADIUS * 0.72 : POUR_BED_RADIUS * 0.38;
-        const speed = i < 3 ? 0.8 : 1.2;
-        const a = (i / headCount) * Math.PI * 2 + elapsed * speed;
-        pos.setXYZ(i, Math.cos(a) * ring, Math.sin(a) * ring, 0);
-      }
-      pos.needsUpdate = true;
-    };
-  } else if (style === 'center') {
-    // Vertical water stream from top to center.
-    const streamSegs = 12;
-    const streamPts = new Float32Array((streamSegs + 1) * 3);
-    for (let i = 0; i <= streamSegs; i++) {
-      const t = i / streamSegs;
-      streamPts[i * 3] = 0;
-      streamPts[i * 3 + 1] = 1.0 - t * 1.0; // from y=1.0 down to y=0
-      streamPts[i * 3 + 2] = 0;
+      update = (_dt, elapsed) => {
+        const pos = head.geometry.getAttribute('position') as THREE.BufferAttribute;
+        for (let i = 0; i < headCount; i++) {
+          const offset = (i / headCount);
+          const t = (offset + elapsed * 0.15) % 1;
+          const r = POUR_BED_RADIUS * 0.92 * t;
+          const a = t * Math.PI * 2 * 2.5;
+          pos.setXYZ(i, Math.cos(a) * r, Math.sin(a) * r, 0);
+        }
+        pos.needsUpdate = true;
+      };
+      break;
     }
-    const streamLine = makeLine(streamPts, 0.3);
-    scene.add(streamLine);
 
-    // Central pool — small filled circle.
-    const poolGeo = new THREE.CircleGeometry(0.12, 16);
-    const poolMat = new THREE.MeshBasicMaterial({
-      color: INK,
-      transparent: true,
-      opacity: 0.3,
-    });
-    const pool = new THREE.Mesh(poolGeo, poolMat);
-    scene.add(pool);
+    case 'circular': {
+      // Two concentric ring outlines.
+      const ring1 = makeLine(circlePath(48, POUR_BED_RADIUS * 0.72), 0.22);
+      const ring2 = makeLine(circlePath(48, POUR_BED_RADIUS * 0.38), 0.22);
+      scene.add(ring1, ring2);
 
-    update = (_dt, elapsed) => {
-      const pos = head.geometry.getAttribute('position') as THREE.BufferAttribute;
-      for (let i = 0; i < headCount; i++) {
-        const t = ((i / headCount) + elapsed * 0.4) % 1;
-        // Drops falling along the stream with slight jitter.
-        const y = 1.0 - t * 1.0;
-        const jitter = Math.sin(elapsed * 3 + i) * 0.015;
-        pos.setXYZ(i, jitter, y, 0);
+      update = (_dt, elapsed) => {
+        const pos = head.geometry.getAttribute('position') as THREE.BufferAttribute;
+        for (let i = 0; i < headCount; i++) {
+          const ring = i < 3 ? POUR_BED_RADIUS * 0.72 : POUR_BED_RADIUS * 0.38;
+          const speed = i < 3 ? 0.8 : 1.2;
+          const a = (i / headCount) * Math.PI * 2 + elapsed * speed;
+          pos.setXYZ(i, Math.cos(a) * ring, Math.sin(a) * ring, 0);
+        }
+        pos.needsUpdate = true;
+      };
+      break;
+    }
+
+    case 'center': {
+      // Vertical water stream from top to center.
+      const streamSegs = 12;
+      const streamPts = new Float32Array((streamSegs + 1) * 3);
+      for (let i = 0; i <= streamSegs; i++) {
+        const t = i / streamSegs;
+        streamPts[i * 3] = 0;
+        streamPts[i * 3 + 1] = 1 - t; // from y=1 down to y=0
+        streamPts[i * 3 + 2] = 0;
       }
-      pos.needsUpdate = true;
-      // Pool pulses gently.
-      const s = 1 + Math.sin(elapsed * 2) * 0.12;
-      pool.scale.set(s, s, 1);
-    };
-  } else {
-    // swirl — rotation arcs around the bed.
-    const arcSegs = 20;
-    const buildArc = (radius: number, startA: number, sweep: number) => {
-      const pts = new Float32Array((arcSegs + 1) * 3);
-      for (let i = 0; i <= arcSegs; i++) {
-        const t = i / arcSegs;
-        const a = startA + t * sweep;
-        pts[i * 3] = Math.cos(a) * radius;
-        pts[i * 3 + 1] = Math.sin(a) * radius;
-        pts[i * 3 + 2] = 0;
-      }
-      return pts;
-    };
-    const arc1 = makeLine(buildArc(POUR_BED_RADIUS * 0.85, 0, Math.PI * 0.6), 0.3);
-    const arc2 = makeLine(buildArc(POUR_BED_RADIUS * 0.85, Math.PI, Math.PI * 0.6), 0.3);
-    const arcGroup = new THREE.Group();
-    arcGroup.add(arc1, arc2);
-    scene.add(arcGroup);
+      const streamLine = makeLine(streamPts, 0.3);
+      scene.add(streamLine);
 
-    // Inner swirl circles.
-    const innerRing = makeLine(circlePath(32, POUR_BED_RADIUS * 0.3), 0.2);
-    scene.add(innerRing);
+      // Central pool — small filled circle.
+      const poolGeo = new THREE.CircleGeometry(0.12, 16);
+      const poolMat = new THREE.MeshBasicMaterial({
+        color: INK,
+        transparent: true,
+        opacity: 0.3,
+      });
+      const pool = new THREE.Mesh(poolGeo, poolMat);
+      scene.add(pool);
 
-    update = (_dt, elapsed) => {
-      arcGroup.rotation.z = elapsed * 0.8;
-      innerRing.rotation.z = -elapsed * 1.2;
-      const pos = head.geometry.getAttribute('position') as THREE.BufferAttribute;
-      for (let i = 0; i < headCount; i++) {
-        const a = (i / headCount) * Math.PI * 2 + elapsed * 0.8;
-        const r = POUR_BED_RADIUS * 0.85;
-        pos.setXYZ(i, Math.cos(a) * r, Math.sin(a) * r, 0);
-      }
-      pos.needsUpdate = true;
-    };
+      update = (_dt, elapsed) => {
+        const pos = head.geometry.getAttribute('position') as THREE.BufferAttribute;
+        for (let i = 0; i < headCount; i++) {
+          const t = ((i / headCount) + elapsed * 0.4) % 1;
+          // Drops falling along the stream with slight jitter.
+          const y = 1 - t;
+          const jitter = Math.sin(elapsed * 3 + i) * 0.015;
+          pos.setXYZ(i, jitter, y, 0);
+        }
+        pos.needsUpdate = true;
+        // Pool pulses gently.
+        const s = 1 + Math.sin(elapsed * 2) * 0.12;
+        pool.scale.set(s, s, 1);
+      };
+      break;
+    }
+
+    case 'swirl': {
+      // Rotation arcs around the bed.
+      const arc1 = makeLine(arcPath(20, POUR_BED_RADIUS * 0.85, 0, Math.PI * 0.6), 0.3);
+      const arc2 = makeLine(arcPath(20, POUR_BED_RADIUS * 0.85, Math.PI, Math.PI * 0.6), 0.3);
+      const arcGroup = new THREE.Group();
+      arcGroup.add(arc1, arc2);
+      scene.add(arcGroup);
+
+      // Inner swirl circles.
+      const innerRing = makeLine(circlePath(32, POUR_BED_RADIUS * 0.3), 0.2);
+      scene.add(innerRing);
+
+      update = (_dt, elapsed) => {
+        arcGroup.rotation.z = elapsed * 0.8;
+        innerRing.rotation.z = -elapsed * 1.2;
+        const pos = head.geometry.getAttribute('position') as THREE.BufferAttribute;
+        for (let i = 0; i < headCount; i++) {
+          const a = (i / headCount) * Math.PI * 2 + elapsed * 0.8;
+          const r = POUR_BED_RADIUS * 0.85;
+          pos.setXYZ(i, Math.cos(a) * r, Math.sin(a) * r, 0);
+        }
+        pos.needsUpdate = true;
+      };
+      break;
+    }
   }
 
   function dispose() {
@@ -449,11 +474,11 @@ export function ambientScene(): AsciiScene {
 
   const count = 60;
   const positions = new Float32Array(count * 3);
-  const seeds = new Float32Array(count * 3);
+  // Only need x/y seeds per particle; the z-component is unused.
+  const seeds = new Float32Array(count * 2);
   for (let i = 0; i < count; i++) {
-    seeds[i * 3] = Math.random();
-    seeds[i * 3 + 1] = Math.random();
-    seeds[i * 3 + 2] = Math.random();
+    seeds[i * 2] = Math.random();
+    seeds[i * 2 + 1] = Math.random();
   }
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -470,8 +495,8 @@ export function ambientScene(): AsciiScene {
   function update(_dt: number, elapsed: number) {
     const pos = points.geometry.getAttribute('position') as THREE.BufferAttribute;
     for (let i = 0; i < count; i++) {
-      const sx = seeds[i * 3];
-      const sy = seeds[i * 3 + 1];
+      const sx = seeds[i * 2];
+      const sy = seeds[i * 2 + 1];
       const speed = 0.04 + sy * 0.05;
       const y = ((sy + elapsed * speed) % 1) * 2 - 1;
       const drift = Math.sin(elapsed * 0.3 + sx * 6) * 0.15;

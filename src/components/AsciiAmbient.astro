@@ -12,9 +12,9 @@
   if (canvas && !window.matchMedia('(max-width: 700px)').matches) {
     const saveData =
       (navigator as any).connection?.saveData === true ||
-      (navigator as any).deviceMemory !== undefined && (navigator as any).deviceMemory < 4;
+      ((navigator as any).deviceMemory !== undefined && (navigator as any).deviceMemory < 4);
     if (saveData) {
-      // skip on constrained devices
+      // Skip on constrained devices — renderer never created.
     } else {
       let renderer: AsciiRenderer | null = null;
       try {
@@ -24,12 +24,13 @@
           fontSize: 11,
           fps: 12,
         });
-      } catch {
-        // WebGL unavailable
+      } catch (err) {
+        console.error('[ascii] Failed to initialize ambient scene', err);
       }
 
       if (renderer) {
         const r = renderer;
+
         const io = new IntersectionObserver(
           (entries) => {
             for (const e of entries) {
@@ -41,10 +42,18 @@
         );
         io.observe(canvas);
 
-        document.addEventListener('visibilitychange', () => {
+        const onVisibilityChange = () => {
           if (document.hidden) r.stop();
           else r.start();
-        });
+        };
+        document.addEventListener('visibilitychange', onVisibilityChange);
+
+        // Teardown on page unload.
+        window.addEventListener('beforeunload', () => {
+          document.removeEventListener('visibilitychange', onVisibilityChange);
+          io.disconnect();
+          r.dispose();
+        }, { once: true });
       }
     }
   }
