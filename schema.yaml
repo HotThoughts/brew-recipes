@@ -92,6 +92,7 @@ properties:
         - light-roast
         - medium-roast
         - dark-roast
+        - omni-roast
         - sweet
         - acidic
         - balanced

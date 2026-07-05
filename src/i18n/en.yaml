@@ -7,6 +7,22 @@ home:
     languages: languages
   ratioNA: ratio n/a
   filterByBrewer: Filter by brewer
+  filterByTaste: Filter by taste
+  filterTitleBrewer: Brewers
+  filterTitleTaste: Taste Profile
+  filterTitleRoast: Roast Level
+  taste:
+    sweet: sweet
+    acidic: acidic
+    balanced: balanced
+  roast:
+    light-roast: light
+    medium-roast: medium
+    dark-roast: dark
+    omni-roast: omni
+  empty:
+    heading: No recipes match
+    hint: Try adjusting or clearing the filters above.
   recipeGroups: Recipe groups by brewer
 
 detail:

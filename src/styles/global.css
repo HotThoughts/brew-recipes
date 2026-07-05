@@ -163,9 +163,61 @@
     min-height: 46vh;
   }
 
-  .brewer-jump {
+  .filter-bar {
     grid-column: 1 / -1;
-    view-transition-name: brewer-tags;
+    display: grid;
+    gap: 12px;
+    padding-top: 14px;
+    view-transition-name: filter-bar;
+  }
+
+  .filter-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .empty-state {
+    padding-block: clamp(60px, 12vw, 100px);
+    text-align: center;
+  }
+
+  .empty-state.filtered-out {
+    display: none;
+  }
+
+  .empty-heading {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-style: italic;
+    color: var(--ink-light);
+    margin: 0 0 12px;
+  }
+
+  .empty-hint {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--muted);
+    max-width: 42ch;
+    margin: 0 auto;
+  }
+
+  .filter-section-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--ink-light);
+    width: 8.5em;
+    flex-shrink: 0;
+    padding-top: 6px;
+    user-select: none;
+  }
+
+  .filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .archive-summary {
@@ -186,8 +238,10 @@
     display: none;
   }
 
-  .home-hero.compact .brewer-jump {
+  .home-hero.compact .filter-bar {
     grid-column: auto;
+    padding-top: 0;
+    gap: 8px;
   }
 
   .home-hero.compact .page-title {
@@ -237,12 +291,6 @@
     font-family: var(--font-display);
     font-size: 1rem;
     font-style: italic;
-  }
-
-  .brewer-jump {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
   }
 
   .archive-summary,
@@ -344,19 +392,19 @@
     animation: blink 1.2s infinite;
   }
 
-  .brewer-toggle {
+  .filter-toggle {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    min-height: 44px;
-    padding: 9px 18px;
+    gap: 8px;
+    min-height: 36px;
+    padding: 6px 15px;
     border: 1px solid var(--rule);
     border-radius: 999px;
     background: transparent;
     color: var(--ink);
     cursor: pointer;
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     transition:
       border-color 180ms var(--ease-out),
       background-color 180ms var(--ease-out),
@@ -364,24 +412,24 @@
       transform 180ms var(--ease-out);
   }
 
-  .brewer-toggle:hover {
+  .filter-toggle:hover {
     border-color: var(--ink-light);
     background: oklch(1 0 0 / 0.22);
     transform: translateY(-1px);
   }
 
-  .brewer-toggle:active {
+  .filter-toggle:active {
     transform: scale(0.96);
   }
 
-  .brewer-toggle[aria-pressed="true"] {
+  .filter-toggle[aria-pressed="true"] {
     background: var(--ink);
     color: var(--paper);
     border-color: var(--ink);
     font-weight: 700;
   }
 
-  .brewer-toggle[aria-pressed="true"]:hover {
+  .filter-toggle[aria-pressed="true"]:hover {
     background: var(--ink-light);
     color: var(--paper);
     border-color: var(--ink-light);
@@ -608,12 +656,13 @@
 
   .recipe-header .page-title {
     max-width: 13ch;
+    font-size: clamp(2rem, 4.5vw, 3rem);
   }
 
   .recipe-intro {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
-    line-height: 1.18;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   .spec-grid {
@@ -838,13 +887,12 @@
 
   .recipe-header .page-title {
     max-width: 10ch;
-    font-size: clamp(3.1rem, 14vw, 4.45rem);
+    font-size: clamp(1.8rem, 8vw, 2.6rem);
     line-height: 0.96;
   }
 
   .recipe-intro {
-    font-size: clamp(1.35rem, 6vw, 1.7rem);
-    line-height: 1.25;
+    font-size: 0.92rem;
   }
 }
 
