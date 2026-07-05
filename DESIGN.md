@@ -190,6 +190,17 @@ This is a flat system. No box-shadows, no layered cards, no z-index stacking bey
 - **Derivation:** Styles are detected from the phase note text (EN and ZH keywords) via `getPourStyles()`, ordered by first occurrence, capped at two per phase. Purely additive — the prose note stays intact below the glyphs.
 - **i18n:** Labels resolve through `detail.pour` in each language file (e.g. `spiral` → `螺旋`, `circular` → `绕圈`); the glyph is language-neutral.
 
+### ASCII Motion
+- **Purpose:** A quiet retro-terminal layer that surfaces the pour gesture as typed characters, extending the archival typewriter voice into motion without breaking the flat, ink-on-paper system.
+- **Pipeline:** Three.js scenes render to a tiny offscreen target, luminance is sampled per cell and mapped to a Space Mono character ramp (` ·:;+=oxX#@`), then typed onto a 2D canvas in Deep Violet ink on the lavender paper field. No CRT green, no scanlines, no black backgrounds; the character grid is the retro move.
+- **Hero scene:** A V60 wireframe cone with water particles descending along an Archimedean spiral into the coffee bed, slow continuous rotation with gentle pointer parallax. Occupies the right column of the home hero grid (where the archive summary formerly sat), rendered in a portrait character grid at full ink strength. Hides entirely when the hero collapses to `.compact` (filter selected), freeing the grid cell for the filter pills.
+- **Pour scenes:** Per phase, a compact coffee-bed disc plus a particle stream tracing the detected pour style (`spiral` center-out, `circular` concentric rings, `center` steady stream, `swirl` bed wobble). Rendered as small ~88px thumbnails in the phase values column; phase rows share grid tracks via CSS subgrid so the values column stays ruler-straight regardless of whether a phase has a pour animation. Off-screen rows pause; language-toggle visibility handled via a `langchange` event.
+- **Ambient field:** A fixed full-viewport steam particle sheet behind `.site-shell`, opacity ≤ 0.07, ~12 fps. Static single frame under reduced motion; skipped on viewports < 700px and constrained devices.
+- **Color rule:** Characters only in `--ink`; Honey Gold never appears in any scene. The renderer colors glyphs with `--ink` against `--paper`, so it always tracks the palette.
+- **Performance:** Frame loop capped at 24 fps (12 fps ambient), pauses on tab-hidden and off-screen (IntersectionObserver), DPR-aware, WebGL-unavailable fallback is an empty canvas. Content never depends on the canvases; all placements are `aria-hidden` decorative layers with zero layout shift.
+- **Reduced motion:** `prefers-reduced-motion: reduce` renders exactly one static frame, no loop.
+- **Responsive:** All ASCII canvases hide below 700px viewport to protect mobile reading and bandwidth.
+
 ## 6. Do's and Don'ts
 
 ### Do:

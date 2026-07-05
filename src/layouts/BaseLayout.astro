@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { withBase } from '../lib/recipes';
+import AsciiAmbient from '../components/AsciiAmbient.astro';
 
 type Props = {
   title: string;
@@ -32,6 +32,7 @@ const {
   </head>
   <body class={pageClass}>
     <div class="texture-overlay" aria-hidden="true"></div>
+    <AsciiAmbient />
     <div class="site-shell">
       <header class="site-header">
         <nav class="site-nav" aria-label="Primary">
@@ -67,6 +68,17 @@ const {
     document.querySelectorAll('.lang-opt').forEach((el) => {
       el.classList.toggle('active', el.dataset.lang === lang);
     });
+
+    // Keep internal guide links in the user's active language.
+    document.querySelectorAll('a[data-preserve-lang]').forEach((el) => {
+      const anchor = el as HTMLAnchorElement;
+      const baseHref = anchor.dataset.baseHref ?? anchor.getAttribute('href') ?? '';
+      anchor.href = `${baseHref}#${lang}`;
+    });
+
+    // Notify decorative layers (ASCII canvases) so they can start/stop
+    // renderers whose visibility depends on the active language.
+    window.dispatchEvent(new CustomEvent('langchange'));
   }
 
   applyLang();

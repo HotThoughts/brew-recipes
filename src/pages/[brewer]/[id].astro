@@ -80,6 +80,12 @@ const allTags = [
                 <p>{t.en.detail.phaseSummary
                   .replace('{water}', String(enRecipe.phases.reduce((t, p) => t + getTotalPhaseWater(p), 0)))
                   .replace('{count}', String(enRecipe.phases.length))}</p>
+                <a
+                  class="phase-guide-link"
+                  href={withBase('/pour-styles/')}
+                  data-preserve-lang
+                  data-base-href={withBase('/pour-styles/')}
+                >{t.en.detail.pourGuideLink}</a>
               </div>
               <ol class="phase-list">
                 {enRecipe.phases.map((phase, i) => {
@@ -156,6 +162,12 @@ const allTags = [
                 <p>{t.zh.detail.phaseSummary
                   .replace('{water}', String(zhRecipe.phases.reduce((t, p) => t + getTotalPhaseWater(p), 0)))
                   .replace('{count}', String(zhRecipe.phases.length))}</p>
+                <a
+                  class="phase-guide-link"
+                  href={withBase('/pour-styles/')}
+                  data-preserve-lang
+                  data-base-href={withBase('/pour-styles/')}
+                >{t.zh.detail.pourGuideLink}</a>
               </div>
               <ol class="phase-list">
                 {zhRecipe.phases.map((phase, i) => {

@@ -1,0 +1,126 @@
+---
+import type { PourStyle } from '../lib/recipes';
+
+type Props = { style: PourStyle; variant?: 'phase' | 'guide' };
+const { style, variant = 'phase' } = Astro.props;
+---
+
+<canvas
+  class:list={['ascii-pour', `ascii-pour-${variant}`]}
+  data-pour-style={style}
+  data-variant={variant}
+  aria-hidden="true"
+></canvas>
+
+<script>
+  import { AsciiRenderer } from '../lib/ascii/renderer';
+  import { pourScene } from '../lib/ascii/scenes';
+  import type { PourStyle } from '../lib/recipes';
+
+  // Init every pour canvas upfront and let IntersectionObserver own
+  // start/stop. This avoids the lang-toggle race: a canvas inside a
+  // display:none version never intersects so it stays paused, and starts
+  // when its version becomes visible and scrolls into view.
+  const renderers = new Map<HTMLCanvasElement, AsciiRenderer>();
+  const observers = new Map<HTMLCanvasElement, IntersectionObserver>();
+
+  function init(canvas: HTMLCanvasElement, style: PourStyle) {
+    const variant = canvas.dataset.variant === 'guide' ? 'guide' : 'phase';
+    let renderer: AsciiRenderer;
+    try {
+      renderer = new AsciiRenderer(canvas, pourScene(style), {
+        cols: variant === 'guide' ? 46 : 22,
+        rows: variant === 'guide' ? 46 : 18,
+        fontSize: variant === 'guide' ? 7 : 4,
+        fps: 20,
+        fillContainer: variant === 'guide',
+        transparentBackground: true,
+      });
+    } catch (err) {
+      console.error('[ascii] Failed to initialize pour scene', err);
+      return;
+    }
+    const r = renderer;
+    renderers.set(canvas, r);
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) r.start();
+          else r.stop();
+        }
+      },
+      { threshold: 0.1 },
+    );
+    io.observe(canvas);
+    observers.set(canvas, io);
+
+    const onVisibilityChange = () => {
+      if (document.hidden) r.stop();
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    // Cleanup per-canvas resources when the canvas is removed from DOM
+    // or on page unload.
+    const cleanup = () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      io.disconnect();
+      observers.delete(canvas);
+      r.dispose();
+      renderers.delete(canvas);
+    };
+    window.addEventListener('beforeunload', cleanup, { once: true });
+  }
+
+  function versionVisible(canvas: HTMLCanvasElement): boolean {
+    const v = canvas.closest('.recipe-version');
+    if (!v) return true;
+    return getComputedStyle(v).display !== 'none';
+  }
+
+  // IntersectionObserver does not fire when an ancestor toggles between
+  // display:none and display:contents, so handle language switches
+  // explicitly: start renderers in the now-visible version, stop the rest.
+  const onLangChange = () => {
+    renderers.forEach((r, canvas) => {
+      if (versionVisible(canvas)) r.start();
+      else r.stop();
+    });
+  };
+  window.addEventListener('langchange', onLangChange);
+
+  function scan() {
+    document
+      .querySelectorAll<HTMLCanvasElement>('.ascii-pour:not([data-init])')
+      .forEach((canvas) => {
+        canvas.dataset.init = '1';
+        const style = canvas.dataset.pourStyle as PourStyle;
+        init(canvas, style);
+      });
+
+    // Prune stale entries for canvases no longer in the DOM.
+    renderers.forEach((r, canvas) => {
+      if (!canvas.isConnected) {
+        r.dispose();
+        renderers.delete(canvas);
+        const io = observers.get(canvas);
+        if (io) { io.disconnect(); observers.delete(canvas); }
+      }
+    });
+  }
+
+  const onHashChange = () => setTimeout(scan, 50);
+  window.addEventListener('hashchange', onHashChange);
+
+  scan();
+
+  // Full teardown on unload.
+  window.addEventListener('beforeunload', () => {
+    window.removeEventListener('langchange', onLangChange);
+    window.removeEventListener('hashchange', onHashChange);
+    observers.forEach((io) => io.disconnect());
+    observers.clear();
+    renderers.forEach((r) => r.dispose());
+    renderers.clear();
+  }, { once: true });
+</script>
