@@ -158,8 +158,8 @@
   }
 
   .home-hero {
-    grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
-    align-items: end;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 460px);
+    align-items: center;
     min-height: 46vh;
   }
 
@@ -220,10 +220,6 @@
     gap: 8px;
   }
 
-  .archive-summary {
-    view-transition-name: archive-stats;
-  }
-
   /* Compact: brewer selected — pills move next to title, hero collapses */
   .home-hero.compact {
     grid-template-columns: minmax(0, 1fr) auto;
@@ -234,7 +230,7 @@
   }
 
   .home-hero.compact .lede,
-  .home-hero.compact .archive-summary {
+  .home-hero.compact .intro-link {
     display: none;
   }
 
@@ -275,9 +271,24 @@
     text-wrap: pretty;
   }
 
+  .intro-link {
+    width: fit-content;
+    color: var(--ink-light);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-underline-offset: 0.25em;
+    transition: color 180ms var(--ease-out), transform 200ms var(--ease-out);
+  }
+
+  .intro-link:hover {
+    color: var(--ink);
+    transform: translateX(4px);
+  }
+
   .system-line,
   .label,
-  .summary-label,
   .brewer-count,
   .group-heading span {
     color: var(--ink-light);
@@ -293,35 +304,11 @@
     font-style: italic;
   }
 
-  .archive-summary,
   .spec-grid,
   .source-panel {
     border: 1px solid var(--rule);
     border-radius: var(--radius);
     background: oklch(1 0 0 / 0.2);
-  }
-
-  .archive-summary {
-    display: grid;
-  }
-
-  .summary-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 18px;
-    padding: 18px;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .summary-row:last-child {
-    border-bottom: 0;
-  }
-
-  .summary-value {
-    font-family: var(--font-display);
-    font-size: 2.4rem;
-    line-height: 1;
   }
 
   .brewer-index,
@@ -346,7 +333,7 @@
 
   .section-heading.compact {
     grid-template-columns: 1fr;
-    gap: 6px;
+    gap: 8px;
   }
 
   .section-heading h2,
@@ -498,7 +485,8 @@
   }
 
   .detail-nav a,
-  .source-panel a {
+  .source-panel a,
+  .phase-guide-link {
     color: var(--ink);
     text-decoration: none;
     transition: color 180ms var(--ease-out), transform 200ms var(--ease-out);
@@ -508,7 +496,8 @@
   }
 
   .detail-nav a:hover,
-  .source-panel a:hover {
+  .source-panel a:hover,
+  .phase-guide-link:hover {
     color: var(--ink-light);
     transform: translateX(-4px);
   }
@@ -691,10 +680,15 @@
   .phase-list {
     list-style: none;
     padding: 0;
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr) minmax(88px, auto);
+    column-gap: 18px;
   }
 
   .phase-row {
-    grid-template-columns: 58px minmax(0, 1fr) minmax(130px, auto);
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
     align-items: start;
     padding: 18px 0;
   }
@@ -755,8 +749,18 @@
   .phase-values {
     display: grid;
     justify-items: end;
-    gap: 4px;
+    gap: 2px;
     white-space: nowrap;
+  }
+
+  .phase-guide-link {
+    width: fit-content;
+    color: var(--ink-light);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-underline-offset: 0.25em;
   }
 
   .source-panel {
@@ -784,6 +788,91 @@
     padding: 0;
     margin: 20px 0 0;
     list-style: none;
+  }
+
+  /* ASCII motion layers — decorative, never content-bearing */
+  .ascii-hero {
+    align-self: center;
+    justify-self: end;
+    width: min(100%, 460px);
+    aspect-ratio: 1;
+    height: auto;
+    opacity: 0.9;
+    view-transition-name: hero-visual;
+  }
+
+  .home-hero.compact .ascii-hero {
+    display: none;
+  }
+
+  .ascii-pour {
+    display: block;
+    width: 88px;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 6px;
+    justify-self: end;
+  }
+
+  .ascii-pour-guide {
+    width: min(100%, 260px);
+    aspect-ratio: 1;
+    height: auto;
+    margin: 0;
+    justify-self: start;
+  }
+
+  .pour-guide {
+    display: grid;
+    gap: clamp(36px, 6vw, 68px);
+  }
+
+  .pour-guide-header {
+    display: grid;
+    gap: 20px;
+    max-width: 760px;
+  }
+
+  .pour-guide-list {
+    display: grid;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pour-guide-row {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.32fr) minmax(0, 1fr);
+    gap: clamp(24px, 5vw, 56px);
+    align-items: center;
+    padding: clamp(24px, 4vw, 40px) 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .pour-guide-demo {
+    display: grid;
+    justify-items: start;
+  }
+
+  .pour-guide-copy {
+    display: grid;
+    gap: 12px;
+  }
+
+  .pour-guide-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.015em;
+  }
+
+  .pour-guide-copy p {
+    max-width: 68ch;
+    color: var(--ink-light);
+    font-size: 0.88rem;
   }
 }
 
@@ -847,17 +936,19 @@
   .recipe-header,
   .recipe-row,
   .section-heading,
-  .recipe-group {
+  .recipe-group,
+  .pour-guide-row {
     grid-template-columns: 1fr;
+  }
+
+  .ascii-hero {
+    justify-self: start;
+    width: min(100%, 360px);
   }
 
   .page-title {
     max-width: 9ch;
     font-size: clamp(3.4rem, 18vw, 5rem);
-  }
-
-  .archive-summary {
-    max-width: 420px;
   }
 
   .recipe-stats {
@@ -896,6 +987,18 @@
   }
 }
 
+@media (max-width: 700px) {
+  .ascii-hero,
+  .ascii-pour {
+    display: none !important;
+  }
+
+  .pour-guide-page .ascii-pour-guide {
+    display: block !important;
+    width: min(100%, 220px);
+  }
+}
+
 @media (max-width: 560px) {
   .site-header,
   .detail-nav,
@@ -914,7 +1017,7 @@
     gap: 8px;
   }
 
-  .phase-row {
+  .phase-list {
     grid-template-columns: 42px minmax(0, 1fr);
   }
 

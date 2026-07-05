@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AsciiPour from '../components/AsciiPour.astro';
+import PourGlyph from '../components/PourGlyph.astro';
+import { t } from '../lib/i18n';
+import { POUR_STYLES, withBase } from '../lib/recipes';
+---
+
+<BaseLayout title={`${t.en.pourGuide.title} | ${t.en.site.title} | ${t.zh.site.title}`} pageClass="pour-guide-page">
+  <main class="pour-guide">
+    <header class="pour-guide-header">
+      <p class="system-line">
+        <span class="lang-en">{t.en.pourGuide.systemLine}</span>
+        <span class="lang-zh">{t.zh.pourGuide.systemLine}</span>
+      </p>
+      <h1 class="page-title">
+        <span class="lang-en">{t.en.pourGuide.title}</span>
+        <span class="lang-zh">{t.zh.pourGuide.title}</span>
+      </h1>
+      <p class="lede">
+        <span class="lang-en">{t.en.pourGuide.lede}</span>
+        <span class="lang-zh">{t.zh.pourGuide.lede}</span>
+      </p>
+    </header>
+
+    <ol class="pour-guide-list" aria-label={t.en.pourGuide.listLabel}>
+      {POUR_STYLES.map((style) => (
+        <li class="pour-guide-row">
+          <div class="pour-guide-demo">
+            <AsciiPour style={style} variant="guide" />
+          </div>
+          <div class="pour-guide-copy">
+            <h2 class="pour-guide-title">
+              <PourGlyph style={style} />
+              <span class="lang-en">{t.en.pourGuide.styles[style].name}</span>
+              <span class="lang-zh">{t.zh.pourGuide.styles[style].name}</span>
+            </h2>
+            <p>
+              <span class="lang-en">{t.en.pourGuide.styles[style].how}</span>
+              <span class="lang-zh">{t.zh.pourGuide.styles[style].how}</span>
+            </p>
+            <p>
+              <span class="lang-en">{t.en.pourGuide.styles[style].taste}</span>
+              <span class="lang-zh">{t.zh.pourGuide.styles[style].taste}</span>
+            </p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <nav class="detail-nav" aria-label={t.en.detail.recipeNav}>
+      <a href={withBase('/')}>
+        <span class="lang-en">← {t.en.pourGuide.back}</span>
+        <span class="lang-zh">← {t.zh.pourGuide.back}</span>
+      </a>
+    </nav>
+  </main>
+</BaseLayout>

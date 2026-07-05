@@ -1,0 +1,51 @@
+---
+// Ambient ASCII steam field, fixed behind site content. Decorative, aria-hidden.
+---
+
+<canvas class="ascii-ambient" aria-hidden="true"></canvas>
+
+<script>
+  import { AsciiRenderer } from '../lib/ascii/renderer';
+  import { ambientScene } from '../lib/ascii/scenes';
+
+  const canvas = document.querySelector<HTMLCanvasElement>('.ascii-ambient');
+  if (canvas && !window.matchMedia('(max-width: 700px)').matches) {
+    const saveData =
+      (navigator as any).connection?.saveData === true ||
+      (navigator as any).deviceMemory !== undefined && (navigator as any).deviceMemory < 4;
+    if (saveData) {
+      // skip on constrained devices
+    } else {
+      let renderer: AsciiRenderer | null = null;
+      try {
+        renderer = new AsciiRenderer(canvas, ambientScene(), {
+          cols: 120,
+          rows: 64,
+          fontSize: 11,
+          fps: 12,
+        });
+      } catch {
+        // WebGL unavailable
+      }
+
+      if (renderer) {
+        const r = renderer;
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) r.start();
+              else r.stop();
+            }
+          },
+          { threshold: 0 },
+        );
+        io.observe(canvas);
+
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) r.stop();
+          else r.start();
+        });
+      }
+    }
+  }
+</script>

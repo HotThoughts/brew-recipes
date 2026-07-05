@@ -1,10 +1,7 @@
 home:
   title: brew recipes
   lede: A quiet archive of pour-over recipes — browse by brewer, compare parameters, and follow each pour step by step.
-  archive:
-    methodFiles: method files
-    brewers: brewers
-    languages: languages
+  pourGuideLink: Learn how pour style changes taste
   ratioNA: ratio n/a
   filterByBrewer: Filter by brewer
   filterByTaste: Filter by taste
@@ -43,8 +40,33 @@ detail:
     circular: circular
     center: center
     swirl: swirl
+  pourGuideLink: Why pour style changes taste
   source: source
   sourceLink: Source
+
+pourGuide:
+  systemLine: pour motion / extraction
+  title: pour styles
+  lede: Water does not only add mass. Its path changes agitation, drawdown, and which parts of the coffee bed extract fastest.
+  listLabel: Pour style demonstrations
+  back: brew methods
+  styles:
+    spiral:
+      name: spiral
+      how: Start near the center and expand outward in a controlled spiral, then return inward if the recipe calls for it.
+      taste: Even wetting and moderate agitation tend to support clarity and sweetness without pushing the edges of the bed too hard.
+    circular:
+      name: circular
+      how: Move in steady rings around the bed, keeping the stream away from the paper wall unless the brewer asks for bypass.
+      taste: More perimeter movement raises agitation and can increase extraction, body, and brightness when the grind and flow are balanced.
+    center:
+      name: center
+      how: Hold the stream near the middle so water falls through a smaller area with less lateral movement.
+      taste: Lower agitation can soften acidity and reduce harshness, but too much center pouring can leave the outer bed under-extracted.
+    swirl:
+      name: swirl
+      how: Rotate or gently shake the brewer after pouring to level the bed and move fines through the slurry.
+      taste: Swirling can improve uniformity and sweetness, while too much movement may slow drawdown and add dryness.
 
 site:
   title: brew-recipes

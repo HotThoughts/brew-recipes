@@ -1,10 +1,7 @@
 home:
   title: 手冲方法
   lede: 一座安静的手冲配方档案库 — 按滤杯浏览，对比冲煮参数，逐步跟随每一个注水阶段。
-  archive:
-    methodFiles: 方法文件
-    brewers: 滤杯种类
-    languages: 语言
+  pourGuideLink: 了解注水方式如何改变风味
   ratioNA: 比例 n/a
   filterByBrewer: 按滤杯筛选
   filterByTaste: 按风味筛选
@@ -43,8 +40,33 @@ detail:
     circular: 绕圈
     center: 中心
     swirl: 摇晃
+  pourGuideLink: 注水方式为什么会改变风味
   source: 来源
   sourceLink: 查看来源
+
+pourGuide:
+  systemLine: 注水动作 / 萃取
+  title: 注水方式
+  lede: 水不只是增加重量。水流的路径会改变扰动、流速，以及咖啡粉床不同区域的萃取速度。
+  listLabel: 注水方式示意
+  back: 手冲方法
+  styles:
+    spiral:
+      name: 螺旋
+      how: 从中心附近开始，稳定地向外画螺旋；如果配方需要，再从外圈回到中心。
+      taste: 均匀润湿和适度扰动通常会带来清晰度与甜感，同时避免过度冲刷粉床边缘。
+    circular:
+      name: 绕圈
+      how: 沿着粉床稳定绕圈，除非配方需要旁通，否则尽量不要把水直接冲到滤纸壁上。
+      taste: 更多外圈移动会提高扰动，研磨和流速合适时，可能增加萃取、醇厚度和明亮感。
+    center:
+      name: 中心
+      how: 将水流保持在中间区域，让水通过较小的范围下落，减少横向扰动。
+      taste: 较低扰动可以柔化酸质并降低粗糙感，但过多中心注水可能让外圈粉床萃取不足。
+    swirl:
+      name: 摇晃
+      how: 注水后轻轻旋转或摇晃滤杯，让粉床更平整，并让细粉在浆液中重新分布。
+      taste: 摇晃有助于提高均匀度和甜感；过度摇晃则可能拖慢流速，并带来干涩感。
 
 site:
   title: 手冲配方

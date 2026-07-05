@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AsciiHero from '../components/AsciiHero.astro';
 import { t } from '../lib/i18n';
 import {
   formatRecipeCount,
@@ -49,22 +50,18 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
         <span class="lang-en">{t.en.home.lede}</span>
         <span class="lang-zh">{t.zh.home.lede}</span>
       </p>
+      <a
+        class="intro-link"
+        href={withBase('/pour-styles/')}
+        data-preserve-lang
+        data-base-href={withBase('/pour-styles/')}
+      >
+        <span class="lang-en">{t.en.home.pourGuideLink}</span>
+        <span class="lang-zh">{t.zh.home.pourGuideLink}</span>
+      </a>
     </section>
 
-    <aside class="archive-summary" aria-label="Archive summary">
-      <div class="summary-row">
-        <span class="summary-value">{uniqueRecipes.length}</span>
-        <span class="summary-label"><span class="lang-en">{t.en.home.archive.methodFiles}</span><span class="lang-zh">{t.zh.home.archive.methodFiles}</span></span>
-      </div>
-      <div class="summary-row">
-        <span class="summary-value">{groups.length}</span>
-        <span class="summary-label"><span class="lang-en">{t.en.home.archive.brewers}</span><span class="lang-zh">{t.zh.home.archive.brewers}</span></span>
-      </div>
-      <div class="summary-row">
-        <span class="summary-value">{collection.languages.length}</span>
-        <span class="summary-label"><span class="lang-en">{t.en.home.archive.languages}</span><span class="lang-zh">{t.zh.home.archive.languages}</span></span>
-      </div>
-    </aside>
+    <AsciiHero />
 
     <section class="filter-bar" aria-label={t.en.home.filterByBrewer}>
       <div class="filter-row">

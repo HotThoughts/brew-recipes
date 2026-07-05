@@ -1,0 +1,88 @@
+---
+import type { PourStyle } from '../lib/recipes';
+
+type Props = { style: PourStyle; variant?: 'phase' | 'guide' };
+const { style, variant = 'phase' } = Astro.props;
+---
+
+<canvas
+  class:list={['ascii-pour', `ascii-pour-${variant}`]}
+  data-pour-style={style}
+  data-variant={variant}
+  aria-hidden="true"
+></canvas>
+
+<script>
+  import { AsciiRenderer } from '../lib/ascii/renderer';
+  import { pourScene } from '../lib/ascii/scenes';
+  import type { PourStyle } from '../lib/recipes';
+
+  // Init every pour canvas upfront and let IntersectionObserver own
+  // start/stop. This avoids the lang-toggle race: a canvas inside a
+  // display:none version never intersects so it stays paused, and starts
+  // when its version becomes visible and scrolls into view.
+  const renderers = new Map<HTMLCanvasElement, AsciiRenderer>();
+
+  function init(canvas: HTMLCanvasElement, style: PourStyle) {
+    const variant = canvas.dataset.variant === 'guide' ? 'guide' : 'phase';
+    let renderer: AsciiRenderer;
+    try {
+      renderer = new AsciiRenderer(canvas, pourScene(style), {
+        cols: variant === 'guide' ? 46 : 22,
+        rows: variant === 'guide' ? 46 : 18,
+        fontSize: variant === 'guide' ? 7 : 4,
+        fps: 20,
+        fillContainer: variant === 'guide',
+        transparentBackground: true,
+      });
+    } catch {
+      return; // WebGL unavailable
+    }
+    const r = renderer;
+    renderers.set(canvas, r);
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) r.start();
+          else r.stop();
+        }
+      },
+      { threshold: 0.1 },
+    );
+    io.observe(canvas);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) r.stop();
+    });
+  }
+
+  function versionVisible(canvas: HTMLCanvasElement): boolean {
+    const v = canvas.closest('.recipe-version');
+    if (!v) return true;
+    return getComputedStyle(v).display !== 'none';
+  }
+
+  // IntersectionObserver does not fire when an ancestor toggles between
+  // display:none and display:contents, so handle language switches
+  // explicitly: start renderers in the now-visible version, stop the rest.
+  window.addEventListener('langchange', () => {
+    renderers.forEach((r, canvas) => {
+      if (versionVisible(canvas)) r.start();
+      else r.stop();
+    });
+  });
+
+  function scan() {
+    document
+      .querySelectorAll<HTMLCanvasElement>('.ascii-pour:not([data-init])')
+      .forEach((canvas) => {
+        canvas.dataset.init = '1';
+        const style = canvas.dataset.pourStyle as PourStyle;
+        init(canvas, style);
+      });
+  }
+
+  scan();
+  window.addEventListener('hashchange', () => setTimeout(scan, 50));
+</script>
