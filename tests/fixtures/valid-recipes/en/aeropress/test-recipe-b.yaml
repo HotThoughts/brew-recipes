@@ -1,0 +1,29 @@
+id: test-recipe-b
+name: Test Recipe Full
+brewer: Aeropress
+dose_g: 18
+water_ml: 300
+ratio: "1:16.7"
+variant: 1-cup
+water_temp_c: 96
+grind_size: medium-fine
+description: A full test recipe with all optional fields.
+phases:
+  - label: Bloom
+    water_g: 50
+    wait_seconds: 30
+    pours: 1
+    note: Spiral pour
+  - label: Main
+    water_g: 80
+    wait_seconds: 15
+    pours: 3
+    note: Circular pour with multiple pours
+source:
+  name: Test Creator
+  url: https://example.com/recipe
+  competition: Test Cup 2024
+tags:
+  - light-roast
+  - sweet
+  - competition

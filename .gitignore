@@ -26,6 +26,9 @@ dist/
 .playwright-mcp
 skills-lock.json
 
+# Test artifacts
+coverage/
+
 # Dev artifacts (screenshots, Playwright snapshots)
 /*.png
 /*.yml

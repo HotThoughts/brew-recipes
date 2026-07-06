@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { load } from 'js-yaml';
+import { walkYamlFiles } from '../../scripts/lib/walk.mjs';
 
 export type LanguageCode = 'en' | 'zh';
 
@@ -65,28 +66,16 @@ const BREWER_ORDER = [
 
 const RECIPE_DIR = path.join(process.cwd(), 'recipes');
 
-function isLanguageCode(value: string): value is LanguageCode {
+export function isLanguageCode(value: string): value is LanguageCode {
   return value === 'en' || value === 'zh';
 }
 
-function* walkYamlFiles(dir: string): Generator<string> {
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const entryPath = path.join(dir, entry.name);
-
-    if (entry.isDirectory()) {
-      yield* walkYamlFiles(entryPath);
-    } else if (entry.name.endsWith('.yaml') || entry.name.endsWith('.yml')) {
-      yield entryPath;
-    }
-  }
-}
-
-function brewerRank(brewer: string): number {
+export function brewerRank(brewer: string): number {
   const index = BREWER_ORDER.indexOf(brewer);
   return index === -1 ? BREWER_ORDER.length : index;
 }
 
-function slugifyBrewer(brewer: string): string {
+export function slugifyBrewer(brewer: string): string {
   return brewer
     .replace(/([a-z])([A-Z])/g, '$1-$2')
     .toLowerCase()
@@ -94,8 +83,9 @@ function slugifyBrewer(brewer: string): string {
     .replace(/^-|-$/g, '');
 }
 
-function normalizeRecipe(filePath: string): Recipe {
-  const relativePath = path.relative(RECIPE_DIR, filePath);
+function normalizeRecipe(filePath: string, recipeDir?: string): Recipe {
+  const dir = recipeDir ?? RECIPE_DIR;
+  const relativePath = path.relative(dir, filePath);
   const [language, brewerSlug] = relativePath.split(path.sep);
 
   if (!isLanguageCode(language)) {
@@ -115,8 +105,9 @@ function normalizeRecipe(filePath: string): Recipe {
   };
 }
 
-export function getRecipes(): Recipe[] {
-  const recipes = [...walkYamlFiles(RECIPE_DIR)].map(normalizeRecipe);
+export function getRecipes(recipeDir?: string): Recipe[] {
+  const dir = recipeDir ?? RECIPE_DIR;
+  const recipes = [...walkYamlFiles(dir)].map((fp) => normalizeRecipe(fp, dir));
 
   return recipes.sort((a, b) => {
     const lang = a.language.localeCompare(b.language);
@@ -129,8 +120,8 @@ export function getRecipes(): Recipe[] {
   });
 }
 
-export function getRecipeCollection(): RecipeCollection {
-  const recipes = getRecipes();
+export function getRecipeCollection(recipeDir?: string): RecipeCollection {
+  const recipes = getRecipes(recipeDir);
   const languages = [...new Set(recipes.map((recipe) => recipe.language))].sort() as LanguageCode[];
   const byLanguage = new Map<LanguageCode, Recipe[]>();
 
@@ -220,7 +211,7 @@ export function getTotalWaitSeconds(recipe: Recipe): number {
   return recipe.phases.reduce((total, phase) => total + (phase.wait_seconds ?? 0), 0);
 }
 
-export function withBase(pathname: string): string {
-  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+export function withBase(pathname: string, baseUrl?: string): string {
+  const base = (baseUrl ?? import.meta.env.BASE_URL).replace(/\/$/, '');
   return `${base}${pathname}`;
 }

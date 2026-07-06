@@ -1,0 +1,12 @@
+id: bad-brewer
+name: Bad Brewer
+brewer: HarioSwitch
+dose_g: 15
+water_ml: 250
+water_temp_c: 93
+grind_size: medium
+phases:
+  - label: Bloom
+    water_g: 50
+source:
+  name: Test
