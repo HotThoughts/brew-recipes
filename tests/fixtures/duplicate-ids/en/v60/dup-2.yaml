@@ -1,0 +1,12 @@
+id: dup
+name: Duplicate Two
+brewer: V60
+dose_g: 18
+water_ml: 300
+water_temp_c: 93
+grind_size: medium
+phases:
+  - label: Bloom
+    water_g: 60
+source:
+  name: Test

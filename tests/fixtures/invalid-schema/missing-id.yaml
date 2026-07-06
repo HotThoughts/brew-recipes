@@ -1,0 +1,12 @@
+# Missing required 'id' field
+name: No ID Recipe
+brewer: V60
+dose_g: 15
+water_ml: 250
+water_temp_c: 93
+grind_size: medium
+phases:
+  - label: Bloom
+    water_g: 50
+source:
+  name: Test

@@ -6,7 +6,10 @@ on:
       - 'src/**'
       - 'recipes/**/*.yaml'
       - 'recipes/**/*.yml'
+      - 'scripts/**'
+      - 'tests/**'
       - 'schema.yaml'
+      - 'vitest.config.ts'
       - 'astro.config.mjs'
       - 'tsconfig.json'
       - 'package.json'
@@ -27,6 +30,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Run unit and integration tests
+        run: npm run test:unit
 
       - name: Validate recipes and build site
         run: npm test
