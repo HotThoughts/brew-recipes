@@ -10,15 +10,15 @@
 
   const canvases = document.querySelectorAll<HTMLCanvasElement>('.ascii-hero');
   canvases.forEach((canvas) => {
-    if (window.matchMedia('(max-width: 700px)').matches) return;
+    const isMobile = window.matchMedia('(max-width: 700px)').matches;
 
     let renderer: AsciiRenderer | null = null;
     try {
       renderer = new AsciiRenderer(canvas, heroScene(), {
-        cols: 80,
-        rows: 80,
-        fontSize: 8,
-        fps: 20,
+        cols: isMobile ? 40 : 80,
+        rows: isMobile ? 40 : 80,
+        fontSize: isMobile ? 6 : 8,
+        fps: isMobile ? 15 : 20,
         fillContainer: true,
         transparentBackground: true,
       });
