@@ -64,54 +64,61 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     <AsciiHero />
 
     <section class="filter-bar" aria-label={t.en.home.filterByBrewer}>
-      <div class="filter-row">
-        <h3 class="filter-section-title">
-          <span class="lang-en">{t.en.home.filterTitleBrewer}</span>
-          <span class="lang-zh">{t.zh.home.filterTitleBrewer}</span>
-        </h3>
-        <div class="filter-pills">
-          {groups.map((group) => (
-            <button
-              type="button"
-              class="filter-toggle"
-              data-brewer={group.brewerSlug}
-              aria-pressed="false"
-            >
-              {group.brewer}
-            </button>
-          ))}
+      <button type="button" class="filter-bar-summary" aria-expanded="false">
+        <span class="lang-en">{t.en.home.filterSummary}</span>
+        <span class="lang-zh">{t.zh.home.filterSummary}</span>
+        <span class="filter-bar-summary-count"></span>
+        <span class="filter-bar-summary-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="filter-bar-groups">
+        <div class="filter-row">
+          <h3 class="filter-section-title">
+            <span class="lang-en">{t.en.home.filterTitleBrewer}</span>
+            <span class="lang-zh">{t.zh.home.filterTitleBrewer}</span>
+          </h3>
+          <div class="filter-pills">
+            {groups.map((group) => (
+              <button
+                type="button"
+                class="filter-toggle"
+                data-brewer={group.brewerSlug}
+                aria-pressed="false"
+              >
+                {group.brewer}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
-      <div class="filter-row">
-        <h3 class="filter-section-title">
-          <span class="lang-en">{t.en.home.filterTitleTaste}</span>
-          <span class="lang-zh">{t.zh.home.filterTitleTaste}</span>
-        </h3>
-        <div class="filter-pills">
-          {availableTasteValues.map((taste) => (
-            <button type="button" class="filter-toggle" data-taste={taste} aria-pressed="false">
-              <span class="lang-en">{t.en.home.taste[taste]}</span>
-              <span class="lang-zh">{t.zh.home.taste[taste]}</span>
-            </button>
-          ))}
+        <div class="filter-row">
+          <h3 class="filter-section-title">
+            <span class="lang-en">{t.en.home.filterTitleTaste}</span>
+            <span class="lang-zh">{t.zh.home.filterTitleTaste}</span>
+          </h3>
+          <div class="filter-pills">
+            {availableTasteValues.map((taste) => (
+              <button type="button" class="filter-toggle" data-taste={taste} aria-pressed="false">
+                <span class="lang-en">{t.en.home.taste[taste]}</span>
+                <span class="lang-zh">{t.zh.home.taste[taste]}</span>
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
-      <div class="filter-row">
-        <h3 class="filter-section-title">
-          <span class="lang-en">{t.en.home.filterTitleRoast}</span>
-          <span class="lang-zh">{t.zh.home.filterTitleRoast}</span>
-        </h3>
-        <div class="filter-pills">
-          {availableRoastValues.map((roast) => (
-            <button type="button" class="filter-toggle" data-roast={roast} aria-pressed="false">
-              <span class="lang-en">{t.en.home.roast[roast]}</span>
-              <span class="lang-zh">{t.zh.home.roast[roast]}</span>
-            </button>
-          ))}
+        <div class="filter-row">
+          <h3 class="filter-section-title">
+            <span class="lang-en">{t.en.home.filterTitleRoast}</span>
+            <span class="lang-zh">{t.zh.home.filterTitleRoast}</span>
+          </h3>
+          <div class="filter-pills">
+            {availableRoastValues.map((roast) => (
+              <button type="button" class="filter-toggle" data-roast={roast} aria-pressed="false">
+                <span class="lang-en">{t.en.home.roast[roast]}</span>
+                <span class="lang-zh">{t.zh.home.roast[roast]}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>
-  </main>
 
   <div class="empty-state filtered-out">
     <p class="empty-heading">
@@ -189,6 +196,7 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
       ))}
     </section>
   </section>
+  </main>
 </BaseLayout>
 
 <script>
@@ -197,6 +205,23 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
   const groups = document.querySelectorAll('.recipe-group');
   const variantPills = document.querySelectorAll('.variant-pill');
   const emptyState = document.querySelector('.empty-state');
+
+  // ── Collapsible filter summary (mobile) ──
+  const filterBar = document.querySelector('.filter-bar');
+  const filterBarSummary = document.querySelector('.filter-bar-summary');
+  const filterBarSummaryCount = document.querySelector('.filter-bar-summary-count');
+
+  filterBarSummary?.addEventListener('click', () => {
+    const expanded = filterBar.classList.toggle('expanded');
+    filterBarSummary.setAttribute('aria-expanded', String(expanded));
+  });
+
+  function updateFilterSummary() {
+    const activeCount = document.querySelectorAll('.filter-toggle[aria-pressed="true"]').length;
+    if (filterBarSummaryCount) {
+      filterBarSummaryCount.textContent = activeCount > 0 ? `(${activeCount})` : '';
+    }
+  }
 
   brewerToggles.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -310,6 +335,7 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
       } else {
         update();
       }
+      updateFilterSummary();
       return;
     }
 
@@ -404,5 +430,6 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     } else {
       update();
     }
+    updateFilterSummary();
   }
 </script>

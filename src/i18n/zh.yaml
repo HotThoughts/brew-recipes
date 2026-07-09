@@ -8,6 +8,7 @@ home:
   filterTitleBrewer: 滤杯
   filterTitleTaste: 风味特征
   filterTitleRoast: 烘焙程度
+  filterSummary: 筛选
   taste:
     sweet: 甘甜
     acidic: 酸质

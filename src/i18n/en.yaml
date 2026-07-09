@@ -8,6 +8,7 @@ home:
   filterTitleBrewer: Brewers
   filterTitleTaste: Taste Profile
   filterTitleRoast: Roast Level
+  filterSummary: Filters
   taste:
     sweet: sweet
     acidic: acidic
