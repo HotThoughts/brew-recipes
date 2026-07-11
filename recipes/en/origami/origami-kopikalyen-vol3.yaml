@@ -1,0 +1,40 @@
+id: origami-kopikalyen-vol3
+name: ORIGAMI Dripper with KOPIKALYAN Vol.3
+brewer: Origami
+dose_g: 18
+water_ml: 300
+ratio: "1:16.7"
+variant: Air S
+water_temp_c: 92
+grind_size: medium
+description: >
+  Masashi Nishio's five-pour recipe for the ORIGAMI Air S dripper. Features
+  WANOJA KAMOJANG West Java anaerobic honey-process coffee — expect rich
+  grape-like flavor, juicy fruitiness, and a long-lasting sweetness with depth.
+  The circular pour technique works with the dripper's ribbed design for even
+  extraction.
+phases:
+  - label: Bloom
+    water_g: 40
+    wait_seconds: 30
+    note: Circular pour
+  - label: Second Pour
+    water_g: 60
+    wait_seconds: 15
+    note: Circular pour
+  - label: Third Pour
+    water_g: 60
+    wait_seconds: 15
+    note: Circular pour
+  - label: Fourth Pour
+    water_g: 60
+    wait_seconds: 15
+    note: Circular pour
+  - label: Final Pour
+    water_g: 80
+    wait_seconds: 0
+    note: Circular pour, let draw down
+source:
+  name: KOPIKALYAN (Masashi Nishio)
+  url: https://origami-kai.com/en/blogs/special-feature/origami-with-kopikalyan-tokyo-vol-3
+tags: [light-roast, multi-pour, balanced]
