@@ -223,10 +223,45 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
   const filterBarSummary = document.querySelector('.filter-bar-summary');
   const filterBarSummaryCount = document.querySelector('.filter-bar-summary-count');
 
+  let autoCollapsed = false;
+  let justToggled = false;
+
   filterBarSummary?.addEventListener('click', () => {
     const expanded = filterBar.classList.toggle('expanded');
     filterBarSummary.setAttribute('aria-expanded', String(expanded));
+    autoCollapsed = false;
+    justToggled = true;
   });
+
+  // ── Auto-collapse filter groups on scroll (mobile) ──
+  let scrollTick = false;
+  function onFilterScroll() {
+    if (scrollTick) return;
+    scrollTick = true;
+    requestAnimationFrame(() => {
+      if (justToggled) {
+        justToggled = false;
+        scrollTick = false;
+        return;
+      }
+
+      const rect = filterBar.getBoundingClientRect();
+      const isStuck = rect.top <= 2 && rect.top >= -2 && window.scrollY > 100;
+      const groupsExpanded = filterBar.classList.contains('expanded');
+
+      if (isStuck && groupsExpanded) {
+        filterBar.classList.remove('expanded');
+        filterBarSummary?.setAttribute('aria-expanded', 'false');
+        autoCollapsed = true;
+      } else if (!isStuck && autoCollapsed) {
+        filterBar.classList.add('expanded');
+        filterBarSummary?.setAttribute('aria-expanded', 'true');
+        autoCollapsed = false;
+      }
+      scrollTick = false;
+    });
+  }
+  window.addEventListener('scroll', onFilterScroll, { passive: true });
 
   function updateFilterSummary() {
     const activeCount = document.querySelectorAll('.filter-toggle[aria-pressed="true"]').length;
