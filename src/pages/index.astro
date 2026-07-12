@@ -209,45 +209,75 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
   const groups = document.querySelectorAll('.recipe-group');
   const variantPills = document.querySelectorAll('.variant-pill');
   const emptyState = document.querySelector('.empty-state-no-results');
+  const hero = document.querySelector('.home-hero');
 
   // ── Collapsible filter summary (mobile) ──
   const filterBar = document.querySelector('.filter-bar');
   const filterBarSummary = document.querySelector('.filter-bar-summary');
   const filterBarSummaryCount = document.querySelector('.filter-bar-summary-count');
 
-  let justToggled = false;
+  function setFilterExpanded(expanded) {
+    filterBar?.classList.toggle('expanded', expanded);
+    filterBarSummary?.setAttribute('aria-expanded', String(expanded));
+  }
 
   filterBarSummary?.addEventListener('click', () => {
-    const expanded = filterBar.classList.toggle('expanded');
-    filterBarSummary.setAttribute('aria-expanded', String(expanded));
-    justToggled = true;
+    setFilterExpanded(!filterBar?.classList.contains('expanded'));
   });
 
-  // ── Auto-collapse filter groups on scroll (mobile) ──
+  // ── Keep the mobile filter useful while browsing ──
+  // The filter only becomes sticky after it reaches the top of the viewport.
+  // It expands again at the actual page top, where the full controls are most
+  // useful and there is no risk of fighting the user's scroll.
+  const mobileQuery = window.matchMedia('(max-width: 820px)');
   let scrollTick = false;
+  let filterBarPinY = null;
+
+  function resetFilterScrollState() {
+    filterBar?.classList.remove('is-sticky');
+    filterBarPinY = null;
+  }
+
+  function syncFilterScrollState() {
+    if (!filterBar || !hero || !mobileQuery.matches || !hero.classList.contains('compact')) {
+      resetFilterScrollState();
+      return;
+    }
+
+    // The expanded filter is the landing state at the top of the page.
+    if (window.scrollY <= 4) {
+      resetFilterScrollState();
+      setFilterExpanded(true);
+      return;
+    }
+
+    // Capture the bar's document position before making it sticky. This avoids
+    // a feedback loop where getBoundingClientRect() reads the pinned position.
+    if (filterBarPinY === null && !filterBar.classList.contains('is-sticky')) {
+      filterBarPinY = window.scrollY + filterBar.getBoundingClientRect().top;
+    }
+
+    if (filterBarPinY !== null && window.scrollY > filterBarPinY + 5) {
+      filterBar.classList.add('is-sticky');
+      setFilterExpanded(false);
+    } else if (filterBarPinY !== null && window.scrollY <= filterBarPinY - 5) {
+      filterBar.classList.remove('is-sticky');
+    }
+  }
+
   function onFilterScroll() {
     if (scrollTick) return;
     scrollTick = true;
     requestAnimationFrame(() => {
-      if (justToggled) {
-        justToggled = false;
-        scrollTick = false;
-        return;
-      }
-
-      // Only auto-collapse on scroll-down, never auto-expand.
-      // Auto-expand causes layout shift that fights the user's scroll.
-      const rect = filterBar.getBoundingClientRect();
-      const isStuck = rect.top <= 2 && rect.top >= -2 && window.scrollY > 100;
-
-      if (isStuck && filterBar.classList.contains('expanded')) {
-        filterBar.classList.remove('expanded');
-        filterBarSummary?.setAttribute('aria-expanded', 'false');
-      }
+      syncFilterScrollState();
       scrollTick = false;
     });
   }
   window.addEventListener('scroll', onFilterScroll, { passive: true });
+  mobileQuery.addEventListener('change', () => {
+    resetFilterScrollState();
+    onFilterScroll();
+  });
 
   function updateFilterSummary() {
     const activeCount = document.querySelectorAll('.filter-toggle[aria-pressed="true"]').length;
@@ -361,7 +391,6 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
       }
     });
 
-    const hero = document.querySelector('.home-hero');
     const hasBrewerFilter = activeBrewers.length > 0;
     const hasTasteFilter = activeTastes.length > 0;
     const hasRoastFilter = activeRoasts.length > 0;
@@ -370,6 +399,8 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     if (!hasBrewerFilter && !hasTasteFilter && !hasRoastFilter) {
       const update = () => {
         hero.classList.remove('compact');
+        resetFilterScrollState();
+        setFilterExpanded(true);
         emptyState.classList.add('filtered-out');
         variantPills.forEach((pill) => pill.classList.remove('active'));
         groups.forEach((g) => {
@@ -477,6 +508,7 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     } else {
       update();
     }
+    requestAnimationFrame(syncFilterScrollState);
     updateFilterSummary();
   }
 </script>

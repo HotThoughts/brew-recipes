@@ -1064,14 +1064,20 @@
   .home-hero.compact .filter-bar {
     grid-column: auto;
     gap: 12px;
-    position: sticky;
-    top: 0;
-    z-index: 1;
     align-self: start;
-    background: linear-gradient(to bottom, var(--paper) 88%, transparent);
-    padding: 12px 0 20px;
+    padding: 12px 0;
     margin: 0;
     view-transition-name: none;
+  }
+
+  /* JS adds .is-sticky after the bar reaches the top while browsing */
+  .home-hero.compact .filter-bar.is-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: oklch(0.925 0.027 302 / 0.98);
+    border-bottom: 1px solid var(--rule);
+    padding: 12px 0;
   }
 
   /* Clearance for sticky filter bar when navigating to recipe group anchors */
