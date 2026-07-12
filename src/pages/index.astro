@@ -124,13 +124,6 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
       </button>
     </section>
 
-  <div class="empty-state empty-state-idle">
-    <p class="empty-heading">
-      <span class="lang-en">{t.en.home.empty.idle}</span>
-      <span class="lang-zh">{t.zh.home.empty.idle}</span>
-    </p>
-  </div>
-
   <div class="empty-state empty-state-no-results filtered-out">
     <p class="empty-heading">
       <span class="lang-en">{t.en.home.empty.heading}</span>
@@ -216,7 +209,6 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
   const groups = document.querySelectorAll('.recipe-group');
   const variantPills = document.querySelectorAll('.variant-pill');
   const emptyState = document.querySelector('.empty-state-no-results');
-  const emptyStateIdle = document.querySelector('.empty-state-idle');
 
   // ── Collapsible filter summary (mobile) ──
   const filterBar = document.querySelector('.filter-bar');
@@ -379,7 +371,6 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
       const update = () => {
         hero.classList.remove('compact');
         emptyState.classList.add('filtered-out');
-        emptyStateIdle?.classList.remove('filtered-out');
         variantPills.forEach((pill) => pill.classList.remove('active'));
         groups.forEach((g) => {
           g.classList.remove('entering');
@@ -396,9 +387,6 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     }
 
     const update = () => {
-      // Hide idle prompt once filters are active
-      emptyStateIdle?.classList.add('filtered-out');
-
       // Collapse hero when any filter is selected
       if (hasBrewerFilter || hasTasteFilter || hasRoastFilter) {
         hero.classList.add('compact');
