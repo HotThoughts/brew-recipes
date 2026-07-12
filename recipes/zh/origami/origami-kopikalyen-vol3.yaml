@@ -1,0 +1,38 @@
+id: origami-kopikalyen-vol3
+name: KOPIKALYAN Origami 冲煮配方 Vol.3
+brewer: Origami
+dose_g: 18
+water_ml: 300
+ratio: "1:16.7"
+variant: Air S
+water_temp_c: 92
+grind_size: medium
+description: >
+  西尾匡史为 ORIGAMI Air S 滤杯设计的五段注水配方。选用 WANOJA KAMOJANG
+  西爪哇厌氧蜜处理咖啡豆，散发浓郁的葡萄类果香和充沛的果汁感，余韵悠长
+  而甜美。绕圈注水配合滤杯的沟槽设计，实现均匀萃取。
+phases:
+  - label: 闷蒸
+    water_g: 40
+    wait_seconds: 30
+    note: 绕圈注水
+  - label: 第二段注水
+    water_g: 60
+    wait_seconds: 15
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 60
+    wait_seconds: 15
+    note: 绕圈注水
+  - label: 第四段注水
+    water_g: 60
+    wait_seconds: 15
+    note: 绕圈注水
+  - label: 最后一段注水
+    water_g: 80
+    wait_seconds: 0
+    note: 绕圈注水，让其自然流完
+source:
+  name: KOPIKALYAN (西尾匡史)
+  url: https://origami-kai.com/en/blogs/special-feature/origami-with-kopikalyan-tokyo-vol-3
+tags: [light-roast, multi-pour, balanced]

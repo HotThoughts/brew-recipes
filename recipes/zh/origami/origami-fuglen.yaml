@@ -1,0 +1,31 @@
+id: origami-fuglen
+name: FUGLEN Origami 冲煮配方 Vol.1
+brewer: Origami
+dose_g: 15
+water_ml: 250
+ratio: "1:16.7"
+variant: Air S
+water_temp_c: 92
+grind_size: medium-fine
+description: >
+  Mika Jackson 为 ORIGAMI Air S 滤杯设计的混合注水配方。先用绕圈注水，再切换
+  为中心单点注水——这一技巧在保留风味清晰度的同时增强醇厚度。肯尼亚 AA
+  KANGOCHO 展现黑醋栗与核果风味，伴随果酱般的甜感，由传奇奥斯陆烘焙品牌
+  FUGLEN 以北欧烘焙风格呈现。
+phases:
+  - label: 闷蒸
+    water_g: 40
+    wait_seconds: 40
+    note: 绕圈注水
+  - label: 第二段注水
+    water_g: 40
+    wait_seconds: 0
+    note: 绕圈注水，覆盖整个粉床
+  - label: 中心注水
+    water_g: 170
+    wait_seconds: 0
+    note: 中心注水至 250g，然后搅拌使咖啡液均匀
+source:
+  name: FUGLEN COFFEE ROASTERS (Mika Jackson)
+  url: https://origami-kai.com/en/blogs/special-feature/origami-with-fuglen
+tags: [light-roast, beginner-friendly, multi-pour]

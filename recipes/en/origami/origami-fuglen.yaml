@@ -1,0 +1,32 @@
+id: origami-fuglen
+name: ORIGAMI Dripper with FUGLEN Vol.1
+brewer: Origami
+dose_g: 15
+water_ml: 250
+ratio: "1:16.7"
+variant: Air S
+water_temp_c: 92
+grind_size: medium-fine
+description: >
+  Mika Jackson's hybrid pour recipe for the ORIGAMI Air S dripper. Starts with
+  circular pours then switches to a single-point center pour — a technique that
+  builds body while preserving clarity. Kenya AA KANGOCHO delivers black currant
+  and stone fruit notes with a jammy sweetness, roasted in FUGLEN's signature
+  Nordic style from Oslo.
+phases:
+  - label: Bloom
+    water_g: 40
+    wait_seconds: 40
+    note: Circular pour
+  - label: Second Pour
+    water_g: 40
+    wait_seconds: 0
+    note: Circular pour across entire bed
+  - label: Center Pour
+    water_g: 170
+    wait_seconds: 0
+    note: Center pour to 250g, then stir to homogenize
+source:
+  name: FUGLEN COFFEE ROASTERS (Mika Jackson)
+  url: https://origami-kai.com/en/blogs/special-feature/origami-with-fuglen
+tags: [light-roast, beginner-friendly, multi-pour]
