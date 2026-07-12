@@ -1,0 +1,44 @@
+id: origami-coffeeshop-vol2
+name: ORIGAMI Dripper with THE COFFEESHOP Vol.2
+brewer: Origami
+dose_g: 18
+water_ml: 300
+ratio: "1:16.7"
+variant: S
+water_temp_c: 92
+grind_size: medium
+description: >
+  Daichi Hagiwara's six-pour recipe for the classic ORIGAMI S dripper. Uses a
+  distinctive 10-second pour / 10-second wait rhythm after a stirred bloom.
+  Honduras Los Pinos Typica Honey coffee offers a silky mouthfeel, jasmine-like
+  florals, and fruit notes of lemon and green apple. The spoon stir during
+  bloom ensures all grounds are saturated evenly.
+phases:
+  - label: Bloom
+    water_g: 40
+    wait_seconds: 40
+    note: Circular pour, stir 5 times with spoon
+  - label: Second Pour
+    water_g: 50
+    wait_seconds: 10
+    note: Circular pour
+  - label: Third Pour
+    water_g: 60
+    wait_seconds: 10
+    note: Circular pour
+  - label: Fourth Pour
+    water_g: 60
+    wait_seconds: 10
+    note: Circular pour
+  - label: Fifth Pour
+    water_g: 50
+    wait_seconds: 10
+    note: Circular pour
+  - label: Final Pour
+    water_g: 40
+    wait_seconds: 0
+    note: Circular pour, let draw down
+source:
+  name: THE COFFEESHOP (Daichi Hagiwara)
+  url: https://origami-kai.com/en/blogs/special-feature/origami%E3%83%89%E3%83%AA%E3%83%83%E3%83%91%E3%83%BC%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E6%8A%BD%E5%87%BA%E3%83%AC%E3%82%B7%E3%83%94-with-the-coffeeshop-vol-2
+tags: [light-roast, multi-pour, balanced]

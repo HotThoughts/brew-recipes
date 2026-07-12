@@ -1,0 +1,43 @@
+id: origami-coffeeshop-vol2
+name: THE COFFEESHOP Origami 冲煮配方 Vol.2
+brewer: Origami
+dose_g: 18
+water_ml: 300
+ratio: "1:16.7"
+variant: S
+water_temp_c: 92
+grind_size: medium
+description: >
+  萩原大智为经典 ORIGAMI S 滤杯设计的六段注水配方。以独特的 10 秒注水 /
+  10 秒等待节奏进行。闷蒸后用勺子搅拌 5 次，确保咖啡粉均匀吸水。洪都拉斯
+  Los Pinos 铁皮卡蜜处理咖啡带来丝绸般口感、茉莉花香，以及柠檬和青苹果的
+  清新果酸。
+phases:
+  - label: 闷蒸
+    water_g: 40
+    wait_seconds: 40
+    note: 绕圈注水，用勺子搅拌 5 次
+  - label: 第二段注水
+    water_g: 50
+    wait_seconds: 10
+    note: 绕圈注水
+  - label: 第三段注水
+    water_g: 60
+    wait_seconds: 10
+    note: 绕圈注水
+  - label: 第四段注水
+    water_g: 60
+    wait_seconds: 10
+    note: 绕圈注水
+  - label: 第五段注水
+    water_g: 50
+    wait_seconds: 10
+    note: 绕圈注水
+  - label: 最后一段注水
+    water_g: 40
+    wait_seconds: 0
+    note: 绕圈注水，让其自然流完
+source:
+  name: THE COFFEESHOP (萩原大智)
+  url: https://origami-kai.com/en/blogs/special-feature/origami%E3%83%89%E3%83%AA%E3%83%83%E3%83%91%E3%83%BC%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E6%8A%BD%E5%87%BA%E3%83%AC%E3%82%B7%E3%83%94-with-the-coffeeshop-vol-2
+tags: [light-roast, multi-pour, balanced]
