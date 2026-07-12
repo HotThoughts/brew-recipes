@@ -1,0 +1,21 @@
+id: iaro-origami-wave
+name: IARO 入门 Origami 波浪滤纸配方
+brewer: Origami
+dose_g: 15
+water_ml: 250
+ratio: "1:16.7"
+paper_filter: wave
+water_temp_c: 93
+grind_size: medium
+description: >
+  IARO 的入门配方在 Origami 滤杯中使用 Kalita 波浪滤纸。中等研磨和缓慢的绕圈注水，
+  让冲煮过程简单而均匀。由于原文没有说明粉量和总水量，本档案统一采用 15g 咖啡粉和 250g 水。
+phases:
+  - label: 绕圈注水
+    water_g: 250
+    wait_seconds: 0
+    note: 缓慢绕圈注水，让咖啡粉均匀润湿并萃取
+source:
+  name: iaro（Linus Friedmann）
+  url: https://iaro.co/blogs/journal/origami-filter
+tags: [light-roast, beginner-friendly, single-pour]

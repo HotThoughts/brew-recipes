@@ -1,0 +1,28 @@
+id: origami-wave-filter
+name: ORIGAMI 波浪滤纸冲煮配方
+brewer: Origami
+dose_g: 15
+water_ml: 240
+ratio: "1:16"
+paper_filter: wave
+water_temp_c: 91
+grind_size: medium-coarse
+description: >
+  ORIGAMI 波浪滤纸配方使用中粗研磨，并以 30 秒为间隔分三段注水。波浪滤纸与滤杯贴合更近，
+  有助于保持稳定流速，冲出平衡且醇厚的风味。
+phases:
+  - label: 第一段注水
+    water_g: 60
+    wait_seconds: 30
+    note: 覆盖整个粉床均匀注水
+  - label: 第二段注水
+    water_g: 90
+    wait_seconds: 30
+    note: 覆盖整个粉床均匀注水
+  - label: 第三段注水
+    water_g: 90
+    wait_seconds: 0
+    note: 轻柔地向中心注水，然后等待滤液流尽
+source:
+  name: ORIGAMI Online Store
+  url: https://origami-kai.com/en/blogs/special-feature/howtochoose_filter

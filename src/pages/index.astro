@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AsciiHero from '../components/AsciiHero.astro';
+import FilterGlyph from '../components/FilterGlyph.astro';
 import { t } from '../lib/i18n';
 import {
   formatRecipeCount,
   getBrewerGroups,
   getRecipeCollection,
+  PAPER_FILTER_VALUES,
   ROAST_VALUES,
   TASTE_VALUES,
   type LanguageCode,
@@ -27,6 +29,9 @@ const availableRoastValues = ROAST_VALUES.filter((value) => recipeTags.has(value
 const groups = getBrewerGroups(uniqueRecipes).map((group) => ({
   ...group,
   variants: [...new Set(group.recipes.map((r) => r.variant).filter(Boolean))].sort(),
+  paperFilters: PAPER_FILTER_VALUES.filter((value) =>
+    group.recipes.some((recipe) => recipe.paper_filter === value),
+  ),
 }));
 
 function getLangVersion(id: string, lang: LanguageCode): Recipe | undefined {
@@ -147,16 +152,38 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
           <div class="group-heading">
             <h2>{group.brewer}</h2>
             <span class="group-count"><span class="lang-en">{formatRecipeCount(group.recipes.length, 'en')}</span><span class="lang-zh">{formatRecipeCount(group.recipes.length, 'zh')}</span></span>
-            {group.variants.length > 1 && (
-              <div class="variant-filters">
-                {group.variants.map((v) => (
-                  <button
-                    type="button"
-                    class="variant-pill"
-                    data-variant={v}
-                    data-brewer={group.brewerSlug}
-                  >{v}</button>
-                ))}
+            {(group.variants.length > 1 || group.paperFilters.length > 1) && (
+              <div class="group-filters">
+                {group.variants.length > 1 && (
+                  <div class="group-filter-set">
+                    {group.variants.map((v) => (
+                      <button
+                        type="button"
+                        class="variant-pill"
+                        data-variant={v}
+                        data-brewer={group.brewerSlug}
+                        aria-pressed="false"
+                      >{v}</button>
+                    ))}
+                  </div>
+                )}
+                {group.paperFilters.length > 1 && (
+                  <div class="group-filter-set">
+                    {group.paperFilters.map((paperFilter) => (
+                      <button
+                        type="button"
+                        class="paper-filter-pill"
+                        data-paper-filter={paperFilter}
+                        data-brewer={group.brewerSlug}
+                        aria-pressed="false"
+                      >
+                        <FilterGlyph filter={paperFilter} />
+                        <span class="lang-en">{t.en.detail.spec[paperFilter]}</span>
+                        <span class="lang-zh">{t.zh.detail.spec[paperFilter]}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -172,6 +199,7 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
                   data-variant={recipe.variant ?? ''}
                   data-taste={matchingTags(recipe, TASTE_VALUES)}
                   data-roast={matchingTags(recipe, ROAST_VALUES)}
+                  data-paper-filter={recipe.paper_filter ?? ''}
                 >
                   <span class="recipe-main">
                     <span class="recipe-name">
@@ -186,11 +214,22 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
                     )}
                   </span>
                   <span class="recipe-stats" aria-label={`${recipe.name} stats`}>
-                    {recipe.ratio ? <span>{recipe.ratio}</span> : <span><span class="lang-en">{t.en.home.ratioNA}</span><span class="lang-zh">{t.zh.home.ratioNA}</span></span>}
-                    <span>{recipe.dose_g}g</span>
-                    <span>{recipe.water_ml}ml</span>
-                    <span>{recipe.water_temp_c}°C</span>
-                    <span>{recipe.grind_size}</span>
+                    <span class="recipe-stat-line">
+                      {recipe.ratio ? <span>{recipe.ratio}</span> : <span><span class="lang-en">{t.en.home.ratioNA}</span><span class="lang-zh">{t.zh.home.ratioNA}</span></span>}
+                      <span>{recipe.dose_g}g</span>
+                      <span>{recipe.water_ml}ml</span>
+                      <span>{recipe.water_temp_c}°C</span>
+                    </span>
+                    <span class="recipe-stat-line">
+                      <span>{recipe.grind_size}</span>
+                      {recipe.paper_filter && (
+                        <span class="recipe-paper-filter">
+                          <FilterGlyph filter={recipe.paper_filter} />
+                          <span class="lang-en">{t.en.detail.spec[recipe.paper_filter]}</span>
+                          <span class="lang-zh">{t.zh.detail.spec[recipe.paper_filter]}</span>
+                        </span>
+                      )}
+                    </span>
                   </span>
                 </a>
               );
@@ -208,6 +247,7 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
   const brewerToggles = document.querySelectorAll('.filter-toggle[data-brewer]');
   const groups = document.querySelectorAll('.recipe-group');
   const variantPills = document.querySelectorAll('.variant-pill');
+  const paperFilterPills = document.querySelectorAll('.paper-filter-pill');
   const emptyState = document.querySelector('.empty-state-no-results');
   const hero = document.querySelector('.home-hero');
 
@@ -296,7 +336,10 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     document.querySelectorAll('.filter-toggle[aria-pressed="true"]').forEach((btn) => {
       btn.setAttribute('aria-pressed', 'false');
     });
-    variantPills.forEach((pill) => pill.classList.remove('active'));
+    [...variantPills, ...paperFilterPills].forEach((pill) => {
+      pill.classList.remove('active');
+      pill.setAttribute('aria-pressed', 'false');
+    });
     applyAllFilters();
   });
 
@@ -305,8 +348,11 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
       const isActive = btn.getAttribute('aria-pressed') === 'true';
       btn.setAttribute('aria-pressed', isActive ? 'false' : 'true');
       if (isActive) {
-        variantPills.forEach((pill) => {
-          if (pill.dataset.brewer === btn.dataset.brewer) pill.classList.remove('active');
+        [...variantPills, ...paperFilterPills].forEach((pill) => {
+          if (pill.dataset.brewer === btn.dataset.brewer) {
+            pill.classList.remove('active');
+            pill.setAttribute('aria-pressed', 'false');
+          }
         });
       }
       applyAllFilters();
@@ -315,7 +361,16 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
 
   variantPills.forEach((pill) => {
     pill.addEventListener('click', () => {
-      pill.classList.toggle('active');
+      const active = pill.classList.toggle('active');
+      pill.setAttribute('aria-pressed', String(active));
+      applyAllFilters();
+    });
+  });
+
+  paperFilterPills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const active = pill.classList.toggle('active');
+      pill.setAttribute('aria-pressed', String(active));
       applyAllFilters();
     });
   });
@@ -343,7 +398,7 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
   });
 
   // ── Pre-select filters from URL hash ──
-  // Format: /#[brewerSlug][&taste=t1[,t2]*][&roast=r1[,r2]*]
+  // Format: /#[brewerSlug][&taste=t1[,t2]*][&roast=r1[,r2]*][&paper_filter=cone|wave]
   const hash = window.location.hash.slice(1);
   if (hash) {
     const segments = hash.split('&');
@@ -355,8 +410,17 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     for (let i = 1; i < segments.length; i++) {
       const [key, value] = segments[i].split('=');
       if (!value) continue;
-      const attr = key === 'taste' ? 'data-taste' : key === 'roast' ? 'data-roast' : null;
-      if (attr) {
+      if (key === 'paper_filter') {
+        value.split(',').forEach((v) => {
+          const pill = document.querySelector(`.paper-filter-pill[data-brewer="${CSS.escape(brewerSlug)}"][data-paper-filter="${CSS.escape(v)}"]`);
+          if (pill) {
+            pill.classList.add('active');
+            pill.setAttribute('aria-pressed', 'true');
+          }
+        });
+      } else {
+        const attr = key === 'taste' ? 'data-taste' : key === 'roast' ? 'data-roast' : null;
+        if (!attr) continue;
         value.split(',').forEach((v) => {
           const pill = document.querySelector(`.filter-toggle[${attr}="${CSS.escape(v)}"]`);
           if (pill) pill.setAttribute('aria-pressed', 'true');
@@ -391,6 +455,15 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
       }
     });
 
+    // Collect active paper-filter pills, grouped by brewer
+    const activePaperFilters = new Map();
+    paperFilterPills.forEach((pill) => {
+      if (pill.classList.contains('active')) {
+        const b = pill.dataset.brewer;
+        if (!activePaperFilters.has(b)) activePaperFilters.set(b, new Set());
+        activePaperFilters.get(b).add(pill.dataset.paperFilter);
+      }
+    });
     const hasBrewerFilter = activeBrewers.length > 0;
     const hasTasteFilter = activeTastes.length > 0;
     const hasRoastFilter = activeRoasts.length > 0;
@@ -402,7 +475,10 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
         resetFilterScrollState();
         setFilterExpanded(true);
         emptyState.classList.add('filtered-out');
-        variantPills.forEach((pill) => pill.classList.remove('active'));
+        [...variantPills, ...paperFilterPills].forEach((pill) => {
+          pill.classList.remove('active');
+          pill.setAttribute('aria-pressed', 'false');
+        });
         groups.forEach((g) => {
           g.classList.remove('entering');
           g.classList.add('filtered-out');
@@ -441,6 +517,8 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
         const rows = g.querySelectorAll('.recipe-row');
         const variantsForBrewer = activeVariants.get(brewer);
         const hasVariantFilter = variantsForBrewer && variantsForBrewer.size > 0;
+        const paperFiltersForBrewer = activePaperFilters.get(brewer);
+        const hasPaperFilter = paperFiltersForBrewer && paperFiltersForBrewer.size > 0;
 
         let groupVisible = 0;
 
@@ -466,6 +544,11 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
             if (!rowRoasts.some((r) => activeRoasts.includes(r))) {
               hidden = true;
             }
+          }
+
+          // Paper-filter filter
+          if (!hidden && hasPaperFilter && !paperFiltersForBrewer.has(row.dataset.paperFilter)) {
+            hidden = true;
           }
 
           if (hidden) {

@@ -1,0 +1,29 @@
+id: origami-wave-filter
+name: ORIGAMI Dripper with Wave Filter
+brewer: Origami
+dose_g: 15
+water_ml: 240
+ratio: "1:16"
+paper_filter: wave
+water_temp_c: 91
+grind_size: medium-coarse
+description: >
+  ORIGAMI's wave-filter recipe uses a medium-coarse grind and three pours at
+  30-second intervals. The wave filter keeps the paper close to the dripper,
+  supporting a stable flow and a balanced, full-bodied cup.
+phases:
+  - label: First Pour
+    water_g: 60
+    wait_seconds: 30
+    note: Pour wide and evenly across the bed
+  - label: Second Pour
+    water_g: 90
+    wait_seconds: 30
+    note: Pour wide and evenly across the bed
+  - label: Third Pour
+    water_g: 90
+    wait_seconds: 0
+    note: Pour gently in the center, then let draw down
+source:
+  name: ORIGAMI Online Store
+  url: https://origami-kai.com/en/blogs/special-feature/howtochoose_filter

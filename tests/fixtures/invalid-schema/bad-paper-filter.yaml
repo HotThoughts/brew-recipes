@@ -1,0 +1,13 @@
+id: bad-paper-filter
+name: Bad Paper Filter Recipe
+brewer: Origami
+dose_g: 15
+water_ml: 250
+paper_filter: cake
+water_temp_c: 92
+grind_size: medium
+phases:
+  - label: Bloom
+    water_g: 40
+source:
+  name: Test Creator

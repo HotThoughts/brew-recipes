@@ -31,6 +31,10 @@ properties:
   variant:
     type: string
     description: Brewer-specific variant, e.g. "1-cup", "2-cup", "155", "185", "type-a", "negotiator"
+  paper_filter:
+    type: string
+    enum: [cone, wave]
+    description: Paper filter shape, when relevant to the recipe
   water_temp_c:
     type: number
     minimum: 80

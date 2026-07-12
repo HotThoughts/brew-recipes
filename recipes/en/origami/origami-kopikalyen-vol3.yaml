@@ -5,6 +5,7 @@ dose_g: 18
 water_ml: 300
 ratio: "1:16.7"
 variant: Air S
+paper_filter: cone
 water_temp_c: 92
 grind_size: medium
 description: >

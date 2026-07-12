@@ -5,6 +5,7 @@ dose_g: 18
 water_ml: 300
 ratio: "1:16.7"
 variant: 1-cup
+paper_filter: wave
 water_temp_c: 96
 grind_size: medium-fine
 description: A full test recipe with all optional fields.
