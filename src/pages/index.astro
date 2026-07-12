@@ -223,13 +223,11 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
   const filterBarSummary = document.querySelector('.filter-bar-summary');
   const filterBarSummaryCount = document.querySelector('.filter-bar-summary-count');
 
-  let autoCollapsed = false;
   let justToggled = false;
 
   filterBarSummary?.addEventListener('click', () => {
     const expanded = filterBar.classList.toggle('expanded');
     filterBarSummary.setAttribute('aria-expanded', String(expanded));
-    autoCollapsed = false;
     justToggled = true;
   });
 
@@ -245,18 +243,14 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
         return;
       }
 
+      // Only auto-collapse on scroll-down, never auto-expand.
+      // Auto-expand causes layout shift that fights the user's scroll.
       const rect = filterBar.getBoundingClientRect();
       const isStuck = rect.top <= 2 && rect.top >= -2 && window.scrollY > 100;
-      const groupsExpanded = filterBar.classList.contains('expanded');
 
-      if (isStuck && groupsExpanded) {
+      if (isStuck && filterBar.classList.contains('expanded')) {
         filterBar.classList.remove('expanded');
         filterBarSummary?.setAttribute('aria-expanded', 'false');
-        autoCollapsed = true;
-      } else if (!isStuck && autoCollapsed) {
-        filterBar.classList.add('expanded');
-        filterBarSummary?.setAttribute('aria-expanded', 'true');
-        autoCollapsed = false;
       }
       scrollTick = false;
     });
