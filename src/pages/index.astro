@@ -131,7 +131,7 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     </p>
   </div>
 
-  <div class="empty-state filtered-out">
+  <div class="empty-state empty-state-no-results filtered-out">
     <p class="empty-heading">
       <span class="lang-en">{t.en.home.empty.heading}</span>
       <span class="lang-zh">{t.zh.home.empty.heading}</span>
@@ -215,7 +215,7 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
   const brewerToggles = document.querySelectorAll('.filter-toggle[data-brewer]');
   const groups = document.querySelectorAll('.recipe-group');
   const variantPills = document.querySelectorAll('.variant-pill');
-  const emptyState = document.querySelector('.empty-state');
+  const emptyState = document.querySelector('.empty-state-no-results');
   const emptyStateIdle = document.querySelector('.empty-state-idle');
 
   // ── Collapsible filter summary (mobile) ──
