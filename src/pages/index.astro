@@ -63,57 +63,75 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
 
     <AsciiHero />
 
-    <section class="filter-bar" aria-label={t.en.home.filterByBrewer}>
-      <div class="filter-row">
-        <h3 class="filter-section-title">
-          <span class="lang-en">{t.en.home.filterTitleBrewer}</span>
-          <span class="lang-zh">{t.zh.home.filterTitleBrewer}</span>
-        </h3>
-        <div class="filter-pills">
-          {groups.map((group) => (
-            <button
-              type="button"
-              class="filter-toggle"
-              data-brewer={group.brewerSlug}
-              aria-pressed="false"
-            >
-              {group.brewer}
-            </button>
-          ))}
+    <section class="filter-bar expanded" aria-label={t.en.home.filterByBrewer}>
+      <button type="button" class="filter-bar-summary" aria-expanded="true">
+        <span class="lang-en">{t.en.home.filterSummary}</span>
+        <span class="lang-zh">{t.zh.home.filterSummary}</span>
+        <span class="filter-bar-summary-count"></span>
+        <span class="filter-bar-summary-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div class="filter-bar-groups">
+        <div class="filter-row">
+          <h3 class="filter-section-title">
+            <span class="lang-en">{t.en.home.filterTitleBrewer}</span>
+            <span class="lang-zh">{t.zh.home.filterTitleBrewer}</span>
+          </h3>
+          <div class="filter-pills">
+            {groups.map((group) => (
+              <button
+                type="button"
+                class="filter-toggle"
+                data-brewer={group.brewerSlug}
+                aria-pressed="false"
+              >
+                {group.brewer}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div class="filter-row">
+          <h3 class="filter-section-title">
+            <span class="lang-en">{t.en.home.filterTitleTaste}</span>
+            <span class="lang-zh">{t.zh.home.filterTitleTaste}</span>
+          </h3>
+          <div class="filter-pills">
+            {availableTasteValues.map((taste) => (
+              <button type="button" class="filter-toggle" data-taste={taste} aria-pressed="false">
+                <span class="lang-en">{t.en.home.taste[taste]}</span>
+                <span class="lang-zh">{t.zh.home.taste[taste]}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div class="filter-row">
+          <h3 class="filter-section-title">
+            <span class="lang-en">{t.en.home.filterTitleRoast}</span>
+            <span class="lang-zh">{t.zh.home.filterTitleRoast}</span>
+          </h3>
+          <div class="filter-pills">
+            {availableRoastValues.map((roast) => (
+              <button type="button" class="filter-toggle" data-roast={roast} aria-pressed="false">
+                <span class="lang-en">{t.en.home.roast[roast]}</span>
+                <span class="lang-zh">{t.zh.home.roast[roast]}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-      <div class="filter-row">
-        <h3 class="filter-section-title">
-          <span class="lang-en">{t.en.home.filterTitleTaste}</span>
-          <span class="lang-zh">{t.zh.home.filterTitleTaste}</span>
-        </h3>
-        <div class="filter-pills">
-          {availableTasteValues.map((taste) => (
-            <button type="button" class="filter-toggle" data-taste={taste} aria-pressed="false">
-              <span class="lang-en">{t.en.home.taste[taste]}</span>
-              <span class="lang-zh">{t.zh.home.taste[taste]}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-      <div class="filter-row">
-        <h3 class="filter-section-title">
-          <span class="lang-en">{t.en.home.filterTitleRoast}</span>
-          <span class="lang-zh">{t.zh.home.filterTitleRoast}</span>
-        </h3>
-        <div class="filter-pills">
-          {availableRoastValues.map((roast) => (
-            <button type="button" class="filter-toggle" data-roast={roast} aria-pressed="false">
-              <span class="lang-en">{t.en.home.roast[roast]}</span>
-              <span class="lang-zh">{t.zh.home.roast[roast]}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+      <button type="button" class="filter-clear" hidden>
+        <span class="lang-en">{t.en.home.clearFilters}</span>
+        <span class="lang-zh">{t.zh.home.clearFilters}</span>
+      </button>
     </section>
-  </main>
 
-  <div class="empty-state filtered-out">
+  <div class="empty-state empty-state-idle">
+    <p class="empty-heading">
+      <span class="lang-en">{t.en.home.empty.idle}</span>
+      <span class="lang-zh">{t.zh.home.empty.idle}</span>
+    </p>
+  </div>
+
+  <div class="empty-state empty-state-no-results filtered-out">
     <p class="empty-heading">
       <span class="lang-en">{t.en.home.empty.heading}</span>
       <span class="lang-zh">{t.zh.home.empty.heading}</span>
@@ -189,6 +207,7 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
       ))}
     </section>
   </section>
+  </main>
 </BaseLayout>
 
 <script>
@@ -196,7 +215,68 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
   const brewerToggles = document.querySelectorAll('.filter-toggle[data-brewer]');
   const groups = document.querySelectorAll('.recipe-group');
   const variantPills = document.querySelectorAll('.variant-pill');
-  const emptyState = document.querySelector('.empty-state');
+  const emptyState = document.querySelector('.empty-state-no-results');
+  const emptyStateIdle = document.querySelector('.empty-state-idle');
+
+  // ── Collapsible filter summary (mobile) ──
+  const filterBar = document.querySelector('.filter-bar');
+  const filterBarSummary = document.querySelector('.filter-bar-summary');
+  const filterBarSummaryCount = document.querySelector('.filter-bar-summary-count');
+
+  let justToggled = false;
+
+  filterBarSummary?.addEventListener('click', () => {
+    const expanded = filterBar.classList.toggle('expanded');
+    filterBarSummary.setAttribute('aria-expanded', String(expanded));
+    justToggled = true;
+  });
+
+  // ── Auto-collapse filter groups on scroll (mobile) ──
+  let scrollTick = false;
+  function onFilterScroll() {
+    if (scrollTick) return;
+    scrollTick = true;
+    requestAnimationFrame(() => {
+      if (justToggled) {
+        justToggled = false;
+        scrollTick = false;
+        return;
+      }
+
+      // Only auto-collapse on scroll-down, never auto-expand.
+      // Auto-expand causes layout shift that fights the user's scroll.
+      const rect = filterBar.getBoundingClientRect();
+      const isStuck = rect.top <= 2 && rect.top >= -2 && window.scrollY > 100;
+
+      if (isStuck && filterBar.classList.contains('expanded')) {
+        filterBar.classList.remove('expanded');
+        filterBarSummary?.setAttribute('aria-expanded', 'false');
+      }
+      scrollTick = false;
+    });
+  }
+  window.addEventListener('scroll', onFilterScroll, { passive: true });
+
+  function updateFilterSummary() {
+    const activeCount = document.querySelectorAll('.filter-toggle[aria-pressed="true"]').length;
+    if (filterBarSummaryCount) {
+      filterBarSummaryCount.textContent = activeCount > 0 ? `(${activeCount})` : '';
+    }
+    const clearBtn = document.querySelector('.filter-clear');
+    if (clearBtn) {
+      clearBtn.hidden = activeCount === 0;
+    }
+  }
+
+  // ── Clear all filters ──
+  const filterClear = document.querySelector('.filter-clear');
+  filterClear?.addEventListener('click', () => {
+    document.querySelectorAll('.filter-toggle[aria-pressed="true"]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', 'false');
+    });
+    variantPills.forEach((pill) => pill.classList.remove('active'));
+    applyAllFilters();
+  });
 
   brewerToggles.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -294,11 +374,12 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     const hasTasteFilter = activeTastes.length > 0;
     const hasRoastFilter = activeRoasts.length > 0;
 
-    // Default: nothing shown until a filter is selected
+    // Default: show idle prompt until a filter is selected
     if (!hasBrewerFilter && !hasTasteFilter && !hasRoastFilter) {
       const update = () => {
         hero.classList.remove('compact');
         emptyState.classList.add('filtered-out');
+        emptyStateIdle?.classList.remove('filtered-out');
         variantPills.forEach((pill) => pill.classList.remove('active'));
         groups.forEach((g) => {
           g.classList.remove('entering');
@@ -310,10 +391,14 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
       } else {
         update();
       }
+      updateFilterSummary();
       return;
     }
 
     const update = () => {
+      // Hide idle prompt once filters are active
+      emptyStateIdle?.classList.add('filtered-out');
+
       // Collapse hero when any filter is selected
       if (hasBrewerFilter || hasTasteFilter || hasRoastFilter) {
         hero.classList.add('compact');
@@ -404,5 +489,6 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     } else {
       update();
     }
+    updateFilterSummary();
   }
 </script>

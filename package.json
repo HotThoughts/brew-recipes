@@ -4,6 +4,9 @@
   "private": true,
   "description": "Community pour-over coffee recipe database",
   "license": "CC0-1.0",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
