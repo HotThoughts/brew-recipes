@@ -9,6 +9,7 @@ home:
   filterTitleTaste: Taste Profile
   filterTitleRoast: Roast Level
   filterSummary: Filters
+  clearFilters: Clear all
   taste:
     sweet: sweet
     acidic: acidic
@@ -19,6 +20,7 @@ home:
     dark-roast: dark
     omni-roast: omni
   empty:
+    idle: Select a brewer, taste, or roast above to browse recipes.
     heading: No recipes match
     hint: Try adjusting or clearing the filters above.
   recipeGroups: Recipe groups by brewer

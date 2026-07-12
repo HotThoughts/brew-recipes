@@ -63,8 +63,8 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
 
     <AsciiHero />
 
-    <section class="filter-bar" aria-label={t.en.home.filterByBrewer}>
-      <button type="button" class="filter-bar-summary" aria-expanded="false">
+    <section class="filter-bar expanded" aria-label={t.en.home.filterByBrewer}>
+      <button type="button" class="filter-bar-summary" aria-expanded="true">
         <span class="lang-en">{t.en.home.filterSummary}</span>
         <span class="lang-zh">{t.zh.home.filterSummary}</span>
         <span class="filter-bar-summary-count"></span>
@@ -118,7 +118,18 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
           </div>
         </div>
       </div>
+      <button type="button" class="filter-clear" hidden>
+        <span class="lang-en">{t.en.home.clearFilters}</span>
+        <span class="lang-zh">{t.zh.home.clearFilters}</span>
+      </button>
     </section>
+
+  <div class="empty-state empty-state-idle">
+    <p class="empty-heading">
+      <span class="lang-en">{t.en.home.empty.idle}</span>
+      <span class="lang-zh">{t.zh.home.empty.idle}</span>
+    </p>
+  </div>
 
   <div class="empty-state filtered-out">
     <p class="empty-heading">
@@ -205,6 +216,7 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
   const groups = document.querySelectorAll('.recipe-group');
   const variantPills = document.querySelectorAll('.variant-pill');
   const emptyState = document.querySelector('.empty-state');
+  const emptyStateIdle = document.querySelector('.empty-state-idle');
 
   // ── Collapsible filter summary (mobile) ──
   const filterBar = document.querySelector('.filter-bar');
@@ -221,7 +233,21 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     if (filterBarSummaryCount) {
       filterBarSummaryCount.textContent = activeCount > 0 ? `(${activeCount})` : '';
     }
+    const clearBtn = document.querySelector('.filter-clear');
+    if (clearBtn) {
+      clearBtn.hidden = activeCount === 0;
+    }
   }
+
+  // ── Clear all filters ──
+  const filterClear = document.querySelector('.filter-clear');
+  filterClear?.addEventListener('click', () => {
+    document.querySelectorAll('.filter-toggle[aria-pressed="true"]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', 'false');
+    });
+    variantPills.forEach((pill) => pill.classList.remove('active'));
+    applyAllFilters();
+  });
 
   brewerToggles.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -319,11 +345,12 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     const hasTasteFilter = activeTastes.length > 0;
     const hasRoastFilter = activeRoasts.length > 0;
 
-    // Default: nothing shown until a filter is selected
+    // Default: show idle prompt until a filter is selected
     if (!hasBrewerFilter && !hasTasteFilter && !hasRoastFilter) {
       const update = () => {
         hero.classList.remove('compact');
         emptyState.classList.add('filtered-out');
+        emptyStateIdle?.classList.remove('filtered-out');
         variantPills.forEach((pill) => pill.classList.remove('active'));
         groups.forEach((g) => {
           g.classList.remove('entering');
@@ -340,6 +367,9 @@ function matchingTags(recipe: Recipe, values: readonly string[]): string {
     }
 
     const update = () => {
+      // Hide idle prompt once filters are active
+      emptyStateIdle?.classList.add('filtered-out');
+
       // Collapse hero when any filter is selected
       if (hasBrewerFilter || hasTasteFilter || hasRoastFilter) {
         hero.classList.add('compact');

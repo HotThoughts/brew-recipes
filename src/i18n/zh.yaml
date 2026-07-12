@@ -9,6 +9,7 @@ home:
   filterTitleTaste: 风味特征
   filterTitleRoast: 烘焙程度
   filterSummary: 筛选
+  clearFilters: 清除
   taste:
     sweet: 甘甜
     acidic: 酸质
@@ -19,6 +20,7 @@ home:
     dark-roast: 深烘
     omni-roast: 全能
   empty:
+    idle: 选择上方的滤杯、风味或烘焙程度来浏览配方。
     heading: 没有匹配的配方
     hint: 尝试调整或清除上方的筛选条件。
   recipeGroups: 按滤杯分组

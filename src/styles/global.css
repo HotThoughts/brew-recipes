@@ -171,6 +171,50 @@
     view-transition-name: filter-bar;
   }
 
+  .filter-bar-summary {
+    display: none;
+  }
+
+  .filter-bar-groups {
+    display: contents;
+  }
+
+  .filter-bar-summary-chevron {
+    display: inline-block;
+    transition: transform 200ms var(--ease-out);
+  }
+
+  .filter-bar.expanded .filter-bar-summary-chevron {
+    transform: rotate(180deg);
+  }
+
+  .filter-clear {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    padding: 4px 0;
+    border: none;
+    background: none;
+    color: var(--ink-light);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-underline-offset: 0.3em;
+    width: fit-content;
+    transition: color 180ms var(--ease-out), text-decoration-color 180ms var(--ease-out);
+  }
+
+  .filter-clear:hover {
+    color: var(--ink);
+    text-decoration-color: var(--ink);
+  }
+
+  .filter-clear[hidden] {
+    display: none;
+  }
+
   .filter-row {
     display: flex;
     align-items: baseline;
@@ -537,27 +581,41 @@
   .variant-pill {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    min-width: 44px;
-    min-height: 44px;
-    background: none;
-    border: none;
-    padding: 4px 2px;
+    min-height: 36px;
+    padding: 4px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: transparent;
     color: var(--ink-light);
     font-family: var(--font-mono);
     font-size: 0.72rem;
     cursor: pointer;
-    transition: color 180ms var(--ease-out);
-    text-underline-offset: 4px;
+    transition:
+      border-color 180ms var(--ease-out),
+      background-color 180ms var(--ease-out),
+      color 180ms var(--ease-out),
+      transform 180ms var(--ease-out);
   }
 
   .variant-pill:hover {
+    border-color: var(--ink-light);
+    background: oklch(1 0 0 / 0.22);
     color: var(--ink);
+    transform: translateY(-1px);
   }
 
   .variant-pill.active {
-    color: var(--ink);
-    text-decoration: underline;
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .variant-pill.active:hover {
+    background: var(--ink-light);
+    color: var(--paper);
+    border-color: var(--ink-light);
   }
 
   .recipe-row.filtered-out {
@@ -973,6 +1031,19 @@
   .home-hero.compact .filter-bar {
     grid-column: auto;
     gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    align-self: start;
+    background: linear-gradient(to bottom, var(--paper) 88%, transparent);
+    padding: 12px 0 20px;
+    margin: 0;
+    view-transition-name: none;
+  }
+
+  /* Clearance for sticky filter bar when navigating to recipe group anchors */
+  .recipe-group {
+    scroll-margin-top: 112px;
   }
 
   .ascii-hero {
@@ -986,7 +1057,46 @@
   }
 
   .variant-pill {
-    padding-block: 6px;
+    min-height: 44px;
+  }
+
+  /* Mobile: collapsible filter bar */
+  .filter-bar-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 8px 16px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    width: fit-content;
+    transition:
+      border-color 180ms var(--ease-out),
+      background-color 180ms var(--ease-out);
+  }
+
+  .filter-bar-summary:hover {
+    border-color: var(--ink-light);
+    background: oklch(1 0 0 / 0.22);
+  }
+
+  .filter-bar-summary-count {
+    color: var(--ink-light);
+    font-feature-settings: 'tnum';
+  }
+
+  .filter-bar-groups {
+    display: none;
+  }
+
+  .filter-bar.expanded .filter-bar-groups {
+    display: grid;
+    gap: 12px;
   }
 
   .filter-row {
