@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { load } from 'js-yaml';
 import { walkYamlFiles } from '../../scripts/lib/walk.mjs';
+import { t } from './i18n';
 
 export type LanguageCode = 'en' | 'zh';
 
@@ -21,6 +22,8 @@ export type RecipeSource = {
 
 export type PaperFilter = 'cone' | 'wave';
 
+export type BrewTemperature = 'cold' | 'room-temperature' | 'cold-or-room-temperature';
+
 export const PAPER_FILTER_VALUES: PaperFilter[] = ['cone', 'wave'];
 
 export type Recipe = {
@@ -36,7 +39,8 @@ export type Recipe = {
   ratio?: string;
   variant?: string;
   paper_filter?: PaperFilter;
-  water_temp_c: number;
+  water_temp_c?: number;
+  brew_temperature?: BrewTemperature;
   grind_size: string;
   description?: string;
   phases: Phase[];
@@ -60,6 +64,7 @@ const BREWER_ORDER = [
   'V60',
   'Orea',
   'Aeropress',
+  'ColdBrew',
   'April',
   'Chemex',
   'Kalita',
@@ -86,6 +91,10 @@ export function slugifyBrewer(brewer: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
+}
+
+export function formatBrewerName(brewer: string): string {
+  return brewer === 'ColdBrew' ? 'Cold Brew' : brewer;
 }
 
 function normalizeRecipe(filePath: string, recipeDir?: string): Recipe {
@@ -167,16 +176,34 @@ export function formatSeconds(totalSeconds?: number, language: LanguageCode = 'e
   if (totalSeconds === undefined) return language === 'zh' ? '按需注水' : 'as needed';
   if (totalSeconds === 0) return language === 'zh' ? '滴滤' : 'draw down';
 
-  const minutes = Math.floor(totalSeconds / 60);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
+
+  if (hours > 0) {
+    return [
+      `${hours}h`,
+      minutes > 0 ? `${minutes}m` : '',
+      seconds > 0 ? `${seconds}s` : '',
+    ].filter(Boolean).join(' ');
+  }
 
   if (minutes === 0) return `${seconds}s`;
   if (seconds === 0) return `${minutes}m`;
   return `${minutes}m ${seconds}s`;
 }
 
+export function formatBrewTemperature(
+  recipe: Pick<Recipe, 'water_temp_c' | 'brew_temperature'>,
+  language: LanguageCode = 'en',
+): string {
+  if (recipe.water_temp_c !== undefined) return `${recipe.water_temp_c}°C`;
+
+  return recipe.brew_temperature ? t[language].temperature_labels[recipe.brew_temperature] : 'n/a';
+}
+
 export function formatRecipeCount(count: number, language: LanguageCode = 'en'): string {
-  if (language === 'zh') return `${count} 个手冲方法`;
+  if (language === 'zh') return `${count} 个方法`;
   return `${count} ${count === 1 ? 'method' : 'methods'}`;
 }
 

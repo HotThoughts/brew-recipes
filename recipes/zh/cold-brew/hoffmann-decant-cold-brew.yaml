@@ -1,0 +1,27 @@
+id: hoffmann-decant-cold-brew
+name: James Hoffmann 倾析冷萃
+brewer: ColdBrew
+dose_g: 75
+water_ml: 1000
+ratio: "1:13.3"
+variant: 倾析法
+brew_temperature: cold
+grind_size: fine
+description: >
+  James Hoffmann 的低损耗冷萃法使用较细研磨、可选澄清剂与小心倾析，
+  无需再把完成的咖啡通过滤纸过滤。
+phases:
+  - label: 混合
+    water_g: 1000
+    note: 加入室温水并充分搅拌；也可选择加入 10 滴澄清剂
+  - label: 浸泡与沉淀
+    water_g: 0
+    wait_seconds: 43200
+    note: 加盖冷藏 12 小时，让咖啡渣沉到容器底部
+  - label: 倾析
+    water_g: 0
+    note: 轻轻倒入干净的分享壶，在底部沉淀接近容器边缘前停止
+source:
+  name: James Hoffmann
+  url: https://www.youtube.com/watch?v=AB0QLjroFss
+tags: [immersion, cold-brew, beginner-friendly]

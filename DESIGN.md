@@ -1,6 +1,6 @@
 ---
 name: brew-recipes
-description: A quiet, archival recipe browser that turns YAML into readable pour-over methods.
+description: A quiet, archival recipe browser that turns YAML into readable coffee methods.
 colors:
   lavender-paper: "oklch(0.925 0.027 302)"
   quiet-lavender: "oklch(0.955 0.016 302)"
@@ -59,7 +59,7 @@ components:
 
 **Creative North Star: "The Brewer's Archive"**
 
-brew-recipes is a card catalog for pour-over methods — quiet, precise, and literate. It treats recipes as archival records rather than lifestyle content: each entry is a structured document with provenance, not a blog post with anecdotes. The interface inherits the material qualities of a library index: thin rules, dense rows, monospaced metadata, and serif headings that feel set in type.
+brew-recipes is a card catalog for coffee methods — quiet, precise, and literate. It treats recipes as archival records rather than lifestyle content: each entry is a structured document with provenance, not a blog post with anecdotes. The interface inherits the material qualities of a library index: thin rules, dense rows, monospaced metadata, and serif headings that feel set in type.
 
 The system grounds itself in lavender-tinted paper and deep violet ink — colors drawn from archival materials (faded library slips, carbon copies, violet typewriter ribbons) rather than coffee-shop browns or latte-art beiges. A single warm accent (Honey Gold) appears sparingly at points of interaction: the blinking cursor, focus rings, and active states. Grain texture at low opacity reinforces the paper surface without calling attention to itself.
 

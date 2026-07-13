@@ -1,0 +1,27 @@
+id: the-barn-mizudashi-cold-brew
+name: THE BARN 水出壶冷萃
+brewer: ColdBrew
+dose_g: 50
+water_ml: 500
+ratio: "1:10"
+variant: Mizudashi 水出壶
+brew_temperature: room-temperature
+grind_size: medium-coarse
+description: >
+  THE BARN 的室温水出壶配方采用 1:10 粉水比和十七小时的长时间萃取，
+  突出咖啡的甜感与质地。
+phases:
+  - label: 均匀浸湿
+    water_g: 500
+    note: 分三次通过水出壶滤网加水，并搅拌以确保所有咖啡粉都接触到水
+  - label: 浸泡
+    water_g: 0
+    wait_seconds: 61200
+    note: 加盖后在室温下萃取，共计 17 小时
+  - label: 完成
+    water_g: 0
+    note: 取出咖啡渣，轻轻旋转壶身使咖啡液均匀，然后加冰享用或冷藏
+source:
+  name: THE BARN Coffee Roasters
+  url: https://thebarn.de/blogs/the-barn-blog/cold-brew-at-home
+tags: [sweet, balanced, immersion, cold-brew, beginner-friendly]

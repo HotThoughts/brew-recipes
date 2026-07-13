@@ -1,8 +1,8 @@
-# Brew Recipes — Pour-Over Recipe Database
+# Brew Recipes — Coffee Recipe Database
 
 [![Validate Recipes](https://github.com/HotThoughts/brew-recipes/actions/workflows/validate.yaml/badge.svg)](https://github.com/HotThoughts/brew-recipes/actions/workflows/validate.yaml)
 
-A community-curated collection of pour-over coffee recipes in YAML format, with a bilingual (EN/ZH) static website for easy browsing. Validated by JSON Schema and built with Astro.
+A community-curated collection of pour-over and cold-brew coffee recipes in YAML format, with a bilingual (EN/ZH) static website for easy browsing. Validated by JSON Schema and built with Astro.
 
 **Live site:** [hotthoughts.github.io/brew-recipes](https://hotthoughts.github.io/brew-recipes)
 
@@ -62,16 +62,17 @@ Every recipe follows the schema at [`schema.yaml`](schema.yaml).
 |-------|------|-------------|
 | `id` | string | Globally unique kebab-case identifier |
 | `name` | string | Human-readable recipe name |
-| `brewer` | enum | V60, Chemex, Aeropress, Orea, Kalita, April, FrenchPress, StaggX, Origami, Other |
-| `dose_g` | number | Coffee dose (5–80 g) |
+| `brewer` | enum | V60, Chemex, Aeropress, ColdBrew, Orea, Kalita, April, FrenchPress, StaggX, Origami, Other |
+| `dose_g` | number | Coffee dose (5–120 g) |
 | `water_ml` | number | Total brew water (50–1200 ml) |
 | `ratio` | string | Coffee:water ratio, e.g. `"1:15"` (optional) |
 | `variant` | string | Brewer-specific variant, e.g. `"1-cup"`, `"v3"`, `"155"` (optional) |
 | `paper_filter` | enum | Paper filter shape: `cone` or `wave` (optional) |
-| `water_temp_c` | number | Water temperature (80–100 °C) |
+| `water_temp_c` | number | Exact water temperature (80–100 °C); required unless `brew_temperature` is provided |
+| `brew_temperature` | enum | `cold`, `room-temperature`, or `cold-or-room-temperature`; required unless `water_temp_c` is provided |
 | `grind_size` | enum | extra-coarse, coarse, medium-coarse, medium, medium-fine, fine, extra-fine |
 | `description` | string | Short paragraph about the recipe's character or origin (optional) |
-| `phases` | array | Pouring phases (1–10). Each has `label`, `water_g`, optional `wait_seconds` (0–300s), `pours` (sub-pour count), and `note` |
+| `phases` | array | Brew phases (1–10). Each has `label`, `water_g`, optional `wait_seconds` (0–86400s), `pours` (sub-pour count), and `note` |
 | `source` | object | Attribution. Required: `name`. Optional: `url`, `competition` |
 | `tags` | array | See [`schema.yaml`](schema.yaml) for the canonical tag list (roast level, flavor profile, pour style, difficulty, etc.) |
 

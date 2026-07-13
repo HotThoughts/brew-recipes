@@ -4,6 +4,8 @@ import FilterGlyph from '../../components/FilterGlyph.astro';
 import PourGlyph from '../../components/PourGlyph.astro';
 import { t } from '../../lib/i18n';
 import {
+  formatBrewerName,
+  formatBrewTemperature,
   formatSeconds,
   getPourStyles,
   getRecipeCollection,
@@ -43,6 +45,7 @@ if (!mainRecipe) return Astro.redirect('/');
 const allTags = [
   ...new Set([...(enRecipe?.tags ?? []), ...(zhRecipe?.tags ?? [])]),
 ];
+const isColdBrew = mainRecipe.brewer === 'ColdBrew';
 ---
 
 <BaseLayout title={`${mainRecipe.name} | ${t.en.site.title} | ${t.zh.site.title}`} pageClass="detail-page">
@@ -53,7 +56,7 @@ const allTags = [
           <div class="recipe-version lang-en">
             <header class="recipe-header">
               <div>
-                <p class="system-line">{enRecipe.brewer} / {enRecipe.id}</p>
+                <p class="system-line">{formatBrewerName(enRecipe.brewer)} / {enRecipe.id}</p>
                 <h1 class="page-title">{enRecipe.name}</h1>
               </div>
             </header>
@@ -70,24 +73,25 @@ const allTags = [
               <div><span class="label">{t.en.detail.spec.dose}</span><strong>{enRecipe.dose_g}g</strong></div>
               <div><span class="label">{t.en.detail.spec.water}</span><strong>{enRecipe.water_ml}ml</strong></div>
               <div><span class="label">{t.en.detail.spec.ratio}</span><strong>{enRecipe.ratio ?? 'n/a'}</strong></div>
-              <div><span class="label">{t.en.detail.spec.temperature}</span><strong>{enRecipe.water_temp_c}°C</strong></div>
+              <div><span class="label">{isColdBrew ? t.en.detail.spec.brewTemperature : t.en.detail.spec.temperature}</span><strong>{formatBrewTemperature(enRecipe, 'en')}</strong></div>
               <div><span class="label">{t.en.detail.spec.grind}</span><strong>{enRecipe.grind_size}</strong></div>
-              <div><span class="label">{t.en.detail.spec.wait}</span><strong>{formatSeconds(getTotalWaitSeconds(enRecipe), 'en')}</strong></div>
+              <div><span class="label">{isColdBrew ? t.en.detail.spec.brewTime : t.en.detail.spec.wait}</span><strong>{formatSeconds(getTotalWaitSeconds(enRecipe), 'en')}</strong></div>
               {enRecipe.paper_filter && <div><span class="label">{t.en.detail.spec.paperFilter}</span><strong class="filter-value"><FilterGlyph filter={enRecipe.paper_filter} /><span>{t.en.detail.spec[enRecipe.paper_filter]}</span></strong></div>}
             </section>
 
             <section class="phase-section" aria-labelledby="phase-title-en">
               <div class="section-heading compact">
-                <h2 id="phase-title-en">{t.en.detail.phases}</h2>
-                <p>{t.en.detail.phaseSummary
+                <h2 id="phase-title-en">{isColdBrew ? t.en.detail.brewSteps : t.en.detail.phases}</h2>
+                <p>{(isColdBrew ? t.en.detail.brewStepSummary : t.en.detail.phaseSummary)
                   .replace('{water}', String(enRecipe.phases.reduce((t, p) => t + getTotalPhaseWater(p), 0)))
+                  .replace('{time}', formatSeconds(getTotalWaitSeconds(enRecipe), 'en'))
                   .replace('{count}', String(enRecipe.phases.length))}</p>
-                <a
+                {!isColdBrew && <a
                   class="phase-guide-link"
                   href={withBase('/pour-styles/')}
                   data-preserve-lang
                   data-base-href={withBase('/pour-styles/')}
-                >{t.en.detail.pourGuideLink}</a>
+                >{t.en.detail.pourGuideLink}</a>}
               </div>
               <ol class="phase-list">
                 {enRecipe.phases.map((phase, i) => {
@@ -97,7 +101,7 @@ const allTags = [
                       <span class="phase-index">{String(i + 1).padStart(2, '0')}</span>
                       <div class="phase-copy">
                         <h3>{phase.label}</h3>
-                        {pourStyles.length > 0 && (
+                        {!isColdBrew && pourStyles.length > 0 && (
                           <ul class="pour-styles" aria-label={t.en.detail.pour.label}>
                             {pourStyles.map((pourStyle) => (
                               <li>
@@ -110,8 +114,8 @@ const allTags = [
                         {phase.note && <p>{phase.note}</p>}
                       </div>
                       <div class="phase-values">
-                        <span>{phase.water_g}g{phase.pours ? ` × ${phase.pours}` : ''}</span>
-                        <span>{formatSeconds(phase.wait_seconds, 'en')}</span>
+                        {(!isColdBrew || phase.water_g > 0) && <span>{phase.water_g}g{phase.pours ? ` × ${phase.pours}` : ''}</span>}
+                        {(!isColdBrew || phase.wait_seconds !== undefined) && <span>{formatSeconds(phase.wait_seconds, 'en')}</span>}
                       </div>
                     </li>
                   );
@@ -136,7 +140,7 @@ const allTags = [
           <div class="recipe-version lang-zh">
             <header class="recipe-header">
               <div>
-                <p class="system-line">{zhRecipe.brewer} / {zhRecipe.id}</p>
+                <p class="system-line">{formatBrewerName(zhRecipe.brewer)} / {zhRecipe.id}</p>
                 <h1 class="page-title">{zhRecipe.name}</h1>
               </div>
             </header>
@@ -153,24 +157,25 @@ const allTags = [
               <div><span class="label">{t.zh.detail.spec.dose}</span><strong>{zhRecipe.dose_g}g</strong></div>
               <div><span class="label">{t.zh.detail.spec.water}</span><strong>{zhRecipe.water_ml}ml</strong></div>
               <div><span class="label">{t.zh.detail.spec.ratio}</span><strong>{zhRecipe.ratio ?? '无'}</strong></div>
-              <div><span class="label">{t.zh.detail.spec.temperature}</span><strong>{zhRecipe.water_temp_c}°C</strong></div>
+              <div><span class="label">{isColdBrew ? t.zh.detail.spec.brewTemperature : t.zh.detail.spec.temperature}</span><strong>{formatBrewTemperature(zhRecipe, 'zh')}</strong></div>
               <div><span class="label">{t.zh.detail.spec.grind}</span><strong>{zhRecipe.grind_size}</strong></div>
-              <div><span class="label">{t.zh.detail.spec.wait}</span><strong>{formatSeconds(getTotalWaitSeconds(zhRecipe), 'zh')}</strong></div>
+              <div><span class="label">{isColdBrew ? t.zh.detail.spec.brewTime : t.zh.detail.spec.wait}</span><strong>{formatSeconds(getTotalWaitSeconds(zhRecipe), 'zh')}</strong></div>
               {zhRecipe.paper_filter && <div><span class="label">{t.zh.detail.spec.paperFilter}</span><strong class="filter-value"><FilterGlyph filter={zhRecipe.paper_filter} /><span>{t.zh.detail.spec[zhRecipe.paper_filter]}</span></strong></div>}
             </section>
 
             <section class="phase-section" aria-labelledby="phase-title-zh">
               <div class="section-heading compact">
-                <h2 id="phase-title-zh">{t.zh.detail.phases}</h2>
-                <p>{t.zh.detail.phaseSummary
+                <h2 id="phase-title-zh">{isColdBrew ? t.zh.detail.brewSteps : t.zh.detail.phases}</h2>
+                <p>{(isColdBrew ? t.zh.detail.brewStepSummary : t.zh.detail.phaseSummary)
                   .replace('{water}', String(zhRecipe.phases.reduce((t, p) => t + getTotalPhaseWater(p), 0)))
+                  .replace('{time}', formatSeconds(getTotalWaitSeconds(zhRecipe), 'zh'))
                   .replace('{count}', String(zhRecipe.phases.length))}</p>
-                <a
+                {!isColdBrew && <a
                   class="phase-guide-link"
                   href={withBase('/pour-styles/')}
                   data-preserve-lang
                   data-base-href={withBase('/pour-styles/')}
-                >{t.zh.detail.pourGuideLink}</a>
+                >{t.zh.detail.pourGuideLink}</a>}
               </div>
               <ol class="phase-list">
                 {zhRecipe.phases.map((phase, i) => {
@@ -180,7 +185,7 @@ const allTags = [
                       <span class="phase-index">{String(i + 1).padStart(2, '0')}</span>
                       <div class="phase-copy">
                         <h3>{phase.label}</h3>
-                        {pourStyles.length > 0 && (
+                        {!isColdBrew && pourStyles.length > 0 && (
                           <ul class="pour-styles" aria-label={t.zh.detail.pour.label}>
                             {pourStyles.map((pourStyle) => (
                               <li>
@@ -193,8 +198,8 @@ const allTags = [
                         {phase.note && <p>{phase.note}</p>}
                       </div>
                       <div class="phase-values">
-                        <span>{phase.water_g}g{phase.pours ? ` × ${phase.pours}` : ''}</span>
-                        <span>{formatSeconds(phase.wait_seconds, 'zh')}</span>
+                        {(!isColdBrew || phase.water_g > 0) && <span>{phase.water_g}g{phase.pours ? ` × ${phase.pours}` : ''}</span>}
+                        {(!isColdBrew || phase.wait_seconds !== undefined) && <span>{formatSeconds(phase.wait_seconds, 'zh')}</span>}
                       </div>
                     </li>
                   );
@@ -216,8 +221,8 @@ const allTags = [
 
       <nav class="detail-nav" aria-label="Recipe navigation">
         <a href={withBase(`/#${mainRecipe.brewerSlug}`)}>
-          <span class="lang-en">← {mainRecipe.brewer} {t.en.detail.breadcrumbMethods}</span>
-          <span class="lang-zh">← {mainRecipe.brewer} {t.zh.detail.breadcrumbMethods}</span>
+          <span class="lang-en">← {formatBrewerName(mainRecipe.brewer)} {t.en.detail.breadcrumbMethods}</span>
+          <span class="lang-zh">← {formatBrewerName(mainRecipe.brewer)} {t.zh.detail.breadcrumbMethods}</span>
         </a>
       </nav>
     </article>

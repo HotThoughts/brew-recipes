@@ -1,11 +1,16 @@
+temperature_labels:
+  cold: 冷水
+  room-temperature: 室温
+  cold-or-room-temperature: 冷水 / 室温
+
 home:
-  title: 手冲方法
-  lede: 一座安静的手冲配方档案库 — 按滤杯浏览，对比冲煮参数，逐步跟随每一个注水阶段。
+  title: 咖啡方法
+  lede: 一座安静的咖啡配方档案库 — 按冲煮方式浏览，对比参数，并逐步跟随每一种方法。
   pourGuideLink: 了解注水方式如何改变风味
   ratioNA: 比例 n/a
-  filterByBrewer: 按滤杯筛选
+  filterByBrewer: 按冲煮方式筛选
   filterByTaste: 按风味筛选
-  filterTitleBrewer: 滤杯
+  filterTitleBrewer: 冲煮方式
   filterTitleTaste: 风味特征
   filterTitleRoast: 烘焙程度
   filterSummary: 筛选
@@ -23,7 +28,7 @@ home:
     idle: 选择上方的滤杯、风味或烘焙程度来浏览配方。
     heading: 没有匹配的配方
     hint: 尝试调整或清除上方的筛选条件。
-  recipeGroups: 按滤杯分组
+  recipeGroups: 按冲煮方式分组
 
 detail:
   breadcrumbMethods: 方法
@@ -33,13 +38,17 @@ detail:
     water: 水量
     ratio: 粉水比
     temperature: 水温
+    brewTemperature: 萃取温度
     grind: 研磨度
     wait: 等待
+    brewTime: 冲煮时间
     paperFilter: 滤纸
     cone: 锥形
     wave: 波浪
   phases: 注水阶段
+  brewSteps: 冲煮步骤
   phaseSummary: "{water}g 水量，共 {count} 个阶段。"
+  brewStepSummary: "{water}g 水 · 萃取 {time}，共 {count} 个步骤。"
   pour:
     label: 注水方式
     spiral: 螺旋
@@ -75,5 +84,5 @@ pourGuide:
       taste: 摇晃有助于提高均匀度和甜感；过度摇晃则可能拖慢流速，并带来干涩感。
 
 site:
-  title: 手冲配方
-  description: 浏览社区精选手冲配方，无需阅读原始 YAML 文件。
+  title: 咖啡配方
+  description: 浏览社区精选咖啡配方，无需阅读原始 YAML 文件。

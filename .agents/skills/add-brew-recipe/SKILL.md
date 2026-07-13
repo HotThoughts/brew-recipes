@@ -1,7 +1,7 @@
 ---
 name: add-brew-recipe
 description: >
-  Add a new pour-over coffee recipe to the brew-recipes YAML database. Accepts
+  Add a new pour-over or cold-brew coffee recipe to the brew-recipes YAML database. Accepts
   pasted recipe text (from YouTube descriptions, blogs, coffee apps) and
   auto-extracts structured fields — or falls back to interactive collection for
   manual entry. Triggered by "add a recipe", "new recipe for...", pasted coffee
@@ -10,7 +10,7 @@ description: >
 
 # Add Brew Recipe
 
-You are adding a new pour-over coffee recipe to the brew-recipes YAML database.
+You are adding a new coffee recipe to the brew-recipes YAML database.
 This skill has two modes:
 
 - **Auto-detect mode**: The user pastes semi-structured recipe text (from a YouTube
@@ -26,15 +26,15 @@ and optionally translated.
 
 The authoritative schema is `schema.yaml` in the project root.
 
-**Required fields**: `id`, `name`, `brewer`, `dose_g`, `water_ml`, `water_temp_c`,
-`grind_size`, `phases`, `source`
+**Required fields**: `id`, `name`, `brewer`, `dose_g`, `water_ml`, `grind_size`,
+`phases`, `source`, plus either `water_temp_c` or `brew_temperature`
 
-**Brewer enum** (10 values):
-V60 · Chemex · Aeropress · Kalita · Orea · FrenchPress · StaggX · Origami · April · Other
+**Brewer enum** (11 values):
+V60 · Chemex · Aeropress · ColdBrew · Kalita · Orea · FrenchPress · StaggX · Origami · April · Other
 
 **Brewer → directory slug** (lowercase, split CamelCase with hyphen):
 V60 → `v60`, Chemex → `chemex`, Aeropress → `aeropress`, Kalita → `kalita`,
-Orea → `orea`, FrenchPress → `french-press`, StaggX → `stagg-x`,
+Orea → `orea`, ColdBrew → `cold-brew`, FrenchPress → `french-press`, StaggX → `stagg-x`,
 Origami → `origami`, April → `april`, Other → `other`
 
 **Grind sizes**: extra-coarse · coarse · medium-coarse · medium · medium-fine ·
@@ -47,10 +47,10 @@ fine · extra-fine
 `bypass` · `cold-brew` · `competition` · `beginner-friendly` · `advanced`
 
 **Phase fields**: `label` (required) · `water_g` (required) · `wait_seconds`
-(optional, 0–300) · `pours` (optional, integer 1–10, makes `water_g` the
+(optional, 0–86400) · `pours` (optional, integer 1–10, makes `water_g` the
 per-sub-pour amount) · `note` (optional)
 
-**Ranges**: dose 5–80 g · water 50–1200 ml · temp 80–100 °C · ratio `"1:N"`
+**Ranges**: dose 5–120 g · water 50–1200 ml · temp 80–100 °C · ratio `"1:N"`
 (one decimal) · 1–10 phases
 
 **Source object**: `name` (required) · `url` (optional, URI) ·
@@ -107,6 +107,9 @@ In priority order:
 | Just a number near "temperature" | `temperature 93` | Assume °C |
 
 Flag values outside 80–100 °C for user verification.
+
+For cold brew without an exact temperature, set `brew_temperature` to `cold`,
+`room-temperature`, or `cold-or-room-temperature` instead of inventing a Celsius value.
 
 ### 2.4 Extract Grind Size
 
@@ -350,6 +353,7 @@ water_ml: <water>
 ratio: "<ratio>"
 variant: <variant>           # omit if not applicable
 water_temp_c: <temp>
+brew_temperature: <category>  # cold brew only; use instead of water_temp_c
 grind_size: <grind>
 description: >
   <1-3 sentence description, folded block scalar with 2-space indent>
@@ -370,7 +374,7 @@ tags: [<tag1>, <tag2>, ...]
 **Formatting rules** (verified against existing recipes):
 - Two-space indentation throughout
 - Top-level key order: `id`, `name`, `brewer`, `dose_g`, `water_ml`, `ratio`,
-  `variant` (if present), `water_temp_c`, `grind_size`, `description`, `phases`,
+  `variant` (if present), temperature field, `grind_size`, `description`, `phases`,
   `source`, `tags`
 - Phase key order: `label`, `water_g`, `wait_seconds` (if non-zero), `pours`
   (if >1), `note` (if present)
@@ -406,7 +410,7 @@ If it fails:
 **Common failures**:
 - `id` doesn't match kebab-case regex `^[a-z0-9]+(-[a-z0-9]+)*$`
 - Required field missing
-- Value out of range (dose 5–80, water 50–1200, temp 80–100, wait_seconds ≤ 300)
+- Value out of range (dose 5–120, water 50–1200, temp 80–100, wait_seconds ≤ 86400)
 - Source object missing `name`
 
 ---

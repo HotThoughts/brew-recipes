@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import {
   isLanguageCode,
   brewerRank,
+  formatBrewerName,
+  formatBrewTemperature,
   slugifyBrewer,
   getBrewerGroups,
   formatSeconds,
@@ -41,16 +43,23 @@ describe('brewerRank', () => {
 
   it('returns correct index for known brewers', () => {
     expect(brewerRank('Aeropress')).toBe(2);
-    expect(brewerRank('Chemex')).toBe(4);
+    expect(brewerRank('Chemex')).toBe(5);
     expect(brewerRank('Orea')).toBe(1);
   });
 
   it('returns BREWER_ORDER.length for unknown brewers', () => {
-    expect(brewerRank('NotABrewer')).toBe(10);
+    expect(brewerRank('NotABrewer')).toBe(11);
   });
 
   it('is case-sensitive (unknown returns max)', () => {
-    expect(brewerRank('v60')).toBe(10);
+    expect(brewerRank('v60')).toBe(11);
+  });
+});
+
+describe('formatBrewerName', () => {
+  it('adds the display space for ColdBrew', () => {
+    expect(formatBrewerName('ColdBrew')).toBe('Cold Brew');
+    expect(formatBrewerName('V60')).toBe('V60');
   });
 });
 
@@ -150,6 +159,13 @@ describe('formatSeconds', () => {
       expect(formatSeconds(90)).toBe('1m 30s');
       expect(formatSeconds(150)).toBe('2m 30s');
     });
+
+    it('formats long cold-brew durations', () => {
+      expect(formatSeconds(28800)).toBe('8h');
+      expect(formatSeconds(43200)).toBe('12h');
+      expect(formatSeconds(61200)).toBe('17h');
+      expect(formatSeconds(3690)).toBe('1h 1m 30s');
+    });
   });
 
   describe('Chinese (zh)', () => {
@@ -165,6 +181,18 @@ describe('formatSeconds', () => {
       expect(formatSeconds(45, 'zh')).toBe('45s');
       expect(formatSeconds(90, 'zh')).toBe('1m 30s');
     });
+  });
+});
+
+describe('formatBrewTemperature', () => {
+  it('formats exact Celsius temperatures', () => {
+    expect(formatBrewTemperature({ water_temp_c: 93 })).toBe('93°C');
+  });
+
+  it('localizes categorical temperatures', () => {
+    expect(formatBrewTemperature({ brew_temperature: 'cold' }, 'en')).toBe('cold');
+    expect(formatBrewTemperature({ brew_temperature: 'room-temperature' }, 'zh')).toBe('室温');
+    expect(formatBrewTemperature({ brew_temperature: 'cold-or-room-temperature' }, 'zh')).toBe('冷水 / 室温');
   });
 });
 
@@ -184,8 +212,8 @@ describe('formatRecipeCount', () => {
 
   describe('Chinese', () => {
     it('formats with Chinese text', () => {
-      expect(formatRecipeCount(1, 'zh')).toBe('1 个手冲方法');
-      expect(formatRecipeCount(5, 'zh')).toBe('5 个手冲方法');
+      expect(formatRecipeCount(1, 'zh')).toBe('1 个方法');
+      expect(formatRecipeCount(5, 'zh')).toBe('5 个方法');
     });
   });
 });

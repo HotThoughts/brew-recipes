@@ -73,6 +73,38 @@ describe('validateFile', () => {
   });
 });
 
+describe('cold-brew schema support', () => {
+  const { schema, ajv } = createAjv();
+  const validate = ajv.compile(schema);
+  const coldBrew = {
+    id: 'test-cold-brew',
+    name: 'Test Cold Brew',
+    brewer: 'ColdBrew',
+    dose_g: 100,
+    water_ml: 1000,
+    brew_temperature: 'cold',
+    grind_size: 'coarse',
+    phases: [{ label: 'Steep', water_g: 1000, wait_seconds: 61200 }],
+    source: { name: 'Test' },
+  };
+
+  it('accepts categorical temperature and a 17-hour steep', () => {
+    expect(validate(coldBrew)).toBe(true);
+  });
+
+  it('requires either exact or categorical temperature', () => {
+    const { brew_temperature: _temperature, ...missingTemperature } = coldBrew;
+    expect(validate(missingTemperature)).toBe(false);
+  });
+
+  it('rejects waits longer than 24 hours', () => {
+    expect(validate({
+      ...coldBrew,
+      phases: [{ label: 'Steep', water_g: 1000, wait_seconds: 86401 }],
+    })).toBe(false);
+  });
+});
+
 // ─── checkUniqueIds ──────────────────────────────────────────────────
 
 describe('checkUniqueIds', () => {

@@ -1,0 +1,27 @@
+id: roeststaette-classic-cold-brew
+name: Röststätte 经典冷萃
+brewer: ColdBrew
+dose_g: 100
+water_ml: 1000
+ratio: "1:10"
+variant: 通用容器
+brew_temperature: cold-or-room-temperature
+grind_size: coarse
+description: >
+  Röststätte 的经典浸泡法采用简单的 1:10 粉水比，经过至少十二小时萃取，
+  得到甜感突出、口感饱满的冷萃咖啡。
+phases:
+  - label: 混合
+    water_g: 1000
+    note: 将水加入新鲜研磨的咖啡粉中，充分搅拌，确保所有咖啡粉都被浸湿
+  - label: 浸泡
+    water_g: 0
+    wait_seconds: 43200
+    note: 加盖后放入冰箱或置于室温，浸泡至少 12 小时
+  - label: 过滤
+    water_g: 0
+    note: 用细滤器滤出咖啡渣，然后放回冰箱保存
+source:
+  name: Röststätte Berlin
+  url: https://www.roeststaette.com/en/coldbrew-rezepte/
+tags: [sweet, balanced, immersion, cold-brew, beginner-friendly]

@@ -9,9 +9,9 @@
 
 ## Recipe Guidelines
 
-- **Accuracy**: Include exact parameters (grams, ml, °C, seconds). No ranges — pick the canonical value.
+- **Accuracy**: Include exact parameters from the source. Use `water_temp_c` for a stated Celsius temperature or `brew_temperature` for categorical cold-brew extraction.
 - **Attribution**: Always link to the original source (video, blog post, book).
-- **Phases**: Break down the pour into discrete steps with timing.
+- **Phases**: Break the method into discrete steps with timing. Long cold-brew steeps are stored in seconds and may run up to 24 hours.
 - **Tags**: Use existing tags where possible; new tags are fine if they add meaningful filtering categories.
 
 ## Adding a New Language

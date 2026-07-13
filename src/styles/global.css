@@ -584,8 +584,9 @@
 
   .recipe-group {
     display: grid;
-    grid-template-columns: minmax(150px, 0.22fr) minmax(0, 1fr);
-    gap: clamp(28px, 4vw, 56px);
+    /* The wider heading column keeps “Cold Brew” and its filter chips readable. */
+    grid-template-columns: minmax(420px, 0.32fr) minmax(0, 1fr);
+    gap: clamp(48px, 6vw, 96px);
     align-items: start;
     scroll-margin-top: 24px;
     padding-top: clamp(44px, 8vw, 88px);
@@ -1072,6 +1073,13 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
     }
+  }
+}
+
+@media (max-width: 1120px) {
+  .recipe-group {
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
 }
 

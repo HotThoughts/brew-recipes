@@ -8,6 +8,9 @@ import { walkYamlFiles } from './walk.mjs';
 
 const RECIPES_DIR = 'recipes';
 const DIST_DIR = 'dist';
+const ZERO_GRAM_TEXT_PATTERN = />\s*0\s*g\s*</iu;
+const AS_NEEDED_TEXT_PATTERN = />\s*as(?:\s|&nbsp;|&#160;|&#x0*a0;)+needed\s*</iu;
+const ZH_AS_NEEDED_TEXT_PATTERN = />\s*按需注水\s*</u;
 
 /**
  * Parse a recipe YAML file and extract its metadata for site verification.
@@ -93,6 +96,21 @@ export function checkDetailPage(html, versions) {
       errors.push(`Detail page for ${v.id} missing source field`);
     } else if (!html.includes(escapeHtml(v.source.name))) {
       errors.push(`Detail page for ${v.id} missing source "${v.source.name}"`);
+    }
+    if (v.brewer === 'ColdBrew') {
+      if (!html.includes('brew steps') || !html.includes('冲煮步骤')) {
+        errors.push(`Cold-brew detail page for ${v.id} missing localized brew-step headings`);
+      }
+      if (v.source?.url && !html.includes(escapeHtml(v.source.url))) {
+        errors.push(`Cold-brew detail page for ${v.id} missing source URL`);
+      }
+      if (
+        ZERO_GRAM_TEXT_PATTERN.test(html)
+        || AS_NEEDED_TEXT_PATTERN.test(html)
+        || ZH_AS_NEEDED_TEXT_PATTERN.test(html)
+      ) {
+        errors.push(`Cold-brew detail page for ${v.id} shows irrelevant pour-step values`);
+      }
     }
   }
   return { errors };
