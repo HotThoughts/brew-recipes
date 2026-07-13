@@ -190,6 +190,12 @@ This is a flat system. No box-shadows, no layered cards, no z-index stacking bey
 - **Derivation:** Styles are detected from the phase note text (EN and ZH keywords) via `getPourStyles()`, ordered by first occurrence, capped at two per phase. Purely additive — the prose note stays intact below the glyphs.
 - **i18n:** Labels resolve through `detail.pour` in each language file (e.g. `spiral` → `螺旋`, `circular` → `绕圈`); the glyph is language-neutral.
 
+### Paper-Filter Glyphs
+- **Purpose:** Make the paper filter shape glanceable in the recipe spec grid without replacing the written value.
+- **Set:** `cone` is a curved-top triangular filter; `wave` is a shallow-sided, flat-bottomed filter with three continuous interior wave cycles.
+- **Style:** 20×20 line-art in Deep Violet ink, matching the pour glyph stroke, caps, joins, and no-fill rule. The symbol is decorative and the adjacent text remains the accessible source of meaning.
+- **Placement:** Inline with the `cone` or `wave` value in Origami's local filter pills, recipe-list stats, and the paper-filter spec cell. It is never used as a standalone icon or color-coded status.
+
 ### ASCII Motion
 - **Purpose:** A quiet retro-terminal layer that surfaces the pour gesture as typed characters, extending the archival typewriter voice into motion without breaking the flat, ink-on-paper system.
 - **Pipeline:** Three.js scenes render to a tiny offscreen target, luminance is sampled per cell and mapped to a Space Mono character ramp (` ·:;+=oxX#@`), then typed onto a 2D canvas in Deep Violet ink on the lavender paper field. No CRT green, no scanlines, no black backgrounds; the character grid is the retro move.

@@ -35,6 +35,9 @@ detail:
     temperature: temperature
     grind: grind
     wait: wait
+    paperFilter: paper filter
+    cone: cone
+    wave: wave
   phases: pour phases
   phaseSummary: "{water}g accounted for across {count} phases."
   pour:

@@ -19,6 +19,10 @@ export type RecipeSource = {
   competition?: string;
 };
 
+export type PaperFilter = 'cone' | 'wave';
+
+export const PAPER_FILTER_VALUES: PaperFilter[] = ['cone', 'wave'];
+
 export type Recipe = {
   id: string;
   name: string;
@@ -31,6 +35,7 @@ export type Recipe = {
   water_ml: number;
   ratio?: string;
   variant?: string;
+  paper_filter?: PaperFilter;
   water_temp_c: number;
   grind_size: string;
   description?: string;

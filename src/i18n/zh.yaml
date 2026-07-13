@@ -35,6 +35,9 @@ detail:
     temperature: 水温
     grind: 研磨度
     wait: 等待
+    paperFilter: 滤纸
+    cone: 锥形
+    wave: 波浪
   phases: 注水阶段
   phaseSummary: "{water}g 水量，共 {count} 个阶段。"
   pour:

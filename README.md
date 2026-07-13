@@ -66,6 +66,7 @@ Every recipe follows the schema at [`schema.yaml`](schema.yaml).
 | `water_ml` | number | Total brew water (50–1200 ml) |
 | `ratio` | string | Coffee:water ratio, e.g. `"1:15"` (optional) |
 | `variant` | string | Brewer-specific variant, e.g. `"1-cup"`, `"v3"`, `"155"` (optional) |
+| `paper_filter` | enum | Paper filter shape: `cone` or `wave` (optional) |
 | `water_temp_c` | number | Water temperature (80–100 °C) |
 | `grind_size` | enum | extra-coarse, coarse, medium-coarse, medium, medium-fine, fine, extra-fine |
 | `description` | string | Short paragraph about the recipe's character or origin (optional) |

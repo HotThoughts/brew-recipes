@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import FilterGlyph from '../../components/FilterGlyph.astro';
 import PourGlyph from '../../components/PourGlyph.astro';
 import { t } from '../../lib/i18n';
 import {
@@ -72,6 +73,7 @@ const allTags = [
               <div><span class="label">{t.en.detail.spec.temperature}</span><strong>{enRecipe.water_temp_c}°C</strong></div>
               <div><span class="label">{t.en.detail.spec.grind}</span><strong>{enRecipe.grind_size}</strong></div>
               <div><span class="label">{t.en.detail.spec.wait}</span><strong>{formatSeconds(getTotalWaitSeconds(enRecipe), 'en')}</strong></div>
+              {enRecipe.paper_filter && <div><span class="label">{t.en.detail.spec.paperFilter}</span><strong class="filter-value"><FilterGlyph filter={enRecipe.paper_filter} /><span>{t.en.detail.spec[enRecipe.paper_filter]}</span></strong></div>}
             </section>
 
             <section class="phase-section" aria-labelledby="phase-title-en">
@@ -154,6 +156,7 @@ const allTags = [
               <div><span class="label">{t.zh.detail.spec.temperature}</span><strong>{zhRecipe.water_temp_c}°C</strong></div>
               <div><span class="label">{t.zh.detail.spec.grind}</span><strong>{zhRecipe.grind_size}</strong></div>
               <div><span class="label">{t.zh.detail.spec.wait}</span><strong>{formatSeconds(getTotalWaitSeconds(zhRecipe), 'zh')}</strong></div>
+              {zhRecipe.paper_filter && <div><span class="label">{t.zh.detail.spec.paperFilter}</span><strong class="filter-value"><FilterGlyph filter={zhRecipe.paper_filter} /><span>{t.zh.detail.spec[zhRecipe.paper_filter]}</span></strong></div>}
             </section>
 
             <section class="phase-section" aria-labelledby="phase-title-zh">

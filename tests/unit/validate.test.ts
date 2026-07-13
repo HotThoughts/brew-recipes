@@ -58,6 +58,12 @@ describe('validateFile', () => {
     expect(errors.length).toBeGreaterThan(0);
   });
 
+  it('detects bad enum value (paper filter)', () => {
+    const file = path.join(FIXTURES_DIR, 'invalid-schema', 'bad-paper-filter.yaml');
+    const errors = validateFile(file, schema, ajv);
+    expect(errors.length).toBeGreaterThan(0);
+  });
+
   it('detects pattern violation (uppercase id)', () => {
     const file = path.join(FIXTURES_DIR, 'invalid-schema', 'bad-pattern.yaml');
     const errors = validateFile(file, schema, ajv);

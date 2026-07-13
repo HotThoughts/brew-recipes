@@ -55,6 +55,7 @@ describe('Recipe loading (integration with fixtures)', () => {
     expect(full!.description).toBeDefined();
     expect(full!.ratio).toBe('1:16.7');
     expect(full!.variant).toBe('1-cup');
+    expect(full!.paper_filter).toBe('wave');
     expect(full!.tags).toContain('light-roast');
     expect(full!.tags).toContain('sweet');
     expect(full!.tags).toContain('competition');

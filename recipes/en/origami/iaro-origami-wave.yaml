@@ -1,0 +1,23 @@
+id: iaro-origami-wave
+name: IARO Beginner Origami Wave Method
+brewer: Origami
+dose_g: 15
+water_ml: 250
+ratio: "1:16.7"
+paper_filter: wave
+water_temp_c: 93
+grind_size: medium
+description: >
+  IARO's beginner method uses a Kalita Wave filter in an Origami dripper. The
+  medium grind and slow circular pour are designed for a simple, even brew.
+  The archive standardizes the serving at 15g coffee and 250g water because the
+  source article does not specify a dose or total water amount.
+phases:
+  - label: Circular Pour
+    water_g: 250
+    wait_seconds: 0
+    note: Pour slowly in a circular motion to wet and extract the coffee evenly
+source:
+  name: iaro (Linus Friedmann)
+  url: https://iaro.co/blogs/journal/origami-filter
+tags: [light-roast, beginner-friendly, single-pour]
