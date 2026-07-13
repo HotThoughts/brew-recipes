@@ -41,15 +41,28 @@ function getLangVersion(id: string, lang: LanguageCode): Recipe | undefined {
 function matchingTags(recipe: Recipe, values: readonly string[]): string {
   return (recipe.tags ?? []).filter((tag) => values.includes(tag)).join(' ');
 }
+
+function splitTitleEnding(title: string): { lead: string; ending: string } {
+  const lastSpace = title.lastIndexOf(' ');
+  if (lastSpace === -1) return { lead: '', ending: title };
+  return {
+    lead: title.slice(0, lastSpace + 1),
+    ending: title.slice(lastSpace + 1),
+  };
+}
+
+const homeTitles = {
+  en: splitTitleEnding(t.en.home.title),
+  zh: splitTitleEnding(t.zh.home.title),
+};
 ---
 
 <BaseLayout title={`${t.en.site.title} | ${t.zh.site.title}`} pageClass="home-page">
   <main class="home-hero">
     <section class="intro-panel" aria-labelledby="home-title">
       <h1 id="home-title" class="page-title">
-          <span class="lang-en">{t.en.home.title}</span>
-          <span class="lang-zh">{t.zh.home.title}</span>
-          <span class="cursor" aria-hidden="true"></span>
+          <span class="lang-en"><span class="title-lead">{homeTitles.en.lead}</span><span class="title-ending">{homeTitles.en.ending}<span class="cursor" aria-hidden="true"></span></span></span>
+          <span class="lang-zh">{homeTitles.zh.lead}<span class="title-ending">{homeTitles.zh.ending}<span class="cursor" aria-hidden="true"></span></span></span>
         </h1>
       <p class="lede">
         <span class="lang-en">{t.en.home.lede}</span>
