@@ -14,6 +14,7 @@ A community-curated collection of pour-over coffee recipes in YAML format, with 
 - [Local Development](#local-development)
 - [Deployment](#deployment)
 - [Schema Reference](#schema-reference)
+- [Agent Skill](#agent-skill)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -129,6 +130,18 @@ npm run preview
 All recipes must conform to [`schema.yaml`](schema.yaml) (JSON Schema draft-07). The schema defines required fields, value ranges, tag enum values, and phase structure. It is the single source of truth for the recipe format.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidance on adding or translating recipes.
+
+## Agent Skill
+
+This repository includes a shared [`add-brew-recipe`](.agents/skills/add-brew-recipe/SKILL.md)
+skill for compatible coding agents. Ask your agent to "add a recipe" and either
+paste the recipe text or provide the details interactively. The skill extracts the
+recipe fields, confirms them with you, writes schema-compatible YAML, runs the
+project validation pipeline, and can optionally create a Chinese translation.
+
+The canonical skill lives in `.agents/skills` for shared agent discovery.
+`.claude/skills/add-brew-recipe` links to the same skill for Claude compatibility,
+so both paths use a single maintained source.
 
 ## Contributing
 
