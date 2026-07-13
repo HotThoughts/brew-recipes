@@ -441,6 +441,14 @@
 }
 
 @layer components {
+  .title-lead {
+    font-size: 0.9em;
+  }
+
+  .title-ending {
+    white-space: nowrap;
+  }
+
   .cursor {
     display: inline-block;
     width: 0.22em;
@@ -1093,7 +1101,7 @@
   }
 
   .home-hero {
-    grid-template-columns: minmax(0, 1fr) minmax(96px, 130px);
+    grid-template-columns: minmax(0, 1fr) minmax(187px, 254px);
     align-items: start;
     gap: 20px;
     min-height: auto;
@@ -1133,7 +1141,7 @@
   .ascii-hero {
     justify-self: end;
     align-self: start;
-    width: min(28vw, 130px);
+    width: min(54.6vw, 254px);
   }
 
   .filter-toggle {
