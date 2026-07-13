@@ -4,9 +4,13 @@ import AsciiHero from '../components/AsciiHero.astro';
 import FilterGlyph from '../components/FilterGlyph.astro';
 import { t } from '../lib/i18n';
 import {
+  formatBrewerName,
+  formatBrewTemperature,
   formatRecipeCount,
+  formatSeconds,
   getBrewerGroups,
   getRecipeCollection,
+  getTotalWaitSeconds,
   PAPER_FILTER_VALUES,
   ROAST_VALUES,
   TASTE_VALUES,
@@ -17,10 +21,15 @@ import {
 
 const collection = getRecipeCollection();
 
-// Deduplicate by id — each unique recipe renders once with both language names
-const uniqueRecipes = [
-  ...new Map(collection.recipes.map((r) => [r.id, r])).values(),
-];
+// Deduplicate by id — prefer English as the stable filter-data record, while
+// retaining Chinese-only recipes when no English version exists.
+const uniqueById = new Map<string, Recipe>();
+for (const recipe of collection.recipes) {
+  if (!uniqueById.has(recipe.id) || recipe.language === 'en') {
+    uniqueById.set(recipe.id, recipe);
+  }
+}
+const uniqueRecipes = [...uniqueById.values()];
 
 const recipeTags = new Set(uniqueRecipes.flatMap((recipe) => recipe.tags ?? []));
 const availableTasteValues = TASTE_VALUES.filter((value) => recipeTags.has(value));
@@ -28,7 +37,18 @@ const availableRoastValues = ROAST_VALUES.filter((value) => recipeTags.has(value
 
 const groups = getBrewerGroups(uniqueRecipes).map((group) => ({
   ...group,
-  variants: [...new Set(group.recipes.map((r) => r.variant).filter(Boolean))].sort(),
+  variantOptions: [
+    ...new Map(
+      group.recipes
+        .filter((recipe) => recipe.variant)
+        .map((recipe) => {
+          const value = recipe.variant!;
+          const enLabel = getLangVersion(recipe.id, 'en')?.variant ?? value;
+          const zhLabel = getLangVersion(recipe.id, 'zh')?.variant ?? enLabel;
+          return [value, { value, enLabel, zhLabel }];
+        }),
+    ).values(),
+  ].sort((a, b) => a.enLabel.localeCompare(b.enLabel)),
   paperFilters: PAPER_FILTER_VALUES.filter((value) =>
     group.recipes.some((recipe) => recipe.paper_filter === value),
   ),
@@ -102,7 +122,7 @@ const homeTitles = {
                 data-brewer={group.brewerSlug}
                 aria-pressed="false"
               >
-                {group.brewer}
+                {formatBrewerName(group.brewer)}
               </button>
             ))}
           </div>
@@ -163,20 +183,23 @@ const homeTitles = {
           data-brewer={group.brewerSlug}
         >
           <div class="group-heading">
-            <h2>{group.brewer}</h2>
+            <h2>{formatBrewerName(group.brewer)}</h2>
             <span class="group-count"><span class="lang-en">{formatRecipeCount(group.recipes.length, 'en')}</span><span class="lang-zh">{formatRecipeCount(group.recipes.length, 'zh')}</span></span>
-            {(group.variants.length > 1 || group.paperFilters.length > 1) && (
+            {(group.variantOptions.length > 1 || group.paperFilters.length > 1) && (
               <div class="group-filters">
-                {group.variants.length > 1 && (
+                {group.variantOptions.length > 1 && (
                   <div class="group-filter-set">
-                    {group.variants.map((v) => (
+                    {group.variantOptions.map((variant) => (
                       <button
                         type="button"
                         class="variant-pill"
-                        data-variant={v}
+                        data-variant={variant.value}
                         data-brewer={group.brewerSlug}
                         aria-pressed="false"
-                      >{v}</button>
+                      >
+                        <span class="lang-en">{variant.enLabel}</span>
+                        <span class="lang-zh">{variant.zhLabel}</span>
+                      </button>
                     ))}
                   </div>
                 )}
@@ -205,6 +228,7 @@ const homeTitles = {
             {group.recipes.map((recipe) => {
               const en = getLangVersion(recipe.id, 'en');
               const zh = getLangVersion(recipe.id, 'zh');
+              const isColdBrew = recipe.brewer === 'ColdBrew';
               return (
                 <a
                   class="recipe-row"
@@ -231,10 +255,14 @@ const homeTitles = {
                       {recipe.ratio ? <span>{recipe.ratio}</span> : <span><span class="lang-en">{t.en.home.ratioNA}</span><span class="lang-zh">{t.zh.home.ratioNA}</span></span>}
                       <span>{recipe.dose_g}g</span>
                       <span>{recipe.water_ml}ml</span>
-                      <span>{recipe.water_temp_c}°C</span>
+                      <span>
+                        <span class="lang-en">{formatBrewTemperature(recipe, 'en')}</span>
+                        <span class="lang-zh">{formatBrewTemperature(recipe, 'zh')}</span>
+                      </span>
                     </span>
                     <span class="recipe-stat-line">
                       <span>{recipe.grind_size}</span>
+                      {isColdBrew && <span>{formatSeconds(getTotalWaitSeconds(recipe))}</span>}
                       {recipe.paper_filter && (
                         <span class="recipe-paper-filter">
                           <FilterGlyph filter={recipe.paper_filter} />

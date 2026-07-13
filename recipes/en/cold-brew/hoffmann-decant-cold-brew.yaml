@@ -1,0 +1,27 @@
+id: hoffmann-decant-cold-brew
+name: James Hoffmann Decant Cold Brew
+brewer: ColdBrew
+dose_g: 75
+water_ml: 1000
+ratio: "1:13.3"
+variant: decant method
+brew_temperature: cold
+grind_size: fine
+description: >
+  James Hoffmann's low-waste cold brew uses a fine grind, optional fining agent,
+  and careful decanting instead of passing the finished coffee through a filter.
+phases:
+  - label: Combine
+    water_g: 1000
+    note: Add room-temperature water and stir thoroughly; optionally mix in 10 drops of fining agent
+  - label: Steep and settle
+    water_g: 0
+    wait_seconds: 43200
+    note: Cover and refrigerate for 12 hours so the grounds settle at the bottom
+  - label: Decant
+    water_g: 0
+    note: Gently pour into a clean carafe and stop before the coffee sediment reaches the rim
+source:
+  name: James Hoffmann
+  url: https://www.youtube.com/watch?v=AB0QLjroFss
+tags: [immersion, cold-brew, beginner-friendly]

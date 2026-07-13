@@ -1,0 +1,27 @@
+id: roeststaette-classic-cold-brew
+name: Röststätte Classic Cold Brew
+brewer: ColdBrew
+dose_g: 100
+water_ml: 1000
+ratio: "1:10"
+variant: generic container
+brew_temperature: cold-or-room-temperature
+grind_size: coarse
+description: >
+  Röststätte's classic immersion method produces a sweet, full-bodied cold brew
+  with a simple 1:10 ratio and at least twelve hours of extraction.
+phases:
+  - label: Combine
+    water_g: 1000
+    note: Add the water to the freshly ground coffee and stir thoroughly until every ground is wet
+  - label: Steep
+    water_g: 0
+    wait_seconds: 43200
+    note: Cover and steep for at least 12 hours in the refrigerator or at room temperature
+  - label: Filter
+    water_g: 0
+    note: Pass the brew through a fine filter, then store it in the refrigerator
+source:
+  name: Röststätte Berlin
+  url: https://www.roeststaette.com/en/coldbrew-rezepte/
+tags: [sweet, balanced, immersion, cold-brew, beginner-friendly]

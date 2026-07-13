@@ -1,0 +1,27 @@
+id: hario-filter-in-bottle-cold-brew
+name: HARIO 冷萃滤瓶配方
+brewer: ColdBrew
+dose_g: 55
+water_ml: 700
+ratio: "1:12.7"
+variant: 冷萃滤瓶
+brew_temperature: cold
+grind_size: medium-fine
+description: >
+  HARIO 的标准冷萃滤瓶配方使用内置滤网，在冰箱中温和浸泡八小时，
+  完成后即可得到干净、方便直接倒出的冷萃咖啡。
+phases:
+  - label: 加水
+    water_g: 700
+    note: 将咖啡粉放入滤网，组装滤瓶，再轻柔地倒入冷水
+  - label: 混合与浸泡
+    water_g: 0
+    wait_seconds: 28800
+    note: 塞好瓶口，轻轻摇匀，然后冷藏 8 小时
+  - label: 享用
+    water_g: 0
+    note: 再次轻摇，取下瓶口组件并尽快享用
+source:
+  name: HARIO Europe
+  url: https://www.hario-europe.com/blogs/hario-community/cold-brew-recipes
+tags: [immersion, cold-brew, beginner-friendly]

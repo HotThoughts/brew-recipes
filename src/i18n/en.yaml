@@ -1,11 +1,16 @@
+temperature_labels:
+  cold: cold
+  room-temperature: room temp
+  cold-or-room-temperature: cold / room temp
+
 home:
   title: brew recipes
-  lede: A quiet archive of pour-over recipes — browse by brewer, compare parameters, and follow each pour step by step.
+  lede: A quiet archive of coffee recipes — browse by brewer, compare parameters, and follow each method step by step.
   pourGuideLink: Learn how pour style changes taste
   ratioNA: ratio n/a
-  filterByBrewer: Filter by brewer
+  filterByBrewer: Filter by brew method
   filterByTaste: Filter by taste
-  filterTitleBrewer: Brewers
+  filterTitleBrewer: Brew Methods
   filterTitleTaste: Taste Profile
   filterTitleRoast: Roast Level
   filterSummary: Filters
@@ -33,13 +38,17 @@ detail:
     water: water
     ratio: ratio
     temperature: temperature
+    brewTemperature: brew temperature
     grind: grind
     wait: wait
+    brewTime: brew time
     paperFilter: paper filter
     cone: cone
     wave: wave
   phases: pour phases
+  brewSteps: brew steps
   phaseSummary: "{water}g accounted for across {count} phases."
+  brewStepSummary: "{water}g water · {time} extraction across {count} steps."
   pour:
     label: Pour style
     spiral: spiral
@@ -76,4 +85,4 @@ pourGuide:
 
 site:
   title: brew-recipes
-  description: Browse community-curated pour-over brew recipes without reading raw YAML.
+  description: Browse community-curated coffee recipes without reading raw YAML.

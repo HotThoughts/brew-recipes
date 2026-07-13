@@ -128,4 +128,16 @@ describe('checkDetailPage', () => {
     const result = checkDetailPage(html, versions);
     expect(result.errors).toHaveLength(0);
   });
+
+  it('checks cold-brew-specific detail content', () => {
+    const version = makeVersion({
+      brewer: 'ColdBrew',
+      source: { name: 'Test Source', url: 'https://example.com/cold-brew' },
+    });
+    const html = '<html>Test Recipe A · Test Source · brew steps · 冲煮步骤 · https://example.com/cold-brew</html>';
+    expect(checkDetailPage(html, [version]).errors).toHaveLength(0);
+    expect(checkDetailPage(`${html}>0g<`, [version]).errors).toContain(
+      'Cold-brew detail page for test-recipe-a shows irrelevant pour-step values',
+    );
+  });
 });

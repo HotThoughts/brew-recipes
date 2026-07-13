@@ -1,0 +1,27 @@
+id: hario-filter-in-bottle-cold-brew
+name: HARIO Filter-in Bottle Cold Brew
+brewer: ColdBrew
+dose_g: 55
+water_ml: 700
+ratio: "1:12.7"
+variant: Filter-in Bottle
+brew_temperature: cold
+grind_size: medium-fine
+description: >
+  HARIO's standard Filter-in Bottle recipe is a gentle eight-hour refrigerated
+  immersion with an integrated strainer and a clean, ready-to-pour finish.
+phases:
+  - label: Fill
+    water_g: 700
+    note: Put the coffee in the strainer, assemble the bottle, and gently pour in the cold water
+  - label: Mix and steep
+    water_g: 0
+    wait_seconds: 28800
+    note: Stopper the bottle, shake gently to mix, and refrigerate for 8 hours
+  - label: Serve
+    water_g: 0
+    note: Shake gently once more, remove the spout, and serve fresh
+source:
+  name: HARIO Europe
+  url: https://www.hario-europe.com/blogs/hario-community/cold-brew-recipes
+tags: [immersion, cold-brew, beginner-friendly]

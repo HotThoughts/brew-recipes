@@ -6,11 +6,11 @@ product
 
 ## Users
 
-Coffee brewers standing at a counter with a scale and kettle, contributors adding new recipes, and curious readers comparing methods. They want structured brew parameters — ratio, dose, temperature, pour sequence — without opening raw YAML files or hunting through recipe-blog prose.
+Coffee brewers standing at a counter with a scale, kettle, or cold-brew vessel, contributors adding new recipes, and curious readers comparing methods. They want structured brew parameters — ratio, dose, temperature, duration, and sequence — without opening raw YAML files or hunting through recipe-blog prose.
 
 ## Product Purpose
 
-brew-recipes turns a static YAML recipe database into a readable web surface. Success means people can quickly find a recipe by language and brewer, inspect practical brew parameters, follow the pour phases, and trace source attribution.
+brew-recipes turns a static YAML recipe database into a readable web surface. Success means people can quickly find a recipe by language and brew method, inspect practical parameters, follow each brew step, and trace source attribution.
 
 ## Brand Personality
 

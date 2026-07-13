@@ -1,0 +1,27 @@
+id: the-barn-mizudashi-cold-brew
+name: THE BARN Mizudashi Cold Brew
+brewer: ColdBrew
+dose_g: 50
+water_ml: 500
+ratio: "1:10"
+variant: Mizudashi
+brew_temperature: room-temperature
+grind_size: medium-coarse
+description: >
+  THE BARN's room-temperature Mizudashi method emphasizes sweetness and texture
+  with a 1:10 ratio and a long seventeen-hour extraction.
+phases:
+  - label: Saturate
+    water_g: 500
+    note: Add the water in three stages through the Mizudashi filter, stirring so every ground contacts the water
+  - label: Steep
+    water_g: 0
+    wait_seconds: 61200
+    note: Cover and brew at room temperature for a total of 17 hours
+  - label: Finish
+    water_g: 0
+    note: Remove the grounds, swirl the carafe to distribute the coffee evenly, and serve over ice or chill
+source:
+  name: THE BARN Coffee Roasters
+  url: https://thebarn.de/blogs/the-barn-blog/cold-brew-at-home
+tags: [sweet, balanced, immersion, cold-brew, beginner-friendly]

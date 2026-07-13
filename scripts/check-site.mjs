@@ -13,6 +13,10 @@ const recipeMap = buildRecipeMap();
 
 // Root index page
 assert(fs.existsSync(path.join(DIST_DIR, 'index.html')), 'Missing dist/index.html');
+if (fs.existsSync(path.join(DIST_DIR, 'index.html'))) {
+  const homeHtml = fs.readFileSync(path.join(DIST_DIR, 'index.html'), 'utf8');
+  assert(homeHtml.includes('data-brewer="cold-brew"'), 'Homepage missing Cold Brew filter');
+}
 
 // Check each deduplicated detail page
 for (const [id, versions] of recipeMap) {
