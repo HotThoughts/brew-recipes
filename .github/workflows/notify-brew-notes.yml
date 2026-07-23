@@ -1,0 +1,23 @@
+name: Notify Brew Notes on Recipe Changes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "recipes/**"
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch sync event to brew-notes
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.BREW_NOTES_DISPATCH_TOKEN }}
+          repository: HotThoughts/brew-app
+          event-type: brew-recipes-updated
+          client-payload: |
+            {
+              "ref": "${{ github.ref }}",
+              "sha": "${{ github.sha }}"
+            }

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import AsciiAmbient from '../components/AsciiAmbient.astro';
+import { withBase } from '../lib/recipes';
 
 type Props = {
   title: string;
@@ -13,6 +14,7 @@ const {
   description = 'Browse community-curated coffee recipes without reading raw YAML.',
   pageClass = '',
 } = Astro.props;
+const isGrinderPage = Astro.url.pathname.includes('/grinders');
 ---
 
 <!doctype html>
@@ -36,12 +38,33 @@ const {
     <div class="site-shell">
       <header class="site-header">
         <nav class="site-nav" aria-label="Primary">
-          <span class="lang-switch">
+          <a
+            class="site-nav-link"
+            href={withBase('/')}
+            data-preserve-lang
+            data-base-href={withBase('/')}
+            aria-current={isGrinderPage ? undefined : 'page'}
+          >
+            <span class="lang-en">Recipes</span>
+            <span class="lang-zh">配方</span>
+          </a>
+          <a
+            class="site-nav-link"
+            href={withBase('/grinders/')}
+            data-preserve-lang
+            data-base-href={withBase('/grinders/')}
+            data-site-grinders-link
+            aria-current={isGrinderPage ? 'page' : undefined}
+          >
+            <span class="lang-en">Grinders</span>
+            <span class="lang-zh">研磨器</span>
+          </a>
+          <a href="https://github.com/HotThoughts/brew-recipes">GitHub</a>
+          <span class="lang-switch" aria-label="Language">
             <a href="#en" class="lang-opt" data-lang="en">en</a>
             <span class="lang-sep">/</span>
             <a href="#zh" class="lang-opt" data-lang="zh">zh</a>
           </span>
-          <a href="https://github.com/HotThoughts/brew-recipes">GitHub</a>
         </nav>
       </header>
 
@@ -54,8 +77,8 @@ const {
   const validLangs = ['en', 'zh'];
 
   function applyLang() {
-    const hash = window.location.hash.slice(1);
-    const lang = validLangs.includes(hash) ? hash : 'en';
+    const [hashLang, hashAnchor] = window.location.hash.slice(1).split(':', 2);
+    const lang = validLangs.includes(hashLang) ? hashLang : 'en';
 
     // Update body class for CSS-based language toggling
     document.body.classList.remove('lang-en', 'lang-zh');
@@ -67,13 +90,16 @@ const {
     // Highlight active language in the header switch
     document.querySelectorAll('.lang-opt').forEach((el) => {
       el.classList.toggle('active', el.dataset.lang === lang);
+      const anchor = hashAnchor ? `:${hashAnchor}` : '';
+      el.setAttribute('href', `#${el.dataset.lang}${anchor}`);
     });
 
     // Keep internal guide links in the user's active language.
     document.querySelectorAll('a[data-preserve-lang]').forEach((el) => {
       const anchor = el as HTMLAnchorElement;
       const baseHref = anchor.dataset.baseHref ?? anchor.getAttribute('href') ?? '';
-      anchor.href = `${baseHref}#${lang}`;
+      const targetAnchor = anchor.dataset.anchor ? `:${anchor.dataset.anchor}` : '';
+      anchor.href = `${baseHref}#${lang}${targetAnchor}`;
     });
 
     // Notify decorative layers (ASCII canvases) so they can start/stop
