@@ -1,0 +1,29 @@
+---
+import GrinderGuideVersion from '../../components/GrinderGuideVersion.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t } from '../../lib/i18n';
+import { getGrinders, type Grinder } from '../../lib/grinders';
+import { withBase } from '../../lib/recipes';
+
+export function getStaticPaths() {
+  return getGrinders().map((grinder) => ({
+    params: { id: grinder.id },
+    props: { grinder },
+  }));
+}
+
+const { grinder } = Astro.props as { grinder: Grinder };
+---
+
+<BaseLayout title={`${grinder.manufacturer} ${grinder.model} | ${t.en.grinders.directory.title}`} pageClass="grinder-guide-page">
+  <main class="grinder-guide">
+    <GrinderGuideVersion grinder={grinder} language="en" />
+    <GrinderGuideVersion grinder={grinder} language="zh" />
+    <nav class="detail-nav" aria-label={t.en.detail.recipeNav}>
+      <a href={withBase('/grinders/')} data-preserve-lang data-base-href={withBase('/grinders/')}>
+        <span class="lang-en">← {t.en.grinders.directory.title}</span>
+        <span class="lang-zh">← {t.zh.grinders.directory.title}</span>
+      </a>
+    </nav>
+  </main>
+</BaseLayout>

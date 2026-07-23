@@ -1,0 +1,19 @@
+id: reversed-range
+manufacturer: Test
+model: Reversed
+adjustment:
+  system: Test Clicks
+  unit: clicks
+  scale_min: 0
+  scale_max: 30
+  scale_step: 5
+  direction: higher-is-coarser
+ranges:
+  - id: filter
+    min_clicks: 22
+    max_clicks: 12
+sources:
+  - id: test-source
+    name: Test Source
+    url: https://example.com/settings
+    scope: click-guidance

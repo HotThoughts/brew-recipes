@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import FilterGlyph from '../../components/FilterGlyph.astro';
 import PourGlyph from '../../components/PourGlyph.astro';
 import { t } from '../../lib/i18n';
+import { getGrinder, getGrinderRangeForBrewer } from '../../lib/grinders';
 import {
   formatBrewerName,
   formatBrewTemperature,
@@ -46,6 +47,18 @@ const allTags = [
   ...new Set([...(enRecipe?.tags ?? []), ...(zhRecipe?.tags ?? [])]),
 ];
 const isColdBrew = mainRecipe.brewer === 'ColdBrew';
+const featuredGrinder = getGrinder('comandante-c40-mk4');
+const grinderRange = featuredGrinder
+  ? getGrinderRangeForBrewer(featuredGrinder, mainRecipe.brewer)
+  : undefined;
+
+function rangeText(language: 'en' | 'zh'): string {
+  if (!grinderRange) return '';
+  if (grinderRange.min_clicks !== undefined && grinderRange.max_clicks !== undefined) {
+    return `${grinderRange.min_clicks}–${grinderRange.max_clicks} ${t[language].grinders.units.clicks}`;
+  }
+  return t[language].grinders.guidance.recipeDependent;
+}
 ---
 
 <BaseLayout title={`${mainRecipe.name} | ${t.en.site.title} | ${t.zh.site.title}`} pageClass="detail-page">
@@ -74,7 +87,17 @@ const isColdBrew = mainRecipe.brewer === 'ColdBrew';
               <div><span class="label">{t.en.detail.spec.water}</span><strong>{enRecipe.water_ml}ml</strong></div>
               <div><span class="label">{t.en.detail.spec.ratio}</span><strong>{enRecipe.ratio ?? 'n/a'}</strong></div>
               <div><span class="label">{isColdBrew ? t.en.detail.spec.brewTemperature : t.en.detail.spec.temperature}</span><strong>{formatBrewTemperature(enRecipe, 'en')}</strong></div>
-              <div><span class="label">{t.en.detail.spec.grind}</span><strong>{enRecipe.grind_size}</strong></div>
+              <div>
+                <span class="label">{t.en.detail.spec.grind}</span>
+                <strong>{enRecipe.grind_size}</strong>
+                {grinderRange && <a
+                  class="grinder-spec-link"
+                  href={withBase(featuredGrinder!.urlPath)}
+                  data-preserve-lang
+                  data-base-href={withBase(featuredGrinder!.urlPath)}
+                  data-anchor={grinderRange.id}
+                >C40 · {rangeText('en')} →</a>}
+              </div>
               <div><span class="label">{isColdBrew ? t.en.detail.spec.brewTime : t.en.detail.spec.wait}</span><strong>{formatSeconds(getTotalWaitSeconds(enRecipe), 'en')}</strong></div>
               {enRecipe.paper_filter && <div><span class="label">{t.en.detail.spec.paperFilter}</span><strong class="filter-value"><FilterGlyph filter={enRecipe.paper_filter} /><span>{t.en.detail.spec[enRecipe.paper_filter]}</span></strong></div>}
             </section>
@@ -158,7 +181,17 @@ const isColdBrew = mainRecipe.brewer === 'ColdBrew';
               <div><span class="label">{t.zh.detail.spec.water}</span><strong>{zhRecipe.water_ml}ml</strong></div>
               <div><span class="label">{t.zh.detail.spec.ratio}</span><strong>{zhRecipe.ratio ?? '无'}</strong></div>
               <div><span class="label">{isColdBrew ? t.zh.detail.spec.brewTemperature : t.zh.detail.spec.temperature}</span><strong>{formatBrewTemperature(zhRecipe, 'zh')}</strong></div>
-              <div><span class="label">{t.zh.detail.spec.grind}</span><strong>{zhRecipe.grind_size}</strong></div>
+              <div>
+                <span class="label">{t.zh.detail.spec.grind}</span>
+                <strong>{zhRecipe.grind_size}</strong>
+                {grinderRange && <a
+                  class="grinder-spec-link"
+                  href={withBase(featuredGrinder!.urlPath)}
+                  data-preserve-lang
+                  data-base-href={withBase(featuredGrinder!.urlPath)}
+                  data-anchor={grinderRange.id}
+                >C40 · {rangeText('zh')} →</a>}
+              </div>
               <div><span class="label">{isColdBrew ? t.zh.detail.spec.brewTime : t.zh.detail.spec.wait}</span><strong>{formatSeconds(getTotalWaitSeconds(zhRecipe), 'zh')}</strong></div>
               {zhRecipe.paper_filter && <div><span class="label">{t.zh.detail.spec.paperFilter}</span><strong class="filter-value"><FilterGlyph filter={zhRecipe.paper_filter} /><span>{t.zh.detail.spec[zhRecipe.paper_filter]}</span></strong></div>}
             </section>
