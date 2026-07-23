@@ -196,6 +196,12 @@ This is a flat system. No box-shadows, no layered cards, no z-index stacking bey
 - **Style:** 20×20 line-art in Deep Violet ink, matching the pour glyph stroke, caps, joins, and no-fill rule. The symbol is decorative and the adjacent text remains the accessible source of meaning.
 - **Placement:** Inline with the `cone` or `wave` value in Origami's local filter pills, recipe-list stats, and the paper-filter spec cell. It is never used as a standalone icon or color-coded status.
 
+### Grind-Direction Glyphs
+- **Purpose:** Make the fine-to-coarse direction of grinder charts understandable before reading the labels.
+- **Set:** `finer` uses a compact field of eight small particles; `coarser` uses three larger, more widely spaced particles.
+- **Style:** Solid Deep Violet circles on a 28×20 viewBox. The symbols are language-neutral and decorative; localized “finer” and “coarser” labels remain the accessible meaning.
+- **Placement:** At the two ends of the shared click ruler. They are never used as unlabeled controls or as substitutes for numeric settings.
+
 ### ASCII Motion
 - **Purpose:** A quiet retro-terminal layer that surfaces the pour gesture as typed characters, extending the archival typewriter voice into motion without breaking the flat, ink-on-paper system.
 - **Pipeline:** Three.js scenes render to a tiny offscreen target, luminance is sampled per cell and mapped to a Space Mono character ramp (` ·:;+=oxX#@`), then typed onto a 2D canvas in Deep Violet ink on the lavender paper field. No CRT green, no scanlines, no black backgrounds; the character grid is the retro move.

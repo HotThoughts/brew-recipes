@@ -4,6 +4,8 @@
 
 A community-curated collection of pour-over and cold-brew coffee recipes in YAML format, with a bilingual (EN/ZH) static website for easy browsing. Validated by JSON Schema and built with Astro.
 
+The site also includes YAML-backed grinder guides that translate brew methods into repeatable settings for specific grinder models.
+
 **Live site:** [hotthoughts.github.io/brew-recipes](https://hotthoughts.github.io/brew-recipes)
 
 ## Table of Contents
@@ -11,6 +13,7 @@ A community-curated collection of pour-over and cold-brew coffee recipes in YAML
 - [Quick Start](#quick-start)
 - [Recipe Format](#recipe-format)
 - [Web UI](#web-ui)
+- [Grinder Guides](#grinder-guides)
 - [Local Development](#local-development)
 - [Deployment](#deployment)
 - [Schema Reference](#schema-reference)
@@ -86,6 +89,13 @@ Features:
 - **Homepage** — all recipes grouped by brewer with dose, ratio, and tags at a glance
 - **Detail pages** — each recipe shows phases with timing, grind size, water temperature, source attribution, and tags
 - **i18n** — supports English and Chinese (简体中文); the header has a language switcher, and translations are auto-linked by recipe `id`
+- **Grinder guides** — model-specific setting charts, source attribution, and contextual links from compatible recipes
+
+## Grinder Guides
+
+Grinder settings live in `grinders/<id>.yaml` and are validated against [`grinder-schema.yaml`](grinder-schema.yaml). Each file describes the adjustment scale, method ranges, compatible recipe brewers, and scoped sources. Adding another grinder automatically creates a new `/grinders/<id>/` guide and directory entry.
+
+Keep numerical recommendations language-neutral in the grinder YAML. Shared method names and guide copy are localized in `src/i18n/en.yaml` and `src/i18n/zh.yaml`.
 
 ## Local Development
 

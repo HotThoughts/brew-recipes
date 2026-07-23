@@ -1,0 +1,110 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+title: GrinderSettings
+type: object
+required: [id, manufacturer, model, adjustment, ranges, sources]
+additionalProperties: false
+properties:
+  id:
+    type: string
+    pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+  manufacturer:
+    type: string
+    minLength: 1
+  model:
+    type: string
+    minLength: 1
+  adjustment:
+    type: object
+    required: [system, unit, scale_min, scale_max, scale_step, direction]
+    additionalProperties: false
+    properties:
+      system:
+        type: string
+        minLength: 1
+      unit:
+        type: string
+        enum: [clicks]
+      scale_min:
+        type: integer
+        minimum: 0
+      scale_max:
+        type: integer
+        minimum: 1
+      scale_step:
+        type: integer
+        minimum: 1
+      direction:
+        type: string
+        enum: [higher-is-coarser, higher-is-finer]
+      factory_setting:
+        type: integer
+        minimum: 0
+  particle_range_microns:
+    type: object
+    required: [min, max, source_id]
+    additionalProperties: false
+    properties:
+      min:
+        type: integer
+        minimum: 0
+      max:
+        type: integer
+        minimum: 1
+      source_id:
+        type: string
+        pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+  ranges:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [id]
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+        min_clicks:
+          type: integer
+          minimum: 0
+        max_clicks:
+          type: integer
+          minimum: 0
+        guidance:
+          type: string
+          enum: [recipe-dependent]
+        recipe_brewers:
+          type: array
+          items:
+            type: string
+            enum: [V60, Chemex, Aeropress, ColdBrew, Kalita, Orea, FrenchPress, StaggX, Origami, April, Other]
+          uniqueItems: true
+      oneOf:
+        - required: [min_clicks, max_clicks]
+          not:
+            required: [guidance]
+        - required: [guidance]
+          not:
+            anyOf:
+              - required: [min_clicks]
+              - required: [max_clicks]
+  sources:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [id, name, url, scope]
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+        name:
+          type: string
+          minLength: 1
+        url:
+          type: string
+          format: uri
+        scope:
+          type: string
+          enum: [click-guidance, operating-guidance, micron-capability]

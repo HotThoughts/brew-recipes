@@ -83,6 +83,66 @@ pourGuide:
       how: 注水后轻轻旋转或摇晃滤杯，让粉床更平整，并让细粉在浆液中重新分布。
       taste: 摇晃有助于提高均匀度和甜感；过度摇晃则可能拖慢流速，并带来干涩感。
 
+grinders:
+  back: 冲煮方法
+  units:
+    clicks: 格
+  guidance:
+    recipeDependent: 取决于配方
+  directory:
+    systemLine: 研磨器档案 / 可复现刻度
+    title: 研磨刻度
+    lede: 将宽泛的研磨描述转换为特定研磨器上可重复的刻度。每份指南都会清楚标注调节系统与资料来源。
+    listLabel: 可用的研磨器指南
+    ranges: 个范围
+  methods:
+    ibrik: 土耳其壶 / 伊布里克壶
+    espresso: 意式浓缩
+    bialetti: 比乐蒂 / 摩卡壶
+    pour-over-filter: 手冲 / 滤泡
+    aeropress: 爱乐压
+    cupping: 杯测
+    french-press: 法压壶
+    cold-brew: 冷萃
+  guide:
+    lede: 一份实用的 Standard Clix 参考。先从建议范围内开始，再根据眼前的咖啡、配方和口味，每次微调一至两格。
+    specLabel: 研磨器规格
+    adjustment: 调节系统
+    scale: 图表范围
+    direction: 调节方向
+    higherIsCoarser: 数字越大越粗
+    factory: 出厂刻度
+    chartTitle: 刻度范围图
+    chartIntro: C40 标准轴的官方起始范围。这些是调试指南，并非固定配方。
+    finer: 更细
+    coarser: 更粗
+    aeropressNote: 爱乐压的刻度取决于具体配方，因此 Comandante 没有给出单一数字范围。
+    zeroTitle: 找到零点
+    zeroIntro: 每个刻度都从同一个机械基准点开始计数。
+    zeroSteps:
+      - 清空研磨器并将它水平握住。
+      - 拧紧调节盘，直到刀盘刚好能够托住手柄，不再让它自然落向六点钟方向。
+      - 将第一个能托住手柄的位置视为零点，然后逆时针打开刀盘并逐格计数。
+    dialNote: 从建议范围的中间开始。若咖啡淡薄、尖锐或流速过快，就调细；若苦涩、干燥或流速过慢，就调粗。最终仍以味觉为准。
+    micronLabel: 单独来源的能力范围
+    micronNote: Honest Coffee Guide 报告了这一总体颗粒跨度。它只作背景参考，并非逐格换算，也不属于 Comandante 官方刻度建议。
+    sourcesTitle: 来源与适用范围
+    sourcesIntro: 刻度范围与操作说明来自官方；微米能力范围则单独标注第三方来源。
+  guides:
+    timemore-chestnut-c5:
+      lede: 一份针对 Chestnut C5 分级刻度盘的实用参考。先从建议范围内开始，再根据眼前的咖啡、配方和口味，每次微调一至两格。
+      chartIntro: C5 的 48 格刻度盘上的建议起始范围。这些是调试指南，并非固定配方。
+      zeroIntro: 每个刻度都从刀盘完全闭合的位置开始计数。
+      zeroSteps:
+        - 清空研磨器，确保刀盘之间没有咖啡豆。
+        - 顺时针拧动调节盘直到无法再拧，此时刀盘完全闭合。
+        - 将该闭合位置视为零点，然后逆时针旋转，随着刀盘逐渐打开变粗，逐格计数。
+      sourcesIntro: 操作规格来自 Timemore 官方；刻度范围表整理自实测评测。
+  sourceScopes:
+    click-guidance: 官方刻度指南
+    operating-guidance: 官方操作指南
+    micron-capability: 第三方微米参考
+
 site:
   title: 咖啡配方
   description: 浏览社区精选咖啡配方，无需阅读原始 YAML 文件。

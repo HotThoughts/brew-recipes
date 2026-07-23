@@ -1,8 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { walkYamlFiles, validateFile, checkUniqueIds } from '../../scripts/lib/validate.mjs';
+import { walkYamlFiles, validateFile, checkUniqueIds, validateGrinderData } from '../../scripts/lib/validate.mjs';
 import { createAjv } from '../helpers/create-ajv';
+import { load } from 'js-yaml';
+import Ajv from 'ajv';
+import addFormats from 'ajv-formats';
 
 const FIXTURES_DIR = path.join(import.meta.dirname, '..', 'fixtures');
 
@@ -76,5 +79,26 @@ describe('Validation Pipeline (integration)', () => {
     const dir = path.join(FIXTURES_DIR, 'valid-recipes');
     const fileCount = [...walkYamlFiles(dir)].length;
     expect(fileCount).toBe(3); // 2 en + 1 zh
+  });
+
+  it('validates grinder files and cross-field ranges', () => {
+    const schema = load(fs.readFileSync(path.join(import.meta.dirname, '..', '..', 'grinder-schema.yaml'), 'utf8')) as object;
+    const grinderAjv = new Ajv({ allErrors: true });
+    addFormats(grinderAjv);
+    const validFile = path.join(FIXTURES_DIR, 'valid-grinders', 'test-grinder.yaml');
+    const invalidFile = path.join(FIXTURES_DIR, 'invalid-grinders', 'reversed-range.yaml');
+
+    expect(validateFile(validFile, schema, grinderAjv)).toHaveLength(0);
+    const validData = load(fs.readFileSync(validFile, 'utf8')) as object;
+    expect(validateGrinderData(validData)).toHaveLength(0);
+
+    expect(validateFile(invalidFile, schema, grinderAjv)).toHaveLength(0);
+    const invalidData = load(fs.readFileSync(invalidFile, 'utf8')) as object;
+    expect(validateGrinderData(invalidData).join(' ')).toContain('must not exceed');
+  });
+
+  it('detects duplicate grinder IDs', () => {
+    const errors = checkUniqueIds(path.join(FIXTURES_DIR, 'duplicate-grinders'));
+    expect(errors).toHaveLength(1);
   });
 });

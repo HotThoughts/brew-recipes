@@ -65,4 +65,52 @@ export function checkUniqueIds(langDir) {
   return errors;
 }
 
+/**
+ * Validate cross-field grinder invariants that draft-07 JSON Schema cannot express.
+ * @param {object} grinder
+ * @returns {string[]}
+ */
+export function validateGrinderData(grinder) {
+  const errors = [];
+  const { adjustment, ranges = [], sources = [], particle_range_microns: microns } = grinder ?? {};
+  if (!adjustment) return errors;
+
+  if (adjustment.scale_min >= adjustment.scale_max) {
+    errors.push('/adjustment scale_min must be less than scale_max');
+  }
+  if (adjustment.factory_setting !== undefined
+    && (adjustment.factory_setting < adjustment.scale_min
+      || adjustment.factory_setting > adjustment.scale_max)) {
+    errors.push('/adjustment/factory_setting must be within the chart scale');
+  }
+
+  const rangeIds = new Set();
+  for (const range of ranges) {
+    if (rangeIds.has(range.id)) errors.push(`/ranges duplicate id "${range.id}"`);
+    rangeIds.add(range.id);
+    if (range.min_clicks !== undefined && range.max_clicks !== undefined) {
+      if (range.min_clicks > range.max_clicks) {
+        errors.push(`/ranges/${range.id} min_clicks must not exceed max_clicks`);
+      }
+      if (range.min_clicks < adjustment.scale_min || range.max_clicks > adjustment.scale_max) {
+        errors.push(`/ranges/${range.id} click range must be within the chart scale`);
+      }
+    }
+  }
+
+  const sourceIds = new Set();
+  for (const source of sources) {
+    if (sourceIds.has(source.id)) errors.push(`/sources duplicate id "${source.id}"`);
+    sourceIds.add(source.id);
+  }
+  if (microns) {
+    if (microns.min >= microns.max) errors.push('/particle_range_microns min must be less than max');
+    if (!sourceIds.has(microns.source_id)) {
+      errors.push('/particle_range_microns source_id must reference a declared source');
+    }
+  }
+
+  return errors;
+}
+
 export { walkYamlFiles };
