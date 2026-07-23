@@ -9,13 +9,16 @@ import path from 'node:path';
 import { load } from 'js-yaml';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import { walkYamlFiles, validateFile, checkUniqueIds } from './lib/validate.mjs';
+import { walkYamlFiles, validateFile, checkUniqueIds, validateGrinderData } from './lib/validate.mjs';
 
 const SCHEMA_PATH = 'schema.yaml';
 const RECIPES_DIR = 'recipes';
+const GRINDER_SCHEMA_PATH = 'grinder-schema.yaml';
+const GRINDERS_DIR = 'grinders';
 
 // ── Load and compile schema ────────────────────────────────────────
 const schema = load(fs.readFileSync(SCHEMA_PATH, 'utf8'));
+const grinderSchema = load(fs.readFileSync(GRINDER_SCHEMA_PATH, 'utf8'));
 const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);
 
@@ -46,6 +49,25 @@ for (const langDir of langDirs) {
   }
 }
 
+// ── Step 3: Grinder YAML, schema, invariants, and unique IDs ───────
+for (const file of walkYamlFiles(GRINDERS_DIR)) {
+  const fileErrors = validateFile(file, grinderSchema, ajv);
+  if (fileErrors.length === 0) {
+    const grinder = load(fs.readFileSync(file, 'utf8'));
+    fileErrors.push(...validateGrinderData(grinder));
+  }
+  if (fileErrors.length > 0) {
+    console.error(`Grinder schema error in ${file}:`);
+    for (const e of fileErrors) console.error(`  ${e}`);
+    errors += fileErrors.length;
+  }
+}
+
+for (const e of checkUniqueIds(GRINDERS_DIR)) {
+  console.error(e);
+  errors++;
+}
+
 // ── Report ──────────────────────────────────────────────────────────
 if (errors) {
   console.error(`\n${errors} validation error(s) found.`);
@@ -53,4 +75,5 @@ if (errors) {
 }
 
 const fileCount = [...walkYamlFiles(RECIPES_DIR)].length;
-console.log(`All ${fileCount} recipes valid. IDs unique per language.`);
+const grinderCount = [...walkYamlFiles(GRINDERS_DIR)].length;
+console.log(`All ${fileCount} recipes and ${grinderCount} grinders valid. IDs unique.`);

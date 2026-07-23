@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t } from '../../lib/i18n';
+import { getGrinders } from '../../lib/grinders';
+import { withBase } from '../../lib/recipes';
+
+const grinders = getGrinders();
+---
+
+<BaseLayout title={`${t.en.grinders.directory.title} | ${t.en.site.title}`} pageClass="grinder-directory-page">
+  <main class="grinder-directory">
+    <header class="grinder-page-header">
+      <p class="system-line">
+        <span class="lang-en">{t.en.grinders.directory.systemLine}</span>
+        <span class="lang-zh">{t.zh.grinders.directory.systemLine}</span>
+      </p>
+      <h1 class="page-title">
+        <span class="lang-en">{t.en.grinders.directory.title}</span>
+        <span class="lang-zh">{t.zh.grinders.directory.title}</span>
+      </h1>
+      <p class="lede">
+        <span class="lang-en">{t.en.grinders.directory.lede}</span>
+        <span class="lang-zh">{t.zh.grinders.directory.lede}</span>
+      </p>
+    </header>
+
+    <section class="grinder-index" aria-label={t.en.grinders.directory.listLabel}>
+      {grinders.map((grinder) => (
+        <a
+          class="grinder-index-row"
+          href={withBase(grinder.urlPath)}
+          data-preserve-lang
+          data-base-href={withBase(grinder.urlPath)}
+        >
+          <span class="grinder-index-name">
+            <span>{grinder.manufacturer}</span>
+            <strong>{grinder.model}</strong>
+          </span>
+          <span class="grinder-index-meta">
+            <span>{grinder.adjustment.system}</span>
+            <span>{grinder.ranges.length} <span class="lang-en">{t.en.grinders.directory.ranges}</span><span class="lang-zh">{t.zh.grinders.directory.ranges}</span></span>
+            <span aria-hidden="true">→</span>
+          </span>
+        </a>
+      ))}
+    </section>
+
+    <nav class="detail-nav" aria-label={t.en.detail.recipeNav}>
+      <a href={withBase('/')}>
+        <span class="lang-en">← {t.en.grinders.back}</span>
+        <span class="lang-zh">← {t.zh.grinders.back}</span>
+      </a>
+    </nav>
+  </main>
+</BaseLayout>
