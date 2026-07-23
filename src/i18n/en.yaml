@@ -83,6 +83,66 @@ pourGuide:
       how: Rotate or gently shake the brewer after pouring to level the bed and move fines through the slurry.
       taste: Swirling can improve uniformity and sweetness, while too much movement may slow drawdown and add dryness.
 
+grinders:
+  back: brew methods
+  units:
+    clicks: clicks
+  guidance:
+    recipeDependent: recipe dependent
+  directory:
+    systemLine: grinder archive / repeatable settings
+    title: grinder settings
+    lede: Translate broad grind descriptions into repeatable settings for a specific grinder. Each guide keeps its sources and adjustment system visible.
+    listLabel: Available grinder guides
+    ranges: ranges
+  methods:
+    ibrik: cezve / ibrik
+    espresso: espresso
+    bialetti: Bialetti / stovetop
+    pour-over-filter: pour-over / filter
+    aeropress: AeroPress
+    cupping: cupping
+    french-press: French press
+    cold-brew: cold brew
+  guide:
+    lede: A practical Standard Clix reference. Begin inside the suggested range, then adjust one or two clicks at a time for the coffee, recipe, and taste in front of you.
+    specLabel: Grinder specifications
+    adjustment: adjustment
+    scale: chart scale
+    direction: direction
+    higherIsCoarser: higher = coarser
+    factory: factory setting
+    chartTitle: click range chart
+    chartIntro: Official starting ranges for the standard C40 axle. These are guides, not fixed recipes.
+    finer: finer
+    coarser: coarser
+    aeropressNote: AeroPress settings depend on the recipe, so Comandante does not prescribe one numeric range.
+    zeroTitle: finding click zero
+    zeroIntro: Every setting is counted from the same mechanical reference point.
+    zeroSteps:
+      - Empty the grinder and hold it horizontally.
+      - Tighten the dial until the burrs first hold the handle still instead of letting it fall toward six o’clock.
+      - Treat that first held position as zero, then turn anti-clockwise and count each click as the burr opens.
+    dialNote: Start near the middle of a recommended range. Move finer if the cup is weak, sharp, or fast; move coarser if it is harsh, dry, or slow. Taste remains the final calibration.
+    micronLabel: separately sourced capability
+    micronNote: Honest Coffee Guide reports this overall particle-size span. It is context only—not a per-click conversion and not part of Comandante’s official click recommendations.
+    sourcesTitle: sources and scope
+    sourcesIntro: Click ranges and operating instructions are first-party. The micron capability is identified separately.
+  guides:
+    timemore-chestnut-c5:
+      lede: A practical reference for the Chestnut C5's stepped click dial. Begin inside the suggested range, then adjust one or two clicks at a time for the coffee, recipe, and taste in front of you.
+      chartIntro: Suggested starting ranges across the C5's 48-click dial. These are guides, not fixed recipes.
+      zeroIntro: Every setting is counted from the point where the burrs are fully closed.
+      zeroSteps:
+        - Empty the grinder so no beans sit between the burrs.
+        - Turn the adjustment dial clockwise until it stops and the burrs are fully closed.
+        - Treat that closed position as zero, then turn anti-clockwise and count each click as the burrs open coarser.
+      sourcesIntro: Operating specifications are first-party from Timemore; the click-range chart is compiled from a hands-on review.
+  sourceScopes:
+    click-guidance: official click guidance
+    operating-guidance: official operation guide
+    micron-capability: third-party micron reference
+
 site:
   title: brew-recipes
   description: Browse community-curated coffee recipes without reading raw YAML.

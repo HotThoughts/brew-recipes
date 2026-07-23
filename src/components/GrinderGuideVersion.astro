@@ -1,0 +1,127 @@
+---
+import { t } from '../lib/i18n';
+import type { Grinder, GrinderRange } from '../lib/grinders';
+import GrindDirectionGlyph from './GrindDirectionGlyph.astro';
+
+type Props = {
+  grinder: Grinder;
+  language: 'en' | 'zh';
+};
+
+const { grinder, language } = Astro.props;
+const copy = { ...t[language].grinders.guide, ...(t[language].grinders.guides?.[grinder.id] ?? {}) };
+const ticks: number[] = [];
+for (
+  let tick = grinder.adjustment.scale_min;
+  tick <= grinder.adjustment.scale_max;
+  tick += grinder.adjustment.scale_step
+) ticks.push(tick);
+
+function rangePosition(range: GrinderRange): string | undefined {
+  if (range.min_clicks === undefined || range.max_clicks === undefined) return undefined;
+  const span = grinder.adjustment.scale_max - grinder.adjustment.scale_min;
+  const start = ((range.min_clicks - grinder.adjustment.scale_min) / span) * 100;
+  const width = ((range.max_clicks - range.min_clicks) / span) * 100;
+  return `--range-start:${start}%;--range-width:${width}%`;
+}
+---
+
+<div class={`grinder-version lang-${language}`}>
+  <header class="grinder-page-header">
+    <p class="system-line">{grinder.manufacturer} / {grinder.id}</p>
+    <h1 class="page-title">{grinder.model}</h1>
+    <p class="lede">{copy.lede}</p>
+  </header>
+
+  <section class="grinder-specs" aria-label={copy.specLabel}>
+    <div><span class="label">{copy.adjustment}</span><strong>{grinder.adjustment.system}</strong></div>
+    <div><span class="label">{copy.scale}</span><strong>{grinder.adjustment.scale_min}–{grinder.adjustment.scale_max} {t[language].grinders.units.clicks}</strong></div>
+    <div><span class="label">{copy.direction}</span><strong>{copy.higherIsCoarser}</strong></div>
+    {grinder.adjustment.factory_setting !== undefined && <div><span class="label">{copy.factory}</span><strong>{grinder.adjustment.factory_setting} {t[language].grinders.units.clicks}</strong></div>}
+  </section>
+
+  <section class="grind-chart-section" aria-labelledby={`${language}-chart-title`}>
+    <div class="section-heading compact">
+      <h2 id={`${language}-chart-title`}>{copy.chartTitle}</h2>
+      <p>{copy.chartIntro}</p>
+    </div>
+
+    <div class="grind-chart">
+      <div class="grind-ruler" aria-hidden="true">
+        <span class="grind-ruler-label">
+          <GrindDirectionGlyph direction="finer" />
+          <span>{copy.finer}</span>
+        </span>
+        <div class="grind-ruler-scale">
+          {ticks.map((tick) => <span style={`--tick:${((tick - grinder.adjustment.scale_min) / (grinder.adjustment.scale_max - grinder.adjustment.scale_min)) * 100}%`}><i></i><b>{tick}</b></span>)}
+        </div>
+        <span class="grind-ruler-label end">
+          <span>{copy.coarser}</span>
+          <GrindDirectionGlyph direction="coarser" />
+        </span>
+      </div>
+
+      <ol class="grinder-range-list">
+        {grinder.ranges.map((range) => {
+          const numeric = range.min_clicks !== undefined && range.max_clicks !== undefined;
+          const value = numeric
+            ? `${range.min_clicks}–${range.max_clicks} ${t[language].grinders.units.clicks}`
+            : t[language].grinders.guidance.recipeDependent;
+          return (
+            <li id={`${language}:${range.id}`} class="grinder-range-row">
+              <div class="grinder-range-heading">
+                <h3>{t[language].grinders.methods[range.id]}</h3>
+                <strong>{value}</strong>
+              </div>
+              {numeric ? (
+                <div class="grinder-range-track" style={rangePosition(range)} aria-label={`${t[language].grinders.methods[range.id]}: ${value}`}>
+                  <span class="grinder-range-bar"></span>
+                </div>
+              ) : (
+                <div class="grinder-range-track grinder-range-track-note">
+                  <p class="grinder-range-note">{copy.aeropressNote}</p>
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  </section>
+
+  <section class="grinder-guidance" aria-labelledby={`${language}-zero-title`}>
+    <div class="section-heading compact">
+      <h2 id={`${language}-zero-title`}>{copy.zeroTitle}</h2>
+      <p>{copy.zeroIntro}</p>
+    </div>
+    <ol class="grinder-steps">
+      {copy.zeroSteps.map((step: string, index: number) => (
+        <li><span>{String(index + 1).padStart(2, '0')}</span><p>{step}</p></li>
+      ))}
+    </ol>
+    <p class="dial-note">{copy.dialNote}</p>
+  </section>
+
+  {grinder.particle_range_microns && (
+    <aside class="micron-note">
+      <span class="label">{copy.micronLabel}</span>
+      <strong>{grinder.particle_range_microns.min}–{grinder.particle_range_microns.max} μm</strong>
+      <p>{copy.micronNote}</p>
+    </aside>
+  )}
+
+  <footer class="grinder-sources">
+    <div class="section-heading compact">
+      <h2>{copy.sourcesTitle}</h2>
+      <p>{copy.sourcesIntro}</p>
+    </div>
+    <ul>
+      {grinder.sources.map((source) => (
+        <li>
+          <span>{t[language].grinders.sourceScopes[source.scope]}</span>
+          <a href={source.url}>{source.name} ↗</a>
+        </li>
+      ))}
+    </ul>
+  </footer>
+</div>

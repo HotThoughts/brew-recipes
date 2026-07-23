@@ -1,0 +1,52 @@
+id: comandante-c40-mk4
+manufacturer: Comandante
+model: C40 MK4
+adjustment:
+  system: Standard Clix
+  unit: clicks
+  scale_min: 0
+  scale_max: 40
+  scale_step: 5
+  direction: higher-is-coarser
+  factory_setting: 24
+particle_range_microns:
+  min: 0
+  max: 1090
+  source_id: honest-coffee-guide
+ranges:
+  - id: ibrik
+    min_clicks: 3
+    max_clicks: 8
+  - id: espresso
+    min_clicks: 7
+    max_clicks: 13
+  - id: bialetti
+    min_clicks: 14
+    max_clicks: 20
+  - id: pour-over-filter
+    min_clicks: 18
+    max_clicks: 35
+    recipe_brewers: [V60, Chemex, Kalita, Orea, StaggX, Origami, April]
+  - id: aeropress
+    guidance: recipe-dependent
+    recipe_brewers: [Aeropress]
+  - id: cupping
+    min_clicks: 25
+    max_clicks: 35
+  - id: french-press
+    min_clicks: 25
+    max_clicks: 35
+    recipe_brewers: [FrenchPress]
+sources:
+  - id: comandante-faq
+    name: Comandante FAQ
+    url: https://comandantegrinder.com/pages/faq
+    scope: click-guidance
+  - id: comandante-manual
+    name: Comandante C40 MK4 manual
+    url: https://www.comandantegrinder.com/downloads/C40-Manual-E-Q3-21-web.pdf
+    scope: operating-guidance
+  - id: honest-coffee-guide
+    name: Honest Coffee Guide
+    url: https://honestcoffeeguide.com/comandante-c40-mk4-grind-settings/
+    scope: micron-capability
