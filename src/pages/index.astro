@@ -88,15 +88,17 @@ const homeTitles = {
         <span class="lang-en">{t.en.home.lede}</span>
         <span class="lang-zh">{t.zh.home.lede}</span>
       </p>
-      <a
-        class="intro-link"
-        href={withBase('/pour-styles/')}
-        data-preserve-lang
-        data-base-href={withBase('/pour-styles/')}
-      >
-        <span class="lang-en">{t.en.home.pourGuideLink}</span>
-        <span class="lang-zh">{t.zh.home.pourGuideLink}</span>
-      </a>
+      <nav class="intro-links" aria-label="Coffee guides">
+        <a
+          class="intro-link"
+          href={withBase('/pour-styles/')}
+          data-preserve-lang
+          data-base-href={withBase('/pour-styles/')}
+        >
+          <span class="lang-en">{t.en.home.pourGuideLink}</span>
+          <span class="lang-zh">{t.zh.home.pourGuideLink}</span>
+        </a>
+      </nav>
     </section>
 
     <AsciiHero />

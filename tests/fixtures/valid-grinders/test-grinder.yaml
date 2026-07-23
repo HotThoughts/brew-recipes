@@ -1,0 +1,21 @@
+id: test-grinder
+manufacturer: Test
+model: Grinder One
+adjustment:
+  system: Test Clicks
+  unit: clicks
+  scale_min: 0
+  scale_max: 30
+  scale_step: 5
+  direction: higher-is-coarser
+  factory_setting: 15
+ranges:
+  - id: filter
+    min_clicks: 10
+    max_clicks: 20
+    recipe_brewers: [V60]
+sources:
+  - id: test-source
+    name: Test Source
+    url: https://example.com/settings
+    scope: click-guidance
