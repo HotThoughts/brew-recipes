@@ -10,6 +10,7 @@ type Props = {
 
 const { grinder, language } = Astro.props;
 const copy = { ...t[language].grinders.guide, ...(t[language].grinders.guides?.[grinder.id] ?? {}) };
+const unitLabel = t[language].grinders.units[grinder.adjustment.unit];
 const ticks: number[] = [];
 for (
   let tick = grinder.adjustment.scale_min;
@@ -35,9 +36,9 @@ function rangePosition(range: GrinderRange): string | undefined {
 
   <section class="grinder-specs" aria-label={copy.specLabel}>
     <div><span class="label">{copy.adjustment}</span><strong>{grinder.adjustment.system}</strong></div>
-    <div><span class="label">{copy.scale}</span><strong>{grinder.adjustment.scale_min}–{grinder.adjustment.scale_max} {t[language].grinders.units.clicks}</strong></div>
+    <div><span class="label">{copy.scale}</span><strong>{grinder.adjustment.scale_min}–{grinder.adjustment.scale_max} {unitLabel}</strong></div>
     <div><span class="label">{copy.direction}</span><strong>{copy.higherIsCoarser}</strong></div>
-    {grinder.adjustment.factory_setting !== undefined && <div><span class="label">{copy.factory}</span><strong>{grinder.adjustment.factory_setting} {t[language].grinders.units.clicks}</strong></div>}
+    {grinder.adjustment.factory_setting !== undefined && <div><span class="label">{copy.factory}</span><strong>{grinder.adjustment.factory_setting} {unitLabel}</strong></div>}
   </section>
 
   <section class="grind-chart-section" aria-labelledby={`${language}-chart-title`}>
@@ -65,7 +66,7 @@ function rangePosition(range: GrinderRange): string | undefined {
         {grinder.ranges.map((range) => {
           const numeric = range.min_clicks !== undefined && range.max_clicks !== undefined;
           const value = numeric
-            ? `${range.min_clicks}–${range.max_clicks} ${t[language].grinders.units.clicks}`
+            ? `${range.min_clicks}–${range.max_clicks} ${unitLabel}`
             : t[language].grinders.guidance.recipeDependent;
           return (
             <li id={`${language}:${range.id}`} class="grinder-range-row">

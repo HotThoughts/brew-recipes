@@ -87,6 +87,7 @@ grinders:
   back: brew methods
   units:
     clicks: clicks
+    numbers: numbers
   guidance:
     recipeDependent: recipe dependent
   directory:
@@ -100,8 +101,10 @@ grinders:
     espresso: espresso
     bialetti: Bialetti / stovetop
     pour-over-filter: pour-over / filter
+    prismo: Prismo attachment
     aeropress: AeroPress
     cupping: cupping
+    electric-coffee-maker: electric coffee maker
     french-press: French press
     cold-brew: cold brew
   guide:
@@ -129,6 +132,33 @@ grinders:
     sourcesTitle: sources and scope
     sourcesIntro: Click ranges and operating instructions are first-party. The micron capability is identified separately.
   guides:
+    1zpresso-zp6:
+      lede: A practical reference for the ZP6's external adjustment ring, sold in English material as the ZP6 Special. Begin inside the suggested range, then adjust one or two clicks at a time for the coffee, recipe, and taste in front of you.
+      chartTitle: number range chart
+      chartIntro: First-party starting ranges from 1Zpresso's ZP6 Special reference chart, read off the nine printed numbers. Ten clicks sit between one number and the next, so 4.5 means number 4 plus five clicks. These are guides, not fixed recipes.
+      zeroTitle: reading the ring
+      zeroIntro: A setting is read where the red dot points, counted from the position where the burrs first resist the handle.
+      zeroSteps:
+        - Empty the grinder so no beans sit between the burrs.
+        - Turn the ring anti-clockwise until you feel resistance and the handle begins to turn against it; that position is zero.
+        - Turn clockwise and read the number the red dot reaches, then count single clicks past it for the decimal.
+      dialNote: One click is 22 microns and ten clicks make one printed number, so a whole number is a large move and a click is a small one. Start near the middle of a recommended range. Move finer if the cup is weak, sharp, or fast; move coarser if it is harsh, dry, or slow. Taste remains the final calibration.
+      aeropressNote: The official reference chart covers only siphon or pour-over and French press, so 1Zpresso publishes no numeric AeroPress range for this grinder.
+      micronNote: Honest Coffee Guide reports this overall particle-size span for the ZP6 Special. It is context only—not a per-number conversion and not part of 1Zpresso's own recommendations.
+      sourcesIntro: Click ranges and operating instructions are first-party from 1Zpresso; the micron capability is identified separately.
+    fellow-ode-brew:
+      lede: A practical reference for Ode's numbered grind dial. Ode is built for brewed coffee only, so every range here is a filter or immersion method.
+      chartTitle: number range chart
+      chartIntro: Fellow's starting ranges for the Gen 2 brew burrs, as printed in the in-box dial guide. These are guides, not fixed recipes.
+      zeroTitle: reading the grind dial
+      zeroIntro: The scale is printed on the grinder, so a setting is read off the dial rather than counted from a closed-burr zero.
+      zeroSteps:
+        - Run the grinder for a moment to clear coffee left between the burrs before changing the setting.
+        - Turn the grind dial with the motor running; clockwise moves coarser, anti-clockwise moves finer.
+        - Align the dial mark with the number you want on the printed coarseness scale.
+      dialNote: Unmarked detents sit between the printed numbers, so a position between two numbers can be returned to. Start near the middle of a recommended range. Move finer if the cup is weak, sharp, or fast; move coarser if it is harsh, dry, or slow. Taste remains the final calibration.
+      micronNote: Honest Coffee Guide reports this overall particle-size span for the Gen 2 burrs. It is context only—not a per-number conversion and not part of Fellow's own dial recommendations.
+      sourcesIntro: Dial ranges and operating instructions are first-party from Fellow; the micron span is identified separately.
     timemore-chestnut-c5:
       lede: A practical reference for the Chestnut C5's stepped click dial. Begin inside the suggested range, then adjust one or two clicks at a time for the coffee, recipe, and taste in front of you.
       chartIntro: Suggested starting ranges across the C5's 48-click dial. These are guides, not fixed recipes.

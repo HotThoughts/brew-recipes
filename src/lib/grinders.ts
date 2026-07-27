@@ -3,9 +3,11 @@ import path from 'node:path';
 import { load } from 'js-yaml';
 import { walkYamlFiles } from '../../scripts/lib/walk.mjs';
 
+export type GrinderAdjustmentUnit = 'clicks' | 'numbers';
+
 export type GrinderAdjustment = {
   system: string;
-  unit: 'clicks';
+  unit: GrinderAdjustmentUnit;
   scale_min: number;
   scale_max: number;
   scale_step: number;
@@ -66,9 +68,12 @@ export function getGrinderRangeForBrewer(
   return grinder.ranges.find((range) => range.recipe_brewers?.includes(brewer));
 }
 
-export function formatGrinderRange(range: GrinderRange): string {
+export function formatGrinderRange(
+  range: GrinderRange,
+  unit: GrinderAdjustmentUnit = 'clicks',
+): string {
   if (range.min_clicks !== undefined && range.max_clicks !== undefined) {
-    return `${range.min_clicks}–${range.max_clicks} clicks`;
+    return `${range.min_clicks}–${range.max_clicks} ${unit}`;
   }
   return 'recipe dependent';
 }

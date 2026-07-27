@@ -30,4 +30,9 @@ describe('grinder collection', () => {
     expect(formatGrinderRange({ id: 'aeropress', guidance: 'recipe-dependent' }))
       .toBe('recipe dependent');
   });
+
+  it('formats settings for dials labelled in printed numbers', () => {
+    expect(formatGrinderRange({ id: 'filter', min_clicks: 4, max_clicks: 5 }, 'numbers'))
+      .toBe('4–5 numbers');
+  });
 });
