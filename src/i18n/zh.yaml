@@ -87,6 +87,7 @@ grinders:
   back: 冲煮方法
   units:
     clicks: 格
+    numbers: 刻度
   guidance:
     recipeDependent: 取决于配方
   directory:
@@ -100,8 +101,10 @@ grinders:
     espresso: 意式浓缩
     bialetti: 比乐蒂 / 摩卡壶
     pour-over-filter: 手冲 / 滤泡
+    prismo: Prismo 配件
     aeropress: 爱乐压
     cupping: 杯测
+    electric-coffee-maker: 电动滴滤机
     french-press: 法压壶
     cold-brew: 冷萃
   guide:
@@ -129,6 +132,31 @@ grinders:
     sourcesTitle: 来源与适用范围
     sourcesIntro: 刻度范围与操作说明来自官方；微米能力范围则单独标注第三方来源。
   guides:
+    1zpresso-zp6:
+      lede: 一份针对 ZP6 外置调节环的实用参考；英文资料中这台研磨器以 ZP6 Special 的名称销售。先从建议范围内开始，再根据眼前的咖啡、配方和口味，每次微调一至两格。
+      chartIntro: 来自 1Zpresso ZP6 Special 官方刻度建议表的起始范围，按调节环上的九个数字读取。相邻两个数字之间有 10 格，因此 4.5 表示数字 4 再加 5 格。这些是调试指南，并非固定配方。
+      zeroTitle: 读懂调节环
+      zeroIntro: 刻度以红点所指的位置读取，并从刀盘刚开始对摇臂产生阻力的位置计起。
+      zeroSteps:
+        - 清空研磨器，确保刀盘之间没有咖啡豆。
+        - 逆时针转动调节环，直到感到阻力、摇臂开始带着阻力转动，该位置即为零点。
+        - 顺时针旋转，读出红点指到的数字，再逐格计数得到小数部分。
+      dialNote: 一格是 22 微米，十格构成一个数字，因此整数是大幅调整，单格则很细微。先从建议范围的中间开始：淡薄、尖锐或流速过快就调细，苦涩、干燥或流速过慢就调粗。最终仍以味觉为准。
+      aeropressNote: 官方刻度建议表只标注虹吸／手冲与法压壶，因此 1Zpresso 没有为这台研磨器公布爱乐压的数字范围。
+      micronNote: Honest Coffee Guide 报告了 ZP6 Special 的这一总体颗粒跨度。它只作背景参考，并非逐个数字的换算，也不属于 1Zpresso 官方刻度建议。
+      sourcesIntro: 刻度范围与操作说明来自 1Zpresso 官方；微米能力范围则单独标注第三方来源。
+    fellow-ode-brew:
+      lede: 一份针对 Ode 数字刻度盘的实用参考。Ode 只为滤泡与浸泡类咖啡设计，因此这里的每个范围都属于滤泡或浸泡方式。
+      chartIntro: Fellow 为 Gen 2 刀盘给出的起始范围，取自随机附带的刻度盘指南。这些是调试指南，并非固定配方。
+      zeroTitle: 读懂研磨刻度盘
+      zeroIntro: 刻度直接印在机身上，因此刻度是从盘面读出的，而不是从刀盘闭合的零点开始计数。
+      zeroSteps:
+        - 调整刻度前先空转片刻，清出残留在刀盘之间的咖啡。
+        - 在电机运转时转动刻度盘：顺时针变粗，逆时针变细。
+        - 将刻度盘上的标记对准印刷刻度上想要的数字。
+      dialNote: 印刷数字之间还有未标注的中间格位，因此两个数字之间的位置也可以复现。先从建议范围的中间开始。若咖啡淡薄、尖锐或流速过快，就调细；若苦涩、干燥或流速过慢，就调粗。最终仍以味觉为准。
+      micronNote: Honest Coffee Guide 报告了 Gen 2 刀盘的这一总体颗粒跨度。它只作背景参考，并非逐格换算，也不属于 Fellow 官方的刻度建议。
+      sourcesIntro: 刻度范围与操作说明来自 Fellow 官方；微米跨度则单独标注第三方来源。
     timemore-chestnut-c5:
       lede: 一份针对 Chestnut C5 分级刻度盘的实用参考。先从建议范围内开始，再根据眼前的咖啡、配方和口味，每次微调一至两格。
       chartIntro: C5 的 48 格刻度盘上的建议起始范围。这些是调试指南，并非固定配方。

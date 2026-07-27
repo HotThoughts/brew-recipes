@@ -1194,6 +1194,7 @@
   .grind-ruler {
     display: grid;
     grid-template-columns: minmax(145px, 0.25fr) minmax(0, 1fr);
+    column-gap: 18px;
     padding: 0 0 12px;
     border-bottom: 1px solid var(--rule);
     color: var(--ink-light);
@@ -1235,23 +1236,26 @@
     position: absolute;
     top: -1px;
     left: var(--tick);
+    width: 0;
     height: 100%;
-    transform: translateX(-50%);
   }
 
   .grind-ruler-scale i {
     display: block;
     width: 1px;
     height: 9px;
+    margin-left: -0.5px;
     background: var(--ink-light);
   }
 
   .grind-ruler-scale b {
-    display: block;
-    margin-top: 4px;
-    transform: translateX(-45%);
+    position: absolute;
+    top: 13px;
+    left: 0;
+    transform: translateX(-50%);
     font-weight: 400;
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
 
   .grinder-range-list,
@@ -1750,6 +1754,7 @@
     padding-inline: 12px;
   }
 
+  .grind-ruler-scale,
   .grinder-range-track {
     width: calc(100% - 12px);
     margin-inline: 6px;

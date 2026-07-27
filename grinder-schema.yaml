@@ -23,7 +23,7 @@ properties:
         minLength: 1
       unit:
         type: string
-        enum: [clicks]
+        enum: [clicks, numbers]
       scale_min:
         type: integer
         minimum: 0

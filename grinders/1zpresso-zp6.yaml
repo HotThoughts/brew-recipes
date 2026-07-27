@@ -1,0 +1,43 @@
+id: 1zpresso-zp6
+manufacturer: 1Zpresso
+model: ZP6
+adjustment:
+  system: External adjustment ring
+  unit: numbers
+  scale_min: 0
+  scale_max: 8
+  scale_step: 1
+  direction: higher-is-coarser
+particle_range_microns:
+  min: 240
+  max: 1050
+  source_id: honest-coffee-guide
+ranges:
+  - id: pour-over-filter
+    min_clicks: 4
+    max_clicks: 5
+    recipe_brewers: [V60, Chemex, Kalita, Orea, StaggX, Origami, April]
+  - id: aeropress
+    guidance: recipe-dependent
+    recipe_brewers: [Aeropress]
+  - id: french-press
+    min_clicks: 5
+    max_clicks: 6
+    recipe_brewers: [FrenchPress]
+sources:
+  - id: 1zpresso-zp6-chart
+    name: 1Zpresso ZP6 Special grind setting reference
+    url: https://1zpresso.coffee/wp-content/uploads/2022/10/ZP6-special-Grind-Setting-Reference-20221031.jpg
+    scope: click-guidance
+  - id: 1zpresso-k-series-manual
+    name: 1Zpresso K-series manual (includes ZP6 Special)
+    url: https://1zpresso.coffee/manual-k-en/
+    scope: operating-guidance
+  - id: 1zpresso-grind-setting-guide
+    name: 1Zpresso grind size chart tutorial
+    url: https://1zpresso.coffee/grind-setting/
+    scope: operating-guidance
+  - id: honest-coffee-guide
+    name: Honest Coffee Guide ZP6 Special grind settings
+    url: https://honestcoffeeguide.com/1zpresso-zp6-special-grind-settings/
+    scope: micron-capability
