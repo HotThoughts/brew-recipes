@@ -55,7 +55,7 @@ const grinderRange = featuredGrinder
 function rangeText(language: 'en' | 'zh'): string {
   if (!grinderRange) return '';
   if (grinderRange.min_clicks !== undefined && grinderRange.max_clicks !== undefined) {
-    return `${grinderRange.min_clicks}–${grinderRange.max_clicks} ${t[language].grinders.units.clicks}`;
+    return `${grinderRange.min_clicks}–${grinderRange.max_clicks} ${t[language].grinders.units[featuredGrinder!.adjustment.unit]}`;
   }
   return t[language].grinders.guidance.recipeDependent;
 }
