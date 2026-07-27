@@ -134,6 +134,7 @@ grinders:
   guides:
     1zpresso-zp6:
       lede: A practical reference for the ZP6's external adjustment ring, sold in English material as the ZP6 Special. Begin inside the suggested range, then adjust one or two clicks at a time for the coffee, recipe, and taste in front of you.
+      chartTitle: number range chart
       chartIntro: First-party starting ranges from 1Zpresso's ZP6 Special reference chart, read off the nine printed numbers. Ten clicks sit between one number and the next, so 4.5 means number 4 plus five clicks. These are guides, not fixed recipes.
       zeroTitle: reading the ring
       zeroIntro: A setting is read where the red dot points, counted from the position where the burrs first resist the handle.
@@ -147,6 +148,7 @@ grinders:
       sourcesIntro: Click ranges and operating instructions are first-party from 1Zpresso; the micron capability is identified separately.
     fellow-ode-brew:
       lede: A practical reference for Ode's numbered grind dial. Ode is built for brewed coffee only, so every range here is a filter or immersion method.
+      chartTitle: number range chart
       chartIntro: Fellow's starting ranges for the Gen 2 brew burrs, as printed in the in-box dial guide. These are guides, not fixed recipes.
       zeroTitle: reading the grind dial
       zeroIntro: The scale is printed on the grinder, so a setting is read off the dial rather than counted from a closed-burr zero.
