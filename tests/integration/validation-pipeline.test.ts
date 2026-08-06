@@ -91,6 +91,15 @@ describe('Validation Pipeline (integration)', () => {
     expect(validateFile(validFile, schema, grinderAjv)).toHaveLength(0);
     const validData = load(fs.readFileSync(validFile, 'utf8')) as object;
     expect(validateGrinderData(validData)).toHaveLength(0);
+    const withoutClickGuidance = structuredClone(validData) as {
+      sources: Array<{ scope: string }>;
+    };
+    withoutClickGuidance.sources.forEach((source) => {
+      source.scope = 'operating-guidance';
+    });
+    expect(validateGrinderData(withoutClickGuidance).join(' ')).toContain(
+      'must include click-guidance',
+    );
 
     expect(validateFile(invalidFile, schema, grinderAjv)).toHaveLength(0);
     const invalidData = load(fs.readFileSync(invalidFile, 'utf8')) as object;

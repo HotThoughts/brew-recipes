@@ -11,6 +11,7 @@ export type GrinderAdjustment = {
   scale_min: number;
   scale_max: number;
   scale_step: number;
+  setting_subdivisions: number;
   direction: 'higher-is-coarser' | 'higher-is-finer';
   factory_setting?: number;
 };

@@ -96,6 +96,34 @@ grinders:
     lede: 将宽泛的研磨描述转换为特定研磨器上可重复的刻度。每份指南都会清楚标注调节系统与资料来源。
     listLabel: 可用的研磨器指南
     ranges: 个范围
+  convert:
+    systemLine: 研磨器档案 / 跨机型刻度
+    title: 刻度换算
+    lede: 把一台研磨器的刻度换算到另一台。每一组对应关系都以两份研磨器指南引用的冲煮方法范围为基准，不用颗粒尺寸推算。
+    formLabel: 研磨刻度换算
+    from: 源研磨器
+    to: 目标研磨器
+    setting: 刻度
+    decreaseSetting: 减小刻度
+    increaseSetting: 增大刻度
+    swap: 互换研磨器
+    resultLabel: 换算结果
+    convertedSetting: 换算刻度
+    sourceRange: 源范围
+    targetRange: 目标范围
+    enterSetting: 输入源研磨器的刻度即可查看有依据的换算结果。
+    guideLink: 完整范围图表
+    outsideRanges: 该刻度落在所有共同公布范围之外，因此下面的结果由最接近的范围外推得出。
+    noSharedRanges: 这两份研磨器指南没有引用同一冲煮方法的数字范围，因此无法进行有依据的换算。
+    outOfScale: 该刻度超出了源研磨器的图表范围。
+    invalidSetting: 该刻度不在源研磨器可用的调节位置上。
+    sameGrinder: 请选择两台不同的研磨器进行换算。
+    caveat: 换算结果只是起点，不是测量值。先从换算刻度开始，再根据眼前的咖啡微调一至两个档位。
+    provenanceTitle: 换算依据的来源
+    provenanceIntro: 两侧范围均来自各研磨器指南所引用的刻度资料。可打开任一指南查看完整图表。
+    directoryTitle: 在研磨器之间换算
+    directoryNote: 以有来源的方法范围为基准
+    directoryAction: 打开换算工具
   methods:
     ibrik: 土耳其壶 / 伊布里克壶
     espresso: 意式浓缩

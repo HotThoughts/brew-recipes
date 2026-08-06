@@ -25,24 +25,50 @@ const grinders = getGrinders();
     </header>
 
     <section class="grinder-index" aria-label={t.en.grinders.directory.listLabel}>
-      {grinders.map((grinder) => (
-        <a
-          class="grinder-index-row"
-          href={withBase(grinder.urlPath)}
-          data-preserve-lang
-          data-base-href={withBase(grinder.urlPath)}
-        >
-          <span class="grinder-index-name">
-            <span>{grinder.manufacturer}</span>
-            <strong>{grinder.model}</strong>
+      <a
+        class="grinder-converter-entry"
+        href={withBase('/grinders/convert/')}
+        data-preserve-lang
+        data-base-href={withBase('/grinders/convert/')}
+        data-grinder-convert-link
+      >
+        <span class="grinder-converter-mark" aria-hidden="true">⇄</span>
+        <span class="grinder-converter-copy">
+          <strong>
+            <span class="lang-en">{t.en.grinders.convert.directoryTitle}</span>
+            <span class="lang-zh">{t.zh.grinders.convert.directoryTitle}</span>
+          </strong>
+          <span>
+            <span class="lang-en">{t.en.grinders.convert.directoryNote}</span>
+            <span class="lang-zh">{t.zh.grinders.convert.directoryNote}</span>
           </span>
-          <span class="grinder-index-meta">
-            <span>{grinder.adjustment.system}</span>
-            <span>{grinder.ranges.length} <span class="lang-en">{t.en.grinders.directory.ranges}</span><span class="lang-zh">{t.zh.grinders.directory.ranges}</span></span>
-            <span aria-hidden="true">→</span>
-          </span>
-        </a>
-      ))}
+        </span>
+        <span class="grinder-converter-action">
+          <span class="lang-en">{t.en.grinders.convert.directoryAction}</span>
+          <span class="lang-zh">{t.zh.grinders.convert.directoryAction}</span>
+          <span aria-hidden="true">→</span>
+        </span>
+      </a>
+      <div class="grinder-index-list">
+        {grinders.map((grinder) => (
+          <a
+            class="grinder-index-row"
+            href={withBase(grinder.urlPath)}
+            data-preserve-lang
+            data-base-href={withBase(grinder.urlPath)}
+          >
+            <span class="grinder-index-name">
+              <span>{grinder.manufacturer}</span>
+              <strong>{grinder.model}</strong>
+            </span>
+            <span class="grinder-index-meta">
+              <span>{grinder.adjustment.system}</span>
+              <span>{grinder.ranges.length} <span class="lang-en">{t.en.grinders.directory.ranges}</span><span class="lang-zh">{t.zh.grinders.directory.ranges}</span></span>
+              <span aria-hidden="true">→</span>
+            </span>
+          </a>
+        ))}
+      </div>
     </section>
 
     <nav class="detail-nav" aria-label={t.en.detail.recipeNav}>

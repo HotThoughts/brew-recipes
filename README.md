@@ -90,12 +90,15 @@ Features:
 - **Detail pages** — each recipe shows phases with timing, grind size, water temperature, source attribution, and tags
 - **i18n** — supports English and Chinese (简体中文); the header has a language switcher, and translations are auto-linked by recipe `id`
 - **Grinder guides** — model-specific setting charts, source attribution, and contextual links from compatible recipes
+- **Grind converter** — convert a setting between two grinders, anchored to method ranges cited by both grinder guides
 
 ## Grinder Guides
 
 Grinder settings live in `grinders/<id>.yaml` and are validated against [`grinder-schema.yaml`](grinder-schema.yaml). Each file describes the adjustment scale, method ranges, compatible recipe brewers, and scoped sources. Adding another grinder automatically creates a new `/grinders/<id>/` guide and directory entry.
 
 Keep numerical recommendations language-neutral in the grinder YAML. Shared method names and guide copy are localized in `src/i18n/en.yaml` and `src/i18n/zh.yaml`.
+
+`/grinders/convert/` adds a grind converter that maps a setting on one grinder to another. It only uses method ranges cited by both grinder guides — a setting is placed relative to its method range and read into the same method's range on the target grinder — so no conversion is inferred from micron spans. `adjustment.setting_subdivisions` records the discrete positions between consecutive whole-number labels so inputs and results stay on settings the grinder can actually select. Subpositions use the grinder's printed index notation: three subdivisions are entered as `5`, `5.1`, `5.2`, then `6`.
 
 ## Local Development
 

@@ -103,6 +103,12 @@ export function validateGrinderData(grinder) {
     if (sourceIds.has(source.id)) errors.push(`/sources duplicate id "${source.id}"`);
     sourceIds.add(source.id);
   }
+  const hasNumericRanges = ranges.some(
+    (range) => range.min_clicks !== undefined && range.max_clicks !== undefined,
+  );
+  if (hasNumericRanges && !sources.some((source) => source.scope === 'click-guidance')) {
+    errors.push('/sources must include click-guidance when numeric ranges are declared');
+  }
   if (microns) {
     if (microns.min >= microns.max) errors.push('/particle_range_microns min must be less than max');
     if (!sourceIds.has(microns.source_id)) {
