@@ -7,6 +7,7 @@ adjustment:
   scale_min: 0
   scale_max: 8
   scale_step: 1
+  setting_subdivisions: 10
   direction: higher-is-coarser
 particle_range_microns:
   min: 240

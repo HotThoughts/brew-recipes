@@ -1,0 +1,500 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t } from '../../lib/i18n';
+import { getGrinders } from '../../lib/grinders';
+import { defaultSetting } from '../../lib/grinder-convert';
+import { withBase } from '../../lib/recipes';
+
+const grinders = getGrinders();
+
+const payload = {
+  grinders: grinders.map((grinder) => ({
+    id: grinder.id,
+    label: `${grinder.manufacturer} ${grinder.model}`,
+    urlPath: withBase(grinder.urlPath),
+    adjustment: grinder.adjustment,
+    ranges: grinder.ranges
+      .filter((range) => range.min_clicks !== undefined && range.max_clicks !== undefined)
+      .map((range) => ({ id: range.id, min_clicks: range.min_clicks, max_clicks: range.max_clicks })),
+    sources: grinder.sources.filter((source) => source.scope === 'click-guidance'),
+  })),
+  copy: {
+    en: {
+      convert: t.en.grinders.convert,
+      methods: t.en.grinders.methods,
+      units: t.en.grinders.units,
+    },
+    zh: {
+      convert: t.zh.grinders.convert,
+      methods: t.zh.grinders.methods,
+      units: t.zh.grinders.units,
+    },
+  },
+};
+
+const payloadJson = JSON.stringify(payload).replace(/</g, '\\u003c');
+const first = payload.grinders[0];
+const second = payload.grinders[1] ?? first;
+---
+
+<BaseLayout
+  title={`${t.en.grinders.convert.title} | ${t.en.grinders.directory.title}`}
+  pageClass="grinder-convert-page"
+>
+  <main class="grinder-convert" data-grinder-convert>
+    <header class="grinder-page-header">
+      <p class="system-line">
+        <span class="lang-en">{t.en.grinders.convert.systemLine}</span>
+        <span class="lang-zh">{t.zh.grinders.convert.systemLine}</span>
+      </p>
+      <h1 class="page-title">
+        <span class="lang-en">{t.en.grinders.convert.title}</span>
+        <span class="lang-zh">{t.zh.grinders.convert.title}</span>
+      </h1>
+      <p class="lede">
+        <span class="lang-en">{t.en.grinders.convert.lede}</span>
+        <span class="lang-zh">{t.zh.grinders.convert.lede}</span>
+      </p>
+    </header>
+
+    <section class="convert-workspace">
+      <h2 id="convert-form-title" class="visually-hidden">
+        <span class="lang-en">{t.en.grinders.convert.formLabel}</span>
+        <span class="lang-zh">{t.zh.grinders.convert.formLabel}</span>
+      </h2>
+
+      <form class="convert-form" aria-labelledby="convert-form-title" novalidate data-convert-form>
+        <div class="convert-source">
+          <div class="convert-field">
+            <label class="label" for="convert-from">
+              <span class="lang-en">{t.en.grinders.convert.from}</span>
+              <span class="lang-zh">{t.zh.grinders.convert.from}</span>
+            </label>
+            <select id="convert-from" class="convert-select" data-convert-from>
+              {payload.grinders.map((grinder) => (
+                <option value={grinder.id} selected={grinder.id === first.id}>{grinder.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div class="convert-field convert-setting-field">
+            <label class="label" for="convert-setting">
+              <span class="lang-en">{t.en.grinders.convert.setting}</span>
+              <span class="lang-zh">{t.zh.grinders.convert.setting}</span>
+            </label>
+            <div class="convert-input-shell">
+              <input
+                id="convert-setting"
+                class="convert-input"
+                type="text"
+                inputmode="decimal"
+                value={defaultSetting(first)}
+                role="spinbutton"
+                aria-valuemin={first.adjustment.scale_min}
+                aria-valuemax={first.adjustment.scale_max}
+                aria-valuenow={defaultSetting(first)}
+                aria-describedby="convert-setting-meta convert-setting-error"
+                data-convert-setting
+              />
+              <button type="button" class="convert-step" data-convert-step="-1">
+                <span aria-hidden="true">−</span>
+                <span class="visually-hidden">
+                  <span class="lang-en">{t.en.grinders.convert.decreaseSetting}</span>
+                  <span class="lang-zh">{t.zh.grinders.convert.decreaseSetting}</span>
+                </span>
+              </button>
+              <button type="button" class="convert-step" data-convert-step="1">
+                <span aria-hidden="true">+</span>
+                <span class="visually-hidden">
+                  <span class="lang-en">{t.en.grinders.convert.increaseSetting}</span>
+                  <span class="lang-zh">{t.zh.grinders.convert.increaseSetting}</span>
+                </span>
+              </button>
+            </div>
+            <p id="convert-setting-meta" class="convert-field-meta" data-convert-setting-meta></p>
+            <p id="convert-setting-error" class="convert-field-error" data-convert-field-error hidden></p>
+          </div>
+        </div>
+
+        <button type="button" class="convert-swap" data-convert-swap>
+          <span aria-hidden="true">⇄</span>
+          <span class="lang-en">{t.en.grinders.convert.swap}</span>
+          <span class="lang-zh">{t.zh.grinders.convert.swap}</span>
+        </button>
+
+        <div class="convert-field convert-target">
+          <label class="label" for="convert-to">
+            <span class="lang-en">{t.en.grinders.convert.to}</span>
+            <span class="lang-zh">{t.zh.grinders.convert.to}</span>
+          </label>
+          <select id="convert-to" class="convert-select" data-convert-to>
+            {payload.grinders.map((grinder) => (
+              <option value={grinder.id} selected={grinder.id === second.id}>{grinder.label}</option>
+            ))}
+          </select>
+        </div>
+      </form>
+
+      <section class="convert-result" aria-labelledby="convert-result-title">
+        <div class="convert-result-intro">
+          <h2 id="convert-result-title" class="convert-section-title">
+            <span class="lang-en">{t.en.grinders.convert.resultLabel}</span>
+            <span class="lang-zh">{t.zh.grinders.convert.resultLabel}</span>
+          </h2>
+          <div class="convert-result-status">
+            <p class="convert-result-summary" data-convert-summary></p>
+            <p class="convert-note" data-convert-note hidden></p>
+          </div>
+        </div>
+        <p class="visually-hidden" role="status" aria-live="polite" aria-atomic="true" data-convert-announcement></p>
+        <ol class="convert-result-list" data-convert-rows></ol>
+        <p class="convert-caveat" data-convert-caveat>
+          <span class="lang-en">{t.en.grinders.convert.caveat}</span>
+          <span class="lang-zh">{t.zh.grinders.convert.caveat}</span>
+        </p>
+      </section>
+    </section>
+
+    <footer class="grinder-sources convert-sources">
+      <div class="section-heading compact">
+        <h2>
+          <span class="lang-en">{t.en.grinders.convert.provenanceTitle}</span>
+          <span class="lang-zh">{t.zh.grinders.convert.provenanceTitle}</span>
+        </h2>
+        <p>
+          <span class="lang-en">{t.en.grinders.convert.provenanceIntro}</span>
+          <span class="lang-zh">{t.zh.grinders.convert.provenanceIntro}</span>
+        </p>
+      </div>
+      <ul data-convert-sources></ul>
+    </footer>
+
+    <nav class="detail-nav" aria-label={t.en.detail.recipeNav}>
+      <a href={withBase('/grinders/')} data-preserve-lang data-base-href={withBase('/grinders/')}>
+        <span class="lang-en">← {t.en.grinders.directory.title}</span>
+        <span class="lang-zh">← {t.zh.grinders.directory.title}</span>
+      </a>
+    </nav>
+  </main>
+
+  <script type="application/json" id="grinder-convert-data" set:html={payloadJson}></script>
+</BaseLayout>
+
+<script>
+  import {
+    convertGrinderSetting,
+    defaultSetting,
+    formatSetting,
+    parseSetting,
+    stepSetting,
+  } from '../../lib/grinder-convert';
+
+  const dataNode = document.getElementById('grinder-convert-data');
+  const root = document.querySelector('[data-grinder-convert]');
+  if (dataNode?.textContent && root) {
+    const payload = JSON.parse(dataNode.textContent);
+    const byId = new Map(payload.grinders.map((grinder) => [grinder.id, grinder]));
+    const langs = ['en', 'zh'];
+
+    const form = root.querySelector('[data-convert-form]');
+    const fromSelect = root.querySelector('[data-convert-from]');
+    const toSelect = root.querySelector('[data-convert-to]');
+    const settingInput = root.querySelector('[data-convert-setting]');
+    const stepButtons = root.querySelectorAll('[data-convert-step]');
+    const settingMeta = root.querySelector('[data-convert-setting-meta]');
+    const fieldError = root.querySelector('[data-convert-field-error]');
+    const swapButton = root.querySelector('[data-convert-swap]');
+    const summary = root.querySelector('[data-convert-summary]');
+    const rows = root.querySelector('[data-convert-rows]');
+    const note = root.querySelector('[data-convert-note]');
+    const announcement = root.querySelector('[data-convert-announcement]');
+    const caveat = root.querySelector('[data-convert-caveat]');
+    const sourceList = root.querySelector('[data-convert-sources]');
+
+    function activeLang() {
+      return document.body.classList.contains('lang-zh') ? 'zh' : 'en';
+    }
+
+    function langSpans(parent, resolve) {
+      for (const lang of langs) {
+        const span = document.createElement('span');
+        span.className = `lang-${lang}`;
+        span.textContent = resolve(lang);
+        parent.appendChild(span);
+      }
+      return parent;
+    }
+
+    function replaceLangSpans(parent, resolve) {
+      parent.replaceChildren();
+      langSpans(parent, resolve);
+    }
+
+    function unit(grinder, lang) {
+      return payload.copy[lang].units[grinder.adjustment.unit];
+    }
+
+    function syncSettingBounds(grinder) {
+      const { scale_min: min, scale_max: max } = grinder.adjustment;
+      settingInput.setAttribute('aria-valuemin', String(min));
+      settingInput.setAttribute('aria-valuemax', String(max));
+      replaceLangSpans(settingMeta, (lang) => `${min}\u2013${max} ${unit(grinder, lang)}`);
+    }
+
+    function scalePercent(grinder, value) {
+      const { scale_min: min, scale_max: max } = grinder.adjustment;
+      if (max === min) return 0;
+      return ((value - min) / (max - min)) * 100;
+    }
+
+    function renderRow(match, from, to) {
+      const row = document.createElement('li');
+      row.className = 'convert-result-row';
+
+      const heading = document.createElement('div');
+      heading.className = 'convert-result-heading';
+      const title = document.createElement('h3');
+      langSpans(title, (lang) => payload.copy[lang].methods[match.methodId] ?? match.methodId);
+      const value = document.createElement('strong');
+      const valueLabel = document.createElement('span');
+      valueLabel.className = 'visually-hidden';
+      langSpans(valueLabel, (lang) => `${payload.copy[lang].convert.convertedSetting}: `);
+      value.appendChild(valueLabel);
+      langSpans(value, (lang) => `${formatSetting(match.value)} ${unit(to, lang)}`);
+      heading.append(title, value);
+
+      const bands = document.createElement('dl');
+      bands.className = 'convert-result-bands';
+
+      function rangeBand(labelKey, resolve) {
+        const band = document.createElement('div');
+        const term = document.createElement('dt');
+        langSpans(term, (lang) => payload.copy[lang].convert[labelKey]);
+        const detail = document.createElement('dd');
+        langSpans(detail, resolve);
+        band.append(term, detail);
+        return band;
+      }
+
+      const sourceBand = rangeBand(
+        'sourceRange',
+        (lang) =>
+          `${from.label} · ${match.sourceRange.min}–${match.sourceRange.max} ${unit(from, lang)}`,
+      );
+      const targetBand = rangeBand(
+        'targetRange',
+        (lang) => `${to.label} · ${match.targetRange.min}–${match.targetRange.max} ${unit(to, lang)}`,
+      );
+      bands.append(sourceBand, targetBand);
+
+      const track = document.createElement('div');
+      track.className = 'convert-track';
+      const start = scalePercent(to, match.targetRange.min);
+      track.style.setProperty('--range-start', `${start}%`);
+      track.style.setProperty('--range-width', `${scalePercent(to, match.targetRange.max) - start}%`);
+      const markerSetting = parseSetting(match.value, to.adjustment) ?? match.value;
+      track.style.setProperty('--marker', `${scalePercent(to, markerSetting)}%`);
+      const bar = document.createElement('span');
+      bar.className = 'grinder-range-bar';
+      const marker = document.createElement('span');
+      marker.className = 'convert-marker';
+      track.append(bar, marker);
+
+      const scale = document.createElement('div');
+      scale.className = 'convert-scale';
+      scale.setAttribute('aria-hidden', 'true');
+      const scaleMin = document.createElement('span');
+      scaleMin.textContent = String(to.adjustment.scale_min);
+      const scaleMax = document.createElement('span');
+      scaleMax.textContent = String(to.adjustment.scale_max);
+      scale.append(scaleMin, track, scaleMax);
+
+      row.append(heading, bands, scale);
+      return row;
+    }
+
+    function renderSources(from, to) {
+      sourceList.replaceChildren();
+      const seen = new Set();
+      for (const grinder of from === to ? [from] : [from, to]) {
+        for (const source of grinder.sources) {
+          if (seen.has(source.url)) continue;
+          seen.add(source.url);
+          const item = document.createElement('li');
+          const scope = document.createElement('span');
+          scope.textContent = grinder.label;
+          const link = document.createElement('a');
+          link.href = source.url;
+          link.textContent = `${source.name} ↗`;
+          item.append(scope, link);
+          sourceList.appendChild(item);
+        }
+        const guide = document.createElement('li');
+        const scope = document.createElement('span');
+        scope.textContent = grinder.label;
+        const link = document.createElement('a');
+        link.href = `${grinder.urlPath}#${activeLang()}`;
+        link.dataset.preserveLang = '';
+        link.dataset.baseHref = grinder.urlPath;
+        langSpans(link, (lang) => `${payload.copy[lang].convert.guideLink} ↗`);
+        guide.append(scope, link);
+        sourceList.appendChild(guide);
+      }
+    }
+
+    function setNote(key) {
+      if (!key) {
+        note.hidden = true;
+        note.replaceChildren();
+        return;
+      }
+      note.hidden = false;
+      replaceLangSpans(note, (lang) => payload.copy[lang].convert[key]);
+    }
+
+    function setFieldError(key) {
+      if (!key) {
+        fieldError.hidden = true;
+        fieldError.replaceChildren();
+        return;
+      }
+      fieldError.hidden = false;
+      replaceLangSpans(fieldError, (lang) => payload.copy[lang].convert[key]);
+    }
+
+    function setAnnouncement(resolve) {
+      replaceLangSpans(announcement, resolve);
+    }
+
+    function summaryText(from, to, setting, lang) {
+      return `${from.label} ${formatSetting(setting)} ${unit(from, lang)} → ${to.label}`;
+    }
+
+    let lastMatches = [];
+    let lastFromId = fromSelect.value;
+
+    function update() {
+      const from = byId.get(fromSelect.value);
+      const to = byId.get(toSelect.value);
+      if (!from || !to) return;
+
+      syncSettingBounds(from);
+      const setting = Number(settingInput.value);
+      rows.replaceChildren();
+      summary.replaceChildren();
+      lastMatches = [];
+      settingInput.removeAttribute('aria-invalid');
+      setFieldError(null);
+      setNote(null);
+      caveat.hidden = true;
+      renderSources(from, to);
+
+      if (from === to) {
+        setNote('sameGrinder');
+        setAnnouncement((lang) => payload.copy[lang].convert.sameGrinder);
+        return;
+      }
+      if (settingInput.value === '' || !Number.isFinite(setting)) {
+        settingInput.removeAttribute('aria-valuenow');
+        settingInput.removeAttribute('aria-valuetext');
+        setNote('enterSetting');
+        setAnnouncement((lang) => payload.copy[lang].convert.enterSetting);
+        return;
+      }
+
+      const result = convertGrinderSetting(from, to, setting);
+      const parsedSetting = parseSetting(setting, from.adjustment);
+      if (parsedSetting === undefined || result.status === 'out-of-scale') {
+        settingInput.removeAttribute('aria-valuenow');
+        settingInput.removeAttribute('aria-valuetext');
+      } else {
+        settingInput.setAttribute('aria-valuenow', String(setting));
+        settingInput.setAttribute(
+          'aria-valuetext',
+          `${formatSetting(setting)} ${unit(from, activeLang())}`,
+        );
+      }
+      lastMatches = result.matches;
+      if (result.matches.length > 0) {
+        replaceLangSpans(summary, (lang) => summaryText(from, to, setting, lang));
+        caveat.hidden = false;
+      }
+      result.matches.forEach((match) => rows.appendChild(renderRow(match, from, to)));
+      if (result.status === 'out-of-scale' || result.status === 'invalid-setting') {
+        settingInput.setAttribute('aria-invalid', 'true');
+      }
+
+      const statusKey =
+        result.status === 'ok'
+          ? null
+          : result.status === 'outside-ranges'
+            ? 'outsideRanges'
+            : result.status === 'no-shared-ranges'
+              ? 'noSharedRanges'
+              : result.status === 'out-of-scale'
+                ? 'outOfScale'
+                : 'invalidSetting';
+
+      if (result.status === 'out-of-scale' || result.status === 'invalid-setting') {
+        setFieldError(statusKey);
+      } else {
+        setNote(statusKey);
+      }
+
+      setAnnouncement((lang) => {
+        const resultSummary = result.matches.length > 0 ? summaryText(from, to, setting, lang) : '';
+        const statusCopy = statusKey ? payload.copy[lang].convert[statusKey] : '';
+        return [resultSummary, statusCopy].filter(Boolean).join('. ');
+      });
+    }
+
+    form.addEventListener('submit', (event) => event.preventDefault());
+    window.addEventListener('hashchange', update);
+    toSelect.addEventListener('change', update);
+    settingInput.addEventListener('input', update);
+
+    function stepSourceSetting(direction) {
+      const from = byId.get(fromSelect.value);
+      if (!from) return;
+      const stepped = stepSetting(Number(settingInput.value), from.adjustment, direction);
+      if (stepped !== undefined) settingInput.value = formatSetting(stepped);
+      update();
+    }
+
+    settingInput.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+      event.preventDefault();
+      stepSourceSetting(event.key === 'ArrowUp' ? 1 : -1);
+    });
+    stepButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        stepSourceSetting(button.dataset.convertStep === '1' ? 1 : -1);
+        settingInput.focus();
+      });
+    });
+
+    // A count of clicks means nothing on a different grinder, so the source
+    // setting resets to the new grinder's own starting point.
+    fromSelect.addEventListener('change', () => {
+      const from = byId.get(fromSelect.value);
+      if (from && fromSelect.value !== lastFromId) {
+        settingInput.value = String(defaultSetting(from));
+        lastFromId = fromSelect.value;
+      }
+      update();
+    });
+
+    swapButton.addEventListener('click', () => {
+      const carried = lastMatches.length > 0 ? lastMatches[0].value : undefined;
+      const previous = fromSelect.value;
+      fromSelect.value = toSelect.value;
+      toSelect.value = previous;
+      lastFromId = fromSelect.value;
+      const from = byId.get(fromSelect.value);
+      settingInput.value = String(carried ?? (from ? defaultSetting(from) : settingInput.value));
+      update();
+    });
+
+    update();
+  }
+</script>

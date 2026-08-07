@@ -7,6 +7,7 @@ adjustment:
   scale_min: 0
   scale_max: 30
   scale_step: 5
+  setting_subdivisions: 1
   direction: higher-is-coarser
   factory_setting: 15
 ranges:

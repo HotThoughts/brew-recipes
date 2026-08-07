@@ -16,13 +16,16 @@ dist/
 .env.local
 .env.*.local
 
-# Claude Code local config
+# Local agent/tool config
 .claude/
 .agents/
 .codex/
+.entire/
+.factory/
 .github/skills/
 .github/hooks/
 .impeccable/
+.opencode/
 .playwright-mcp
 skills-lock.json
 

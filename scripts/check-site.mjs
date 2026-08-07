@@ -25,6 +25,24 @@ if (fs.existsSync(path.join(DIST_DIR, 'index.html'))) {
 // Grinder directory and data-driven guide pages
 const grinderIndex = path.join(DIST_DIR, 'grinders', 'index.html');
 assert(fs.existsSync(grinderIndex), 'Missing grinder directory page');
+if (fs.existsSync(grinderIndex)) {
+  const html = fs.readFileSync(grinderIndex, 'utf8');
+  assert(html.includes('data-grinder-convert-link'), 'Grinder directory missing converter link');
+}
+
+const converterPage = path.join(DIST_DIR, 'grinders', 'convert', 'index.html');
+assert(fs.existsSync(converterPage), 'Missing grinder converter page');
+if (fs.existsSync(converterPage)) {
+  const html = fs.readFileSync(converterPage, 'utf8');
+  assert(html.includes('data-grinder-convert'), 'Converter page missing converter root');
+  assert(html.includes('grinder-convert-data'), 'Converter page missing grinder data payload');
+  assert(html.includes('data-convert-form'), 'Converter page missing conversion form');
+  assert(html.includes('data-convert-step'), 'Converter page missing discrete setting controls');
+  assert(html.includes('convert-result-title'), 'Converter page missing labelled result region');
+  assert(html.includes('data-convert-announcement'), 'Converter page missing live result announcement');
+  assert(html.includes('convert-setting-error'), 'Converter page missing setting error association');
+}
+
 const grinderFiles = [...walkYamlFiles('grinders')];
 for (const file of grinderFiles) {
   const grinder = load(fs.readFileSync(file, 'utf8'));

@@ -15,7 +15,7 @@ properties:
     minLength: 1
   adjustment:
     type: object
-    required: [system, unit, scale_min, scale_max, scale_step, direction]
+    required: [system, unit, scale_min, scale_max, scale_step, setting_subdivisions, direction]
     additionalProperties: false
     properties:
       system:
@@ -31,6 +31,10 @@ properties:
         type: integer
         minimum: 1
       scale_step:
+        type: integer
+        minimum: 1
+      setting_subdivisions:
+        description: Discrete positions per whole-number interval, encoded as zero-based fractional labels (for example 5, 5.1, 5.2, 6 for three subdivisions).
         type: integer
         minimum: 1
       direction:

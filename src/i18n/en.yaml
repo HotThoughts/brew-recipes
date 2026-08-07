@@ -96,6 +96,34 @@ grinders:
     lede: Translate broad grind descriptions into repeatable settings for a specific grinder. Each guide keeps its sources and adjustment system visible.
     listLabel: Available grinder guides
     ranges: ranges
+  convert:
+    systemLine: grinder archive / cross-model settings
+    title: grind converter
+    lede: Move a setting from one grinder to another. Every equivalence is anchored to method ranges cited by both grinder guides, so nothing here is estimated from particle measurements.
+    formLabel: Grinder conversion
+    from: from grinder
+    to: to grinder
+    setting: setting
+    decreaseSetting: decrease setting
+    increaseSetting: increase setting
+    swap: swap grinders
+    resultLabel: Conversion result
+    convertedSetting: converted setting
+    sourceRange: source range
+    targetRange: target range
+    enterSetting: Enter a source setting to see an anchored equivalence.
+    guideLink: full range chart
+    outsideRanges: This setting falls outside every shared published range, so the equivalence below is extrapolated from the nearest one.
+    noSharedRanges: These two grinder guides cite no numeric range for the same brew method, so no anchored conversion is possible.
+    outOfScale: That setting is outside the chart scale of the source grinder.
+    invalidSetting: That setting falls between the adjustment positions available on the source grinder.
+    sameGrinder: Choose two different grinders to convert between.
+    caveat: An equivalence is a starting point, not a measurement. Begin at the converted setting, then adjust one or two positions for the coffee in front of you.
+    provenanceTitle: sources behind this conversion
+    provenanceIntro: Both bands come from the click guidance cited by each grinder guide. Open either guide for the full chart.
+    directoryTitle: convert between grinders
+    directoryNote: Anchored to cited method ranges
+    directoryAction: open converter
   methods:
     ibrik: cezve / ibrik
     espresso: espresso
