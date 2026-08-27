@@ -14,7 +14,7 @@ on:
       - 'tsconfig.json'
       - 'package.json'
       - 'package-lock.json'
-      - '.github/workflows/validate.yaml'
+      - '.github/workflows/**'
       - '.pre-commit-config.yaml'
 
 jobs:
