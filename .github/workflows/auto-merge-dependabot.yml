@@ -23,10 +23,10 @@ jobs:
         if: >-
           ${{ steps.metadata.outputs.update-type != 'version-update:semver-major'
               || steps.metadata.outputs.package-ecosystem == 'github_actions' }}
-        run: gh pr review --approve "$PR_NUMBER"
+        run: gh pr review --approve "$PR_NUMBER" || echo 'Could not approve PR (may need GH_AUTOMERGE_TOKEN in Dependabot secrets)'
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          GH_TOKEN: ${{ secrets.GH_AUTOMERGE_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_AUTOMERGE_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Enable auto-merge
         if: >-
@@ -35,4 +35,4 @@ jobs:
         run: gh pr merge --auto --squash "$PR_NUMBER"
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          GH_TOKEN: ${{ secrets.GH_AUTOMERGE_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_AUTOMERGE_TOKEN || secrets.GITHUB_TOKEN }}
